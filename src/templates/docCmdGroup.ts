@@ -31,8 +31,9 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { ElementTemplateMap, applyToChildren } from '.';
+import { ElementTemplateMap } from '.';
 
+import docTitleCmdGroup from './docTitleCmdGroup';
 import docSimpleSectType from './docSimpleSectType';
 import docParBlockType from './docParBlockType';
 
@@ -47,5 +48,13 @@ const templates: ElementTemplateMap = {
 export default (element: Element) => {
   if (templates[element.name]) {
     return templates[element.name](element);
+  } else {
+    const docTitleCmd = docTitleCmdGroup(element);
+    //TODO
+    if (typeof docTitleCmd === 'undefined') {
+      return element.name + ' ' + JSON.stringify(element);
+    } else {
+      return docTitleCmd;
+    }
   }
 };
