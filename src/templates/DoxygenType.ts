@@ -16,5 +16,5 @@ const templates: ElementTemplateMap = {
   compounddef: compounddefType,
 };
 
-export default (doxygen: Element) =>
-  applyToChildren(templates)(doxygen).join('\n\n');
+export default (element: Element) =>
+  applyToChildren(templates)(element).join('\n\n');

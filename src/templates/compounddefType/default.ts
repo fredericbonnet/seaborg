@@ -15,12 +15,12 @@ const templates: ElementTemplateMap = {
   sectiondef: sectiondefType,
 };
 
-export default (compounddef: Element) => {
+export default (element: Element) => {
   const {
     attributes: { kind },
-  } = compounddef;
+  } = element;
 
   return applyToChildren({ title: titleTemplate(kind), ...templates })(
-    compounddef
+    element
   ).join('\n\n');
 };

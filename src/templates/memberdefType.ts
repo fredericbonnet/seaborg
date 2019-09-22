@@ -83,5 +83,5 @@ const templates: ElementTemplateMap = {
   detaileddescription: descriptionType,
 };
 
-export default (memberdef: Element) =>
-  applyToChildren(templates)(memberdef).join('\n\n');
+export default (element: Element) =>
+  applyToChildren(templates)(element).join('\n\n');

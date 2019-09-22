@@ -22,5 +22,5 @@ const templates: ElementTemplateMap = {
   memberdef: memberdefType,
 };
 
-export default (sectiondef: Element) =>
-  applyToChildren(templates)(sectiondef).join('\n\n');
+export default (element: Element) =>
+  applyToChildren(templates)(element).join('\n\n');

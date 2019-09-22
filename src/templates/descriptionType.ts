@@ -21,5 +21,5 @@ const templates: ElementTemplateMap = {
   para: docParaType,
 };
 
-export default (description: Element) =>
-  applyToChildren(templates)(description).join('\n\n');
+export default (element: Element) =>
+  applyToChildren(templates)(element).join('\n\n');

@@ -5,12 +5,15 @@ import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';
 import sectiondefType from '../sectiondefType';
 
-const templates: ElementTemplateMap = {
-  title: title => `# ${xsdString(title)}`,
-  briefdescription: descriptionType,
-  detaileddescription: descriptionType,
-  sectiondef: sectiondefType,
-};
+export default (element: Element) =>
+  [
+    // Title and description
+    ...applyToChildren({
+      title: title => `# ${xsdString(title)}`,
+      briefdescription: descriptionType,
+      detaileddescription: descriptionType,
+    })(element),
 
-export default (compounddef: Element) =>
-  applyToChildren(templates)(compounddef).join('\n\n');
+    // Remaining children
+    ...applyToChildren({ sectiondef: sectiondefType })(element),
+  ].join('\n\n');

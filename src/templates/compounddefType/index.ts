@@ -38,15 +38,15 @@
 
 import { Element } from '@rgrove/parse-xml';
 
-export default (compounddef: Element) => {
+export default (element: Element) => {
   const {
     attributes: { kind },
-  } = compounddef;
+  } = element;
   let template;
   try {
     template = require('./' + kind).default;
   } catch {
     template = require('./default').default;
   }
-  return template(compounddef);
+  return template(element);
 };
