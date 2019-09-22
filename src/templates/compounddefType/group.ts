@@ -1,5 +1,5 @@
 import { Element } from '@rgrove/parse-xml';
-import { ElementTemplateMap, applyToChildren } from '..';
+import { TemplateMap, applyToChildren } from '..';
 
 import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';

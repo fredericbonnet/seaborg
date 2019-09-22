@@ -5,26 +5,22 @@
   </xsd:complexType>
 */
 
-import { NodeBase, Element, Text } from '@rgrove/parse-xml';
+import { Element } from '@rgrove/parse-xml';
+import { TemplateMap, applyToChildren, $default, $text } from '.';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
+import text from './textNode';
+
+const templates: TemplateMap = {
+  [$default]: docTitleCmdGroup,
+  [$text]: text,
+};
 
 export default (element: Element) => {
   const {
     attributes: { url },
   } = element;
-
-  const text = element.children
-    .filter((node: NodeBase) => node.type === 'text' || node.type === 'element')
-    .map((node: NodeBase) => {
-      switch (node.type) {
-        case 'text':
-          return (node as Text).text;
-        case 'element':
-          return docTitleCmdGroup(node as Element);
-      }
-    })
-    .join('');
+  const text = applyToChildren(templates)(element).join('');
 
   return `[${text}](${url})`;
 };

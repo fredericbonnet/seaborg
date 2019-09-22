@@ -8,11 +8,11 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { ElementTemplateMap, applyToChildren } from '.';
+import { TemplateMap, applyToChildren } from '.';
 
 import compounddefType from './compounddefType';
 
-const templates: ElementTemplateMap = {
+const templates: TemplateMap = {
   compounddef: compounddefType,
 };
 

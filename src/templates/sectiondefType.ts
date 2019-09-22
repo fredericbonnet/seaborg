@@ -10,13 +10,13 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { ElementTemplateMap, applyToChildren } from '.';
+import { TemplateMap, applyToChildren } from '.';
 
 import xsdString from './xsd-string';
 import descriptionType from './descriptionType';
 import memberdefType from './memberdefType';
 
-const templates: ElementTemplateMap = {
+const templates: TemplateMap = {
   header: header => `## ${xsdString(header)}`,
   description: descriptionType,
   memberdef: memberdefType,

@@ -276,7 +276,7 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { ElementTemplateMap } from '.';
+import { TemplateMap } from '.';
 
 import docURLLink from './docURLLink';
 import docMarkupType from './docMarkupType';
@@ -286,7 +286,7 @@ import docFormulaType from './docFormulaType';
 import docRefTextType from './docRefTextType';
 import docEmojiType from './docEmojiType';
 
-const templates: ElementTemplateMap = {
+const templates: TemplateMap = {
   ulink: docURLLink,
   bold: docMarkupType,
   strike: docMarkupType,

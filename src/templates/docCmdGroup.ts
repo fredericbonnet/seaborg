@@ -31,30 +31,26 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { ElementTemplateMap } from '.';
+import { TemplateMap, $default, applyToElement } from '.';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
 import docSimpleSectType from './docSimpleSectType';
 import docParBlockType from './docParBlockType';
 
-//TODO
-const templates: ElementTemplateMap = {
+const templates: TemplateMap = {
   linebreak: () => '\n',
   hruler: () => '---\n',
   simplesect: docSimpleSectType,
   parblock: docParBlockType,
-};
-
-export default (element: Element) => {
-  if (templates[element.name]) {
-    return templates[element.name](element);
-  } else {
+  [$default]: element => {
+    //FIXME
     const docTitleCmd = docTitleCmdGroup(element);
-    //TODO
     if (typeof docTitleCmd === 'undefined') {
       return element.name + ' ' + JSON.stringify(element);
     } else {
       return docTitleCmd;
     }
-  }
+  },
 };
+
+export default (element: Element) => applyToElement(templates)(element);

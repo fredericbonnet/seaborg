@@ -1,9 +1,9 @@
 import { Element } from '@rgrove/parse-xml';
-import { ElementTemplateMap, applyToChildren } from '..';
+import { TemplateMap, applyToChildren } from '..';
 
 import docParaType from '../docParaType';
 
-const templates: ElementTemplateMap = {
+const templates: TemplateMap = {
   para: docParaType,
 };
 

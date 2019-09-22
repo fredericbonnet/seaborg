@@ -5,19 +5,15 @@
 */
 
 import { NodeBase, Element, Text } from '@rgrove/parse-xml';
+import { TemplateMap, $default, $text, applyToChildren } from '.';
 
 import docCmdGroup from './docCmdGroup';
+import text from './textNode';
 
-export default (element: Element) => {
-  return element.children
-    .filter((node: NodeBase) => node.type === 'text' || node.type === 'element')
-    .map((node: NodeBase) => {
-      switch (node.type) {
-        case 'text':
-          return (node as Text).text;
-        case 'element':
-          return docCmdGroup(node as Element);
-      }
-    })
-    .join('\n');
+const templates: TemplateMap = {
+  [$default]: docCmdGroup,
+  [$text]: text,
 };
+
+export default (element: Element) =>
+  applyToChildren(templates)(element).join('\n');

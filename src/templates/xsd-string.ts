@@ -1,9 +1,11 @@
 import { Element } from '@rgrove/parse-xml';
-import { withType, asTextNode, toText } from '../operators';
+import { TemplateMap, applyToChildren, $text } from '.';
+
+import text from './textNode';
+
+const templates: TemplateMap = {
+  [$text]: text,
+};
 
 export default (element: Element) =>
-  element.children
-    .filter(withType('text'))
-    .map(asTextNode)
-    .map(toText)
-    .join('');
+  applyToChildren(templates)(element).join('');
