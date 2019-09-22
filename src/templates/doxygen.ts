@@ -8,15 +8,13 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { withType, withName, asElementNode } from '../operators';
+import { ElementTemplateMap, applyToChildren } from '.';
 
 import compounddefTemplate from './compounddef';
 
+const templates: ElementTemplateMap = {
+  compounddef: compounddefTemplate,
+};
+
 export default (doxygen: Element) =>
-  doxygen.children
-    .filter(withType('element'))
-    .map(asElementNode)
-    .filter(withName('compounddef'))
-    .map(asElementNode)
-    .map(compounddefTemplate)
-    .join('\n\n');
+  applyToChildren(templates)(doxygen).join('\n\n');
