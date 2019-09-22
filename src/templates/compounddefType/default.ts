@@ -1,18 +1,18 @@
 import { Element } from '@rgrove/parse-xml';
 import { ElementTemplateMap, applyToChildren, ElementTemplate } from '..';
 
-import xsdStringTemplate from '../xsd_string';
-import descriptionTemplate from '../description';
-import sectiondefTemplate from '../sectiondef';
+import xsdString from '../xsd-string';
+import descriptionType from '../descriptionType';
+import sectiondefType from '../sectiondefType';
 
 // TODO map kind to string
 const titleTemplate = (kind: string) => (title: Element) =>
-  `# ${kind} ${xsdStringTemplate(title)}`;
+  `# ${kind} ${xsdString(title)}`;
 
 const templates: ElementTemplateMap = {
-  briefdescription: descriptionTemplate,
-  detaileddescription: descriptionTemplate,
-  sectiondef: sectiondefTemplate,
+  briefdescription: descriptionType,
+  detaileddescription: descriptionType,
+  sectiondef: sectiondefType,
 };
 
 export default (compounddef: Element) => {

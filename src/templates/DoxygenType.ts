@@ -10,10 +10,10 @@
 import { Element } from '@rgrove/parse-xml';
 import { ElementTemplateMap, applyToChildren } from '.';
 
-import compounddefTemplate from './compounddef';
+import compounddefType from './compounddefType';
 
 const templates: ElementTemplateMap = {
-  compounddef: compounddefTemplate,
+  compounddef: compounddefType,
 };
 
 export default (doxygen: Element) =>

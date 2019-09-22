@@ -12,13 +12,13 @@
 import { Element } from '@rgrove/parse-xml';
 import { ElementTemplateMap, applyToChildren } from '.';
 
-import xsdStringTemplate from './xsd_string';
-import docParaTemplate from './docPara';
+import xsdString from './xsd-string';
+import docParaType from './docParaType';
 
 // TODO
 const templates: ElementTemplateMap = {
-  title: title => `### ${xsdStringTemplate(title)}`,
-  para: docParaTemplate,
+  title: title => `### ${xsdString(title)}`,
+  para: docParaType,
 };
 
 export default (description: Element) =>

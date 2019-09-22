@@ -73,14 +73,14 @@
 import { Element } from '@rgrove/parse-xml';
 import { ElementTemplateMap, applyToChildren } from '.';
 
-import xsdStringTemplate from './xsd_string';
-import descriptionTemplate from './description';
+import xsdString from './xsd-string';
+import descriptionType from './descriptionType';
 
 // TODO
 const templates: ElementTemplateMap = {
-  name: name => `### ${xsdStringTemplate(name)}`,
-  briefdescription: descriptionTemplate,
-  detaileddescription: descriptionTemplate,
+  name: name => `### ${xsdString(name)}`,
+  briefdescription: descriptionType,
+  detaileddescription: descriptionType,
 };
 
 export default (memberdef: Element) =>

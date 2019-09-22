@@ -12,14 +12,14 @@
 import { Element } from '@rgrove/parse-xml';
 import { ElementTemplateMap, applyToChildren } from '.';
 
-import xsdStringTemplate from './xsd_string';
-import descriptionTemplate from './description';
-import memberdefTemplate from './memberdef';
+import xsdString from './xsd-string';
+import descriptionType from './descriptionType';
+import memberdefType from './memberdefType';
 
 const templates: ElementTemplateMap = {
-  header: header => `## ${xsdStringTemplate(header)}`,
-  description: descriptionTemplate,
-  memberdef: memberdefTemplate,
+  header: header => `## ${xsdString(header)}`,
+  description: descriptionType,
+  memberdef: memberdefType,
 };
 
 export default (sectiondef: Element) =>

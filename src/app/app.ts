@@ -11,7 +11,7 @@ import {
   toText,
 } from '../operators';
 
-import doxygenTemplate from '../templates/doxygen';
+import doxygenTemplate from '../templates/DoxygenType';
 
 const inputDir = '../colibri/doc/public/xml';
 const outputDir = 'tmp/tmp';
