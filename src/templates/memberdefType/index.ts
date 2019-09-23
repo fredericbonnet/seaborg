@@ -68,20 +68,38 @@
     <xsd:attribute name="maybeambiguous" type="DoxBool" use="optional"/>
 
   </xsd:complexType>
- */
+
+  <xsd:simpleType name="DoxMemberKind">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="define" />
+      <xsd:enumeration value="property" />
+      <xsd:enumeration value="event" />
+      <xsd:enumeration value="variable" />
+      <xsd:enumeration value="typedef" />
+      <xsd:enumeration value="enum" />
+      <xsd:enumeration value="function" />
+      <xsd:enumeration value="signal" />
+      <xsd:enumeration value="prototype" />
+      <xsd:enumeration value="friend" />
+      <xsd:enumeration value="dcop" />
+      <xsd:enumeration value="slot" />
+      <xsd:enumeration value="interface" />
+      <xsd:enumeration value="service" />
+    </xsd:restriction>
+  </xsd:simpleType>
+*/
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren } from '.';
 
-import xsdString from './xsd-string';
-import descriptionType from './descriptionType';
-
-// TODO
-const templates: TemplateMap = {
-  name: name => `### ${xsdString(name)}`,
-  briefdescription: descriptionType,
-  detaileddescription: descriptionType,
+export default (element: Element) => {
+  const {
+    attributes: { kind },
+  } = element;
+  let template;
+  try {
+    template = require('./' + kind).default;
+  } catch {
+    template = require('./default').default;
+  }
+  return template(element);
 };
-
-export default (element: Element) =>
-  applyToChildren(templates)(element).join('\n\n');
