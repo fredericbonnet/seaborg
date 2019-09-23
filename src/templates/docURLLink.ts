@@ -9,11 +9,11 @@ import { Element } from '@rgrove/parse-xml';
 import { TemplateMap, applyToChildren, $default, $text } from '.';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
-import text from './textNode';
+import textNode from './textNode';
 
 const templates: TemplateMap = {
   [$default]: docTitleCmdGroup,
-  [$text]: text,
+  [$text]: textNode,
 };
 
 export default (element: Element) => {

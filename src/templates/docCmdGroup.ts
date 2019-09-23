@@ -35,22 +35,20 @@ import { TemplateMap, $default, applyToElement } from '.';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
 import docSimpleSectType from './docSimpleSectType';
+import docTitleType from './docTitleType';
+import docHeadingType from './docHeadingType';
 import docParBlockType from './docParBlockType';
 
 const templates: TemplateMap = {
   linebreak: () => '\n',
   hruler: () => '---\n',
   simplesect: docSimpleSectType,
+  title: docTitleType,
+  heading: docHeadingType,
   parblock: docParBlockType,
-  [$default]: element => {
-    //FIXME
-    const docTitleCmd = docTitleCmdGroup(element);
-    if (typeof docTitleCmd === 'undefined') {
-      return element.name + ' ' + JSON.stringify(element);
-    } else {
-      return docTitleCmd;
-    }
-  },
+  //FIXME remove once all elements are implemented
+  [$default]: element =>
+    docTitleCmdGroup(element) || element.name + ' ' + JSON.stringify(element),
 };
 
 export default (element: Element) => applyToElement(templates)(element);

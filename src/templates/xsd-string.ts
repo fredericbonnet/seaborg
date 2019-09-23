@@ -1,10 +1,10 @@
 import { Element } from '@rgrove/parse-xml';
 import { TemplateMap, applyToChildren, $text } from '.';
 
-import text from './textNode';
+import textNode from './textNode';
 
 const templates: TemplateMap = {
-  [$text]: text,
+  [$text]: textNode,
 };
 
 export default (element: Element) =>

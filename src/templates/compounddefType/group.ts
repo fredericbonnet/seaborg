@@ -1,5 +1,5 @@
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren } from '..';
+import { applyToChildren, $default } from '..';
 
 import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';
@@ -15,5 +15,9 @@ export default (element: Element) =>
     })(element),
 
     // Remaining children
-    ...applyToChildren({ sectiondef: sectiondefType })(element),
+    // TODO
+    ...applyToChildren({
+      sectiondef: sectiondefType,
+      [$default]: element => element.name + ' ' + JSON.stringify(element),
+    })(element),
   ].join('\n\n');

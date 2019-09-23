@@ -14,13 +14,13 @@ import { TemplateMap, applyToChildren, $text } from '.';
 
 import xsdString from './xsd-string';
 import docParaType from './docParaType';
-import text from './textNode';
+import textNode from './textNode';
 
 // TODO
 const templates: TemplateMap = {
   title: title => `### ${xsdString(title)}`,
   para: docParaType,
-  [$text]: text,
+  [$text]: textNode,
 };
 
 export default (element: Element) =>

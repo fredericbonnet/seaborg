@@ -4,16 +4,16 @@
   </xsd:complexType>
 */
 
-import { NodeBase, Element, Text } from '@rgrove/parse-xml';
+import { Element } from '@rgrove/parse-xml';
 import { TemplateMap, $default, $text, applyToChildren } from '.';
 
 import docCmdGroup from './docCmdGroup';
-import text from './textNode';
+import textNode from './textNode';
 
 const templates: TemplateMap = {
   [$default]: docCmdGroup,
-  [$text]: text,
+  [$text]: textNode,
 };
 
 export default (element: Element) =>
-  applyToChildren(templates)(element).join('\n');
+  applyToChildren(templates)(element).join('\n'); //FIXME bad formatting in see: simplesect

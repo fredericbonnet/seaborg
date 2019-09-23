@@ -18,12 +18,15 @@ const outputDir = 'tmp/tmp';
 
 fs.mkdirSync(outputDir, { recursive: true });
 
-// Operators
-
 // Get all compounds from index file
 fs.readFile(path.join(inputDir, 'index.xml'), async (err, data) => {
   const root = parseXml(data.toString());
   const doxygenindex = root.children[0] as Element;
+
+  // Generate index files
+  //TODO
+
+  // Generate compound files
   doxygenindex.children
     .filter(withType('element'))
     .map(asElementNode)

@@ -276,7 +276,7 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap } from '.';
+import { TemplateMap, applyToElement } from '.';
 
 import docURLLink from './docURLLink';
 import docMarkupType from './docMarkupType';
@@ -559,8 +559,4 @@ const templates: TemplateMap = {
   tm: () => '™', // trade mark sign: ™
 };
 
-export default (element: Element) => {
-  if (templates[element.name]) {
-    return templates[element.name](element);
-  }
-};
+export default (element: Element) => applyToElement(templates)(element);

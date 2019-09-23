@@ -1,5 +1,5 @@
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren, ElementTemplate } from '..';
+import { TemplateMap, applyToChildren, $default } from '..';
 
 import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';
@@ -13,6 +13,7 @@ const templates: TemplateMap = {
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
   sectiondef: sectiondefType,
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
 };
 
 export default (element: Element) => {

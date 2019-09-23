@@ -12,9 +12,7 @@ export type TemplateMap = {
   [$text]?: TextTemplate;
 };
 
-export const applyToChildren = (templates: TemplateMap) => (
-  element: Element
-) =>
+export const applyToChildren = (templates: TemplateMap) => (element: Element) =>
   element.children.map((node: NodeBase) => {
     switch (node.type) {
       case 'element':
