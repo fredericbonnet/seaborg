@@ -10,17 +10,35 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren } from '.';
+import { TemplateMap, applyToChildrenGrouped } from '.';
+import Handlebars from 'handlebars';
 
 import xsdString from './xsd-string';
 import descriptionType from './descriptionType';
 import memberdefType from './memberdefType';
 
+const template = Handlebars.compile(
+  `
+## {{header}}
+
+{{description}}
+
+{{#each memberdef}}
+{{this}}
+{{/each}}
+`,
+  { noEscape: true }
+);
+
 const templates: TemplateMap = {
-  header: header => `## ${xsdString(header)}`,
+  header: xsdString,
   description: descriptionType,
   memberdef: memberdefType,
 };
 
-export default (element: Element) =>
-  applyToChildren(templates)(element).join('\n\n');
+export default (element: Element) => {
+  // TODO kind attribute
+  const context = applyToChildrenGrouped(templates)(element);
+
+  return template(context);
+};

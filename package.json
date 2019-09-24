@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rgrove/parse-xml": "^2.0.1"
+    "@rgrove/parse-xml": "^2.0.1",
+    "handlebars": "^4.3.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.5",

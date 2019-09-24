@@ -1,25 +1,35 @@
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren, $default } from '..';
+import { TemplateMap, applyToChildrenGrouped, $default } from '..';
+import Handlebars from 'handlebars';
 
 import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';
 
-// TODO map kind to string
-const nameTemplate = (kind: string) => (title: Element) =>
-  `### ${kind} ${xsdString(title)}`;
+const template = Handlebars.compile(
+  `
+### {{kind}} {{name}}
 
-// TODO
+{{briefdescription}}
+
+{{detaileddescription}}
+`,
+  { noEscape: true }
+);
+
 const templates: TemplateMap = {
+  name: xsdString,
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
+  //TODO
+  [$default]: element => '* ' + element.name + ' ' + JSON.stringify(element),
 };
 
 export default (element: Element) => {
+  // TODO map kind to string
   const {
     attributes: { kind },
   } = element;
-  return applyToChildren({ name: nameTemplate(kind), ...templates })(
-    element
-  ).join('\n\n');
+  const context = applyToChildrenGrouped(templates)(element);
+
+  return template({ ...context, kind }) + '\n\n' + context[$default].join('\n');
 };

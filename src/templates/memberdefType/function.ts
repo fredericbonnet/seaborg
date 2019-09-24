@@ -1,45 +1,41 @@
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren, $default } from '..';
+import { TemplateMap, applyToChildrenGrouped, $default } from '..';
+import Handlebars from 'handlebars';
 
 import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';
 
-export default (element: Element) =>
+Handlebars.registerHelper('fred', (language: string) => {
+  return new Handlebars.SafeString('```c');
+});
+
+const template = Handlebars.compile(
   `
-${
-  // Title
-  applyToChildren({
-    name: (title: Element) => `### Function ${xsdString(title)}`,
-  })(element).join('\n\n')
-}
+### Function {{name}}
 
-${
-  // Definition
-  // TODO language
-  [
-    '```c',
-    applyToChildren({
-      definition: xsdString,
-      argsstring: xsdString,
-    })(element).join(''),
+\`\`\`c
+{{definition}}{{argsstring}}
+\`\`\`
 
-    '```',
-  ].join('\n')
-}
+{{briefdescription}}
 
-${
-  // Description
-  applyToChildren({
-    briefdescription: descriptionType,
-    detaileddescription: descriptionType,
-  })(element).join('\n\n')
-}
+{{detaileddescription}}
+`,
+  { noEscape: true }
+);
 
-${
-  // Remaining children
-  // TODO
-  applyToChildren({
-    [$default]: element => '* ' + element.name + ' ' + JSON.stringify(element),
-  })(element).join('\n\n')
-}
-`;
+const templates: TemplateMap = {
+  name: xsdString,
+  definition: xsdString,
+  argsstring: xsdString,
+  briefdescription: descriptionType,
+  detaileddescription: descriptionType,
+  //TODO
+  [$default]: element => '* ' + element.name + ' ' + JSON.stringify(element),
+};
+
+export default (element: Element) => {
+  const context = applyToChildrenGrouped(templates)(element);
+
+  return template(context) + '\n\n' + context[$default].join('\n');
+};
