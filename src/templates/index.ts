@@ -13,14 +13,16 @@ export type TemplateMap = {
 };
 
 export const applyToChildren = (templates: TemplateMap) => (element: Element) =>
-  element.children.map((node: NodeBase) => {
-    switch (node.type) {
-      case 'element':
-        return applyToElement(templates)(node as Element);
-      case 'text':
-        return applyToText(templates)(node as Text);
-    }
-  });
+  element.children
+    .map((node: NodeBase) => {
+      switch (node.type) {
+        case 'element':
+          return applyToElement(templates)(node as Element);
+        case 'text':
+          return applyToText(templates)(node as Text);
+      }
+    })
+    .filter(e => typeof e !== 'undefined');
 
 export const applyToElement = (templates: TemplateMap) => (
   element: Element

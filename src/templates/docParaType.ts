@@ -16,4 +16,4 @@ const templates: TemplateMap = {
 };
 
 export default (element: Element) =>
-  applyToChildren(templates)(element).join('\n'); //FIXME bad formatting in see: simplesect
+  applyToChildren(templates)(element).join('\n');
