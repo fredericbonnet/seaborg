@@ -10,18 +10,18 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren, $text } from '.';
+import { Mappers, applyToChildren, $text } from '.';
 
 import xsdString from './xsd-string';
 import docParaType from './docParaType';
 import textNode from './textNode';
 
 // TODO
-const templates: TemplateMap = {
+const mappers: Mappers = {
   title: title => `### ${xsdString(title)}`,
   para: docParaType,
   [$text]: textNode,
 };
 
 export default (element: Element) =>
-  applyToChildren(templates)(element).join('\n\n');
+  applyToChildren(mappers)(element).join('\n\n');

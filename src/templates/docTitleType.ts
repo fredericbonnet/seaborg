@@ -5,13 +5,13 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren, $default } from '.';
+import { Mappers, applyToChildren, $default } from '.';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   [$default]: docTitleCmdGroup,
 };
 
 export default (element: Element) =>
-  applyToChildren(templates)(element).join('\n');
+  applyToChildren(mappers)(element).join('\n');

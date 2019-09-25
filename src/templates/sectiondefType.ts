@@ -10,7 +10,7 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildrenGrouped } from '.';
+import { Mappers, applyToChildrenGrouped } from '.';
 import Handlebars from 'handlebars';
 
 import xsdString from './xsd-string';
@@ -30,7 +30,7 @@ const template = Handlebars.compile(
   { noEscape: true }
 );
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   header: xsdString,
   description: descriptionType,
   memberdef: memberdefType,
@@ -38,7 +38,7 @@ const templates: TemplateMap = {
 
 export default (element: Element) => {
   // TODO kind attribute
-  const context = applyToChildrenGrouped(templates)(element);
+  const context = applyToChildrenGrouped(mappers)(element);
 
   return template(context);
 };

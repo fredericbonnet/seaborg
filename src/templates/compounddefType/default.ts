@@ -1,5 +1,5 @@
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildrenGrouped, $default } from '..';
+import { Mappers, applyToChildrenGrouped, $default } from '..';
 import Handlebars from 'handlebars';
 
 import xsdString from '../xsd-string';
@@ -21,7 +21,7 @@ const template = Handlebars.compile(
   { noEscape: true }
 );
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   compoundname: xsdString,
   title: xsdString,
   briefdescription: descriptionType,
@@ -36,7 +36,7 @@ export default (element: Element) => {
   const {
     attributes: { kind },
   } = element;
-  const context = applyToChildrenGrouped(templates)(element);
+  const context = applyToChildrenGrouped(mappers)(element);
 
   return template({ ...context, kind }) + '\n\n' + context[$default].join('\n');
 };

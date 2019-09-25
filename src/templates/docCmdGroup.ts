@@ -31,7 +31,7 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, $default, applyToElement } from '.';
+import { Mappers, $default, applyToElement } from '.';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
 import docSimpleSectType from './docSimpleSectType';
@@ -39,7 +39,7 @@ import docTitleType from './docTitleType';
 import docHeadingType from './docHeadingType';
 import docParBlockType from './docParBlockType';
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   linebreak: () => '\n',
   hruler: () => '---\n',
   simplesect: docSimpleSectType,
@@ -51,4 +51,4 @@ const templates: TemplateMap = {
     docTitleCmdGroup(element) || element.name + ' ' + JSON.stringify(element),
 };
 
-export default (element: Element) => applyToElement(templates)(element);
+export default (element: Element) => applyToElement(mappers)(element);

@@ -6,13 +6,13 @@
   </xsd:complexType>
 */
 
-import { TemplateMap, applyToChildren } from '.';
+import { Mappers, applyToChildren } from '.';
 
 import docParaType from './docParaType';
 import { Element } from '@rgrove/parse-xml';
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   para: docParaType,
 };
 export default (element: Element) =>
-  applyToChildren(templates)(element).join('\\\n');
+  applyToChildren(mappers)(element).join('\\\n');

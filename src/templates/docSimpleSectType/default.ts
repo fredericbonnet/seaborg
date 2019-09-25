@@ -35,14 +35,14 @@
 // TODO merge sections of the same type?
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren } from '..';
+import { Mappers, applyToChildren } from '..';
 
 import docParaType from '../docParaType';
 
 // TODO map kind to string
 const titleTemplate = (kind: string) => `**${kind}**`;
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   para: docParaType,
 };
 
@@ -51,7 +51,7 @@ export default (element: Element) => {
     attributes: { kind },
   } = element;
 
-  return [titleTemplate(kind), ...applyToChildren(templates)(element)].join(
+  return [titleTemplate(kind), ...applyToChildren(mappers)(element)].join(
     '\\\n'
   );
 };

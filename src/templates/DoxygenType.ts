@@ -8,13 +8,13 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren } from '.';
+import { Mappers, applyToChildren } from '.';
 
 import compounddefType from './compounddefType';
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   compounddef: compounddefType,
 };
 
 export default (element: Element) =>
-  applyToChildren(templates)(element).join('\n\n');
+  applyToChildren(mappers)(element).join('\n\n');

@@ -1,11 +1,10 @@
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren, $text } from '.';
+import { Mappers, applyToChildren, $text } from '.';
 
 import textNode from './textNode';
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   [$text]: textNode,
 };
 
-export default (element: Element) =>
-  applyToChildren(templates)(element).join('');
+export default (element: Element) => applyToChildren(mappers)(element).join('');

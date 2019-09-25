@@ -3,31 +3,31 @@ import { Element, Text, NodeBase } from '@rgrove/parse-xml';
 export const $default = Symbol('default');
 export const $text = Symbol('text');
 
-export type ElementTemplate = (element: Element) => string | undefined;
-export type TextTemplate = (text: Text) => string | undefined;
+export type ElementMapper = (element: Element) => string | undefined;
+export type TextMapper = (text: Text) => string | undefined;
 
-export type TemplateMap = {
-  [key: string]: ElementTemplate;
-  [$default]?: ElementTemplate;
-  [$text]?: TextTemplate;
+export type Mappers = {
+  [key: string]: ElementMapper;
+  [$default]?: ElementMapper;
+  [$text]?: TextMapper;
 };
 
-export const applyToChildren = (templates: TemplateMap) => (element: Element) =>
+export const applyToChildren = (mappers: Mappers) => (element: Element) =>
   element.children
-    .map(applyToNode(templates))
+    .map(applyToNode(mappers))
     .filter(e => typeof e !== 'undefined');
 
-export const applyToChildrenGrouped = (templates: TemplateMap) => (
+export const applyToChildrenGrouped = (mappers: Mappers) => (
   element: Element
 ) =>
   element.children
-    .map((node: NodeBase) => ({ node, value: applyToNode(templates)(node) }))
+    .map((node: NodeBase) => ({ node, value: applyToNode(mappers)(node) }))
     .filter(e => typeof e.value !== 'undefined')
     .reduce((acc: any, { node, value }) => {
       switch (node.type) {
         case 'element': {
           const element = node as Element;
-          if (templates[element.name]) {
+          if (mappers[element.name]) {
             return {
               ...acc,
               [element.name]: [...(acc[element.name] || []), value],
@@ -49,24 +49,22 @@ export const applyToChildrenGrouped = (templates: TemplateMap) => (
       }
     }, {});
 
-export const applyToNode = (templates: TemplateMap) => (node: NodeBase) => {
+export const applyToNode = (mappers: Mappers) => (node: NodeBase) => {
   switch (node.type) {
     case 'element':
-      return applyToElement(templates)(node as Element);
+      return applyToElement(mappers)(node as Element);
     case 'text':
-      return applyToText(templates)(node as Text);
+      return applyToText(mappers)(node as Text);
   }
 };
 
-export const applyToElement = (templates: TemplateMap) => (
-  element: Element
-) => {
-  if (templates[element.name]) return templates[element.name](element);
+export const applyToElement = (mappers: Mappers) => (element: Element) => {
+  if (mappers[element.name]) return mappers[element.name](element);
   // @ts-ignore
-  if (templates[$default]) return templates[$default](element);
+  if (mappers[$default]) return mappers[$default](element);
 };
 
-export const applyToText = (templates: TemplateMap) => (text: Text) => {
+export const applyToText = (mappers: Mappers) => (text: Text) => {
   // @ts-ignore
-  if (templates[$text]) return templates[$text](text);
+  if (mappers[$text]) return mappers[$text](text);
 };

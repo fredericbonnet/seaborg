@@ -276,7 +276,7 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToElement } from '.';
+import { Mappers, applyToElement } from '.';
 
 import docURLLink from './docURLLink';
 import docMarkupType from './docMarkupType';
@@ -286,7 +286,7 @@ import docFormulaType from './docFormulaType';
 import docRefTextType from './docRefTextType';
 import docEmojiType from './docEmojiType';
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   ulink: docURLLink,
   bold: docMarkupType,
   strike: docMarkupType,
@@ -559,4 +559,4 @@ const templates: TemplateMap = {
   tm: () => '™', // trade mark sign: ™
 };
 
-export default (element: Element) => applyToElement(templates)(element);
+export default (element: Element) => applyToElement(mappers)(element);

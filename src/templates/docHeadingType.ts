@@ -6,12 +6,12 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { TemplateMap, applyToChildren, $default, $text } from '.';
+import { Mappers, applyToChildren, $default, $text } from '.';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
 import textNode from './textNode';
 
-const templates: TemplateMap = {
+const mappers: Mappers = {
   [$default]: docTitleCmdGroup,
   [$text]: textNode,
 };
@@ -20,6 +20,6 @@ export default (element: Element) => {
   const {
     attributes: { level },
   } = element;
-  const text = applyToChildren(templates)(element);
+  const text = applyToChildren(mappers)(element);
   return `${'#'.repeat(parseInt(level))} ${text}`;
 };
