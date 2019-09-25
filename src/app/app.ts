@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import parseXml, { Element } from '@rgrove/parse-xml';
 
+import configuration from './services/configuration.service';
+
 import {
   withType,
   withName,
@@ -15,6 +17,8 @@ import doxygenTemplate from '../templates/DoxygenType';
 
 const inputDir = '../colibri/doc/public/xml';
 const outputDir = 'tmp/tmp';
+
+configuration.options = { inputDir, outputDir };
 
 fs.mkdirSync(outputDir, { recursive: true });
 
