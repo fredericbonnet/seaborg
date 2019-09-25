@@ -3,72 +3,46 @@ import path from 'path';
 import parseXml, { Element } from '@rgrove/parse-xml';
 
 import configuration from './services/configuration.service';
-
-import {
-  withType,
-  withName,
-  asElementNode,
-  asTextNode,
-  toChildren,
-  toText,
-} from '../operators';
-
+import index from './services/index.service';
+import { CompoundType } from './models/doxygenindex';
 import doxygenTemplate from '../templates/DoxygenType';
 
 const inputDir = '../colibri/doc/public/xml';
 const outputDir = 'tmp/tmp';
 
+// TODO CLI argument parsing
 configuration.options = { inputDir, outputDir };
 
-fs.mkdirSync(outputDir, { recursive: true });
+// Ensure that the output directory exists
+fs.mkdirSync(configuration.options.outputDir, { recursive: true });
 
-// Get all compounds from index file
-fs.readFile(path.join(inputDir, 'index.xml'), async (err, data) => {
-  const root = parseXml(data.toString());
-  const doxygenindex = root.children[0] as Element;
-
+// Read index file from input directory
+index.read().then(index => {
   // Generate index files
   //TODO
 
   // Generate compound files
-  doxygenindex.children
-    .filter(withType('element'))
-    .map(asElementNode)
-    .filter(withName('compound'))
-    .forEach(generateCompoundFile(inputDir, outputDir));
+  index.compounds.forEach(generateCompoundFile);
 });
 
 /**
- * Map function for compound file generation
- *
- * @param inputDir Input directory
- * @param outputDir Output directory
+ * Generate compound file from XML
  */
-const generateCompoundFile = (inputDir: string, outputDir: string) => (
-  compound: Element
-) => {
-  const {
-    attributes: { kind, refid },
-  } = compound;
-  const name = compound.children
-    .filter(withType('element'))
-    .map(asElementNode)
-    .filter(withName('name'))
-    .flatMap(toChildren)
-    .filter(withType('text'))
-    .map(asTextNode)
-    .map(toText)
-    .join('');
+const generateCompoundFile = (compound: CompoundType) => {
+  console.log(
+    `Generating ${compound.kind} [${compound.name}](${compound.refid}.md)`
+  );
 
-  console.log(`Generating ${kind} [${name}](${refid}.md)`);
+  fs.readFile(
+    path.join(configuration.options.inputDir, `${compound.refid}.xml`),
+    (err, data) => {
+      const root = parseXml(data.toString());
+      const doxygen = root.children[0] as Element;
 
-  fs.readFile(path.join(inputDir, `${refid}.xml`), async (err, data) => {
-    const root = parseXml(data.toString());
-    const doxygen = root.children[0] as Element;
-
-    fs.writeFileSync(
-      path.join(outputDir, `${refid}.md`),
-      await doxygenTemplate(doxygen)
-    );
-  });
+      fs.writeFileSync(
+        path.join(configuration.options.outputDir, `${compound.refid}.md`),
+        doxygenTemplate(doxygen)
+      );
+    }
+  );
 };
