@@ -37,6 +37,8 @@ export interface DoxygenType {
     ...
       <xsd:element name="title" type="xsd:string" minOccurs="0" />
     ...
+      <xsd:element name="briefdescription" type="descriptionType" minOccurs="0" />
+    ...
   </xsd:complexType>
 */
 
@@ -47,6 +49,7 @@ export interface CompoundType {
   kind: CompoundKind;
 
   title?: string;
+  briefdescription?: string;
 }
 
 /*

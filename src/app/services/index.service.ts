@@ -19,6 +19,10 @@ import {
   toText,
 } from '../../operators';
 
+import { applyToChildrenGrouped } from '../../templates';
+import xsdString from '../../templates/xsd-string';
+import descriptionType from '../../templates/descriptionType';
+
 const DOXYGEN_INDEX = 'index.xml';
 
 /** Convert CompoundType XML to model */
@@ -63,9 +67,9 @@ const toMemberType = (member: Element): MemberType => {
   return { name, refid, kind: kind as MemberKind };
 };
 
-/** Read compound title from compound file */
-const readCompoundTitle = (compound: CompoundType) =>
-  new Promise<string>((resolve, reject) => {
+/** Read compound title and description from compound file */
+const readCompoundInfo = (compound: CompoundType) =>
+  new Promise((resolve, reject) => {
     // 1. Read compound file
     fs.readFile(
       path.join(configuration.options.inputDir, `${compound.refid}.xml`),
@@ -77,23 +81,26 @@ const readCompoundTitle = (compound: CompoundType) =>
           const root = parseXml(data.toString());
           const doxygen = root.children[0] as Element;
 
-          // 3. Extract title from compounddef
-          const title = doxygen.children
+          // 3. Select compounddef
+          const [compounddef] = doxygen.children
             .filter(withType('element'))
             .map(asElementNode)
             .filter(withName('compounddef'))
-            .filter(compounddef => compounddef.attributes.id === compound.refid)
-            .flatMap(toChildren)
-            .filter(withType('element'))
-            .map(asElementNode)
-            .filter(withName('title'))
-            .flatMap(toChildren)
-            .filter(withType('text'))
-            .map(asTextNode)
-            .map(toText)
-            .join('');
+            .filter(
+              compounddef => compounddef.attributes.id === compound.refid
+            );
 
-          resolve(title);
+          // 4. Extract info
+          const info = applyToChildrenGrouped({
+            title: xsdString,
+            briefdescription: element => {
+              // Return trimmed, non-empty descriptions only
+              const briefdescription = descriptionType(element).trim();
+              return briefdescription.length ? briefdescription : undefined;
+            },
+          })(compounddef);
+
+          resolve(info);
         } catch (e) {
           reject(e);
         }
@@ -147,7 +154,7 @@ export class IndexService {
         const compounds = await Promise.all(
           index.compounds.map(async (compound: CompoundType) => ({
             ...compound,
-            title: await readCompoundTitle(compound),
+            ...(await readCompoundInfo(compound)),
           }))
         );
         return { ...index, compounds };
