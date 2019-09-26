@@ -1,8 +1,10 @@
 /*
- * Adapted from index.xsd
+ * Adapted from index.xsd and compound.xsd
  */
 
 /*
+  index.xsd:
+
   <xsd:complexType name="DoxygenType">
     <xsd:sequence>
       <xsd:element name="compound" type="CompoundType" minOccurs="0" maxOccurs="unbounded"/>
@@ -17,6 +19,8 @@ export interface DoxygenType {
 }
 
 /*
+  index.xsd:
+
   <xsd:complexType name="CompoundType">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
@@ -25,6 +29,15 @@ export interface DoxygenType {
     <xsd:attribute name="refid" type="xsd:string" use="required"/>
     <xsd:attribute name="kind" type="CompoundKind" use="required"/>
   </xsd:complexType>
+
+  compound.xsd:
+  
+  <xsd:complexType name="compounddefType">
+    <xsd:sequence>
+    ...
+      <xsd:element name="title" type="xsd:string" minOccurs="0" />
+    ...
+  </xsd:complexType>
 */
 
 export interface CompoundType {
@@ -32,9 +45,13 @@ export interface CompoundType {
   members: MemberType[];
   refid: string;
   kind: CompoundKind;
+
+  title?: string;
 }
 
 /*
+  index.xsd:
+
   <xsd:complexType name="MemberType">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
@@ -51,6 +68,8 @@ export interface MemberType {
 }
 
 /*
+  index.xsd:
+
   <xsd:simpleType name="CompoundKind">
     <xsd:restriction base="xsd:string">
       |"class"
@@ -86,6 +105,8 @@ export type CompoundKind =
   | 'dir';
 
 /*
+  index.xsd:
+
   <xsd:simpleType name="MemberKind">
     <xsd:restriction base="xsd:string">
       |"define"

@@ -9,7 +9,7 @@ import {
   CompoundKind,
   MemberType,
   MemberKind,
-} from '../models/doxygenindex';
+} from '../models/doxygen';
 import {
   withType,
   asElementNode,
@@ -63,6 +63,44 @@ const toMemberType = (member: Element): MemberType => {
   return { name, refid, kind: kind as MemberKind };
 };
 
+/** Read compound title from compound file */
+const readCompoundTitle = (compound: CompoundType) =>
+  new Promise<string>((resolve, reject) => {
+    // 1. Read compound file
+    fs.readFile(
+      path.join(configuration.options.inputDir, `${compound.refid}.xml`),
+      (err, data) => {
+        if (err) reject(err);
+
+        try {
+          // 2. Build model from XML data
+          const root = parseXml(data.toString());
+          const doxygen = root.children[0] as Element;
+
+          // 3. Extract title from compounddef
+          const title = doxygen.children
+            .filter(withType('element'))
+            .map(asElementNode)
+            .filter(withName('compounddef'))
+            .filter(compounddef => compounddef.attributes.id === compound.refid)
+            .flatMap(toChildren)
+            .filter(withType('element'))
+            .map(asElementNode)
+            .filter(withName('title'))
+            .flatMap(toChildren)
+            .filter(withType('text'))
+            .map(asTextNode)
+            .map(toText)
+            .join('');
+
+          resolve(title);
+        } catch (e) {
+          reject(e);
+        }
+      }
+    );
+  });
+
 /** Index service */
 export class IndexService {
   private _doxygen: DoxygenType = {} as DoxygenType;
@@ -75,16 +113,17 @@ export class IndexService {
     return instance || this;
   }
 
-  /** Read & store Doxygen index from input directory */
+  /** Read & store Doxygen index file data from input directory */
   async read(): Promise<DoxygenType> {
-    return new Promise((resolve, reject) => {
+    return new Promise<DoxygenType>((resolve, reject) => {
+      // 1. Read main index file
       fs.readFile(
         path.join(configuration.options.inputDir, DOXYGEN_INDEX),
         (err, data) => {
           if (err) reject(err);
 
           try {
-            // Build model from XML data
+            // 2. Build model from XML data
             const root = parseXml(data.toString());
             const doxygenindex = root.children[0] as Element;
             const {
@@ -102,11 +141,22 @@ export class IndexService {
           }
         }
       );
-    }).then(index => {
-      // Store & return model
-      Object.assign(this._doxygen, index);
-      return this._doxygen;
-    });
+    })
+      .then(async index => {
+        // 3. Extract compound title from each compound file
+        const compounds = await Promise.all(
+          index.compounds.map(async (compound: CompoundType) => ({
+            ...compound,
+            title: await readCompoundTitle(compound),
+          }))
+        );
+        return { ...index, compounds };
+      })
+      .then(index => {
+        // 4. Store & return model
+        Object.assign(this._doxygen, index);
+        return this._doxygen;
+      });
   }
 }
 

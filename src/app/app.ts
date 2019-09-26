@@ -4,7 +4,7 @@ import parseXml, { Element } from '@rgrove/parse-xml';
 
 import configuration from './services/configuration.service';
 import index from './services/index.service';
-import { DoxygenType, CompoundType, CompoundKind } from './models/doxygenindex';
+import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
 import mainIndexFileTemplate from '../templates/doxygenindex/main';
 import compoundIndexFileTemplate from '../templates/doxygenindex/compounds';

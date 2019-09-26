@@ -1,4 +1,4 @@
-import { CompoundKind, CompoundType } from '../../../app/models/doxygenindex';
+import { CompoundKind, CompoundType } from '../../../app/models/doxygen';
 
 export default (kind: CompoundKind, compounds: CompoundType[]) => {
   let template;

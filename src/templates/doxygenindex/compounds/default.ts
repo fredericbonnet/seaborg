@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { CompoundType, CompoundKind } from '../../../app/models/doxygenindex';
+import { CompoundType, CompoundKind } from '../../../app/models/doxygen';
 
 // FIXME title and file paths
 const template = Handlebars.compile(
@@ -8,7 +8,7 @@ const template = Handlebars.compile(
 # Index of {{kind}}
 
 {{#each compounds}}
-* [{{this.name}}](tmp/{{this.refid}}.md)
+* {{#with this}}[{{#if title}}{{title}}{{else}}{{name}}{{/if}}](tmp/{{refid}}.md){{/with}}
 {{/each}}
 `,
   { noEscape: true }

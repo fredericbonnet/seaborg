@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { DoxygenType, CompoundKind } from '../../app/models/doxygenindex';
+import { DoxygenType, CompoundKind } from '../../app/models/doxygen';
 
 // FIXME label and file paths
 const template = Handlebars.compile(
