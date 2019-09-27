@@ -6,6 +6,7 @@ import configuration from './services/configuration.service';
 import index from './services/index.service';
 import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
+import { registerHelpers } from '../helpers';
 import mainIndexFileTemplate from '../templates/doxygenindex/main';
 import compoundIndexFileTemplate from '../templates/doxygenindex/compounds';
 import compoundFileTemplate from '../templates/DoxygenType';
@@ -15,6 +16,9 @@ const outputDir = 'tmp/tmp';
 
 // TODO CLI argument parsing
 configuration.options = { inputDir, outputDir };
+
+// Register helpers for template generation
+registerHelpers();
 
 // Ensure that the output directory exists
 fs.mkdirSync(configuration.options.outputDir, { recursive: true });

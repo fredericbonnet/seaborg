@@ -11,6 +11,7 @@ Handlebars.registerHelper('fred', (language: string) => {
 
 const template = Handlebars.compile(
   `
+<a id="{{id}}"></a>
 ### Function {{name}}
 
 \`\`\`c
@@ -35,7 +36,10 @@ const mappers: Mappers = {
 };
 
 export default (element: Element) => {
+  const {
+    attributes: { id },
+  } = element;
   const context = applyToChildrenGrouped(mappers)(element);
 
-  return template(context) + '\n\n' + context[$default].join('\n');
+  return template({ ...context, id }) + '\n\n' + context[$default].join('\n');
 };

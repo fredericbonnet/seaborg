@@ -171,6 +171,18 @@ export class IndexService {
         return this._doxygen;
       });
   }
+
+  /**
+   * Find the compound containing the given member
+   *
+   * @param refid Member refid
+   */
+  findMemberCompound(refid: string) {
+    const [compound] = this.doxygen.compounds.filter(compound =>
+      compound.members.some(member => member.refid === refid)
+    );
+    return compound;
+  }
 }
 
 /** Singleton instance */

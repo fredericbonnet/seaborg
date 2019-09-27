@@ -17,6 +17,7 @@
 //TODO
 import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildren, $default, $text } from '.';
+import Handlebars from 'handlebars';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
 import textNode from './textNode';
@@ -26,17 +27,15 @@ const mappers: Mappers = {
   [$text]: textNode,
 };
 
+const template = Handlebars.compile('{{ref refid kindref text}}', {
+  noEscape: true,
+});
+
 export default (element: Element) => {
   // TODO other attributes?
   const {
     attributes: { refid, kindref },
   } = element;
   const text = applyToChildren(mappers)(element).join('');
-
-  switch (kindref) {
-    case 'compound':
-      return `[${text}](./tmp/${refid})`; //FIXME link to compound
-    case 'member':
-      return `[${text}](#${refid})`; //FIXME link to member
-  }
+  return template({ refid, kindref, text });
 };

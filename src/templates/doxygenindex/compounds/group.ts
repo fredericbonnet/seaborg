@@ -8,7 +8,14 @@ const template = Handlebars.compile(
 # Index of modules
 
 {{#each compounds}}
-* {{#with this}}[{{#if title}}{{title}}{{else}}{{name}}{{/if}}](tmp/{{refid}}.md){{#if briefdescription}}: {{briefdescription}}{{/if}}{{/with}}
+{{#with this}}
+* {{#if title ~}}
+    {{ref refid "compound" title}}
+  {{~ else ~}}
+    {{ref refid "compound" name}}
+  {{~/if ~}}
+  {{~#if briefdescription}}: {{briefdescription}}{{/if}}
+{{/with}}
 {{/each}}
 `,
   { noEscape: true }

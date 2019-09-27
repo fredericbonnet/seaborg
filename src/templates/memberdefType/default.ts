@@ -7,6 +7,7 @@ import descriptionType from '../descriptionType';
 
 const template = Handlebars.compile(
   `
+<a id="{{id}}"></a>
 ### {{kind}} {{name}}
 
 {{briefdescription}}
@@ -27,9 +28,11 @@ const mappers: Mappers = {
 export default (element: Element) => {
   // TODO map kind to string
   const {
-    attributes: { kind },
+    attributes: { kind, id },
   } = element;
   const context = applyToChildrenGrouped(mappers)(element);
 
-  return template({ ...context, kind }) + '\n\n' + context[$default].join('\n');
+  return (
+    template({ ...context, kind, id }) + '\n\n' + context[$default].join('\n')
+  );
 };
