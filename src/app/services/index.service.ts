@@ -23,6 +23,7 @@ import { applyToChildrenGrouped } from '../../templates';
 import xsdString from '../../templates/xsd-string';
 import descriptionType from '../../templates/descriptionType';
 
+/** Doxygen index file name */
 const DOXYGEN_INDEX = 'index.xml';
 
 /** Convert CompoundType XML to model */
@@ -108,7 +109,12 @@ const readCompoundInfo = (compound: CompoundType) =>
     );
   });
 
-/** Index service */
+/**
+ * Index service
+ *
+ * Holds all the info for the compounds and members discovered from the
+ * main index file and compound files
+ */
 export class IndexService {
   private _doxygen: DoxygenType = {} as DoxygenType;
   get doxygen() {
