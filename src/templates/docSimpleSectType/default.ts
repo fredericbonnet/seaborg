@@ -37,12 +37,14 @@
 import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildren } from '..';
 
+import docTitleType from '../docTitleType';
 import docParaType from '../docParaType';
 
 // TODO map kind to string
 const titleTemplate = (kind: string) => `**${kind}**`;
 
 const mappers: Mappers = {
+  title: docTitleType,
   para: docParaType,
 };
 
