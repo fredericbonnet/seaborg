@@ -14,6 +14,8 @@ const template = Handlebars.compile(
 
 {{detaileddescription}}
 
+{{inbodydescription}}
+
 {{TODO TODO}}
 `,
   { noEscape: true }
@@ -23,6 +25,7 @@ const mappers: Mappers = {
   name: xsdString,
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
+  inbodydescription: descriptionType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 };

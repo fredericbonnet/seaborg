@@ -24,6 +24,8 @@ const template = Handlebars.compile(
 
 {{detaileddescription}}
 
+{{inbodydescription}}
+
 {{#if param}}**Parameters**:
 {{#each param}}
 * {{this}}
@@ -45,6 +47,7 @@ const mappers: Mappers = {
   param: paramType,
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
+  inbodydescription: descriptionType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 };
