@@ -2,6 +2,7 @@ import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildrenGrouped, $default } from '..';
 import Handlebars from 'handlebars';
 
+import linkedTextType from '../linkedTextType';
 import xsdString from '../xsd-string';
 import paramType from '../paramType';
 import descriptionType from '../descriptionType';
@@ -29,12 +30,15 @@ const template = Handlebars.compile(
 {{/each}}
 {{/if}}
 
+{{#if type}}**Return type**: {{type}}{{/if}}
+
 {{TODO TODO}}
 `,
   { noEscape: true }
 );
 
 const mappers: Mappers = {
+  type: linkedTextType,
   definition: xsdString,
   argsstring: xsdString,
   name: xsdString,
