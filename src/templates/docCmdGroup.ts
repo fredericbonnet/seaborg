@@ -37,6 +37,7 @@ import docTitleCmdGroup from './docTitleCmdGroup';
 import docSimpleSectType from './docSimpleSectType';
 import docTitleType from './docTitleType';
 import docHeadingType from './docHeadingType';
+import docParamListType from './docParamListType';
 import docParBlockType from './docParBlockType';
 
 const mappers: Mappers = {
@@ -45,6 +46,7 @@ const mappers: Mappers = {
   simplesect: docSimpleSectType,
   title: docTitleType,
   heading: docHeadingType,
+  parameterlist: docParamListType,
   parblock: docParBlockType,
   //FIXME remove once all elements are implemented
   [$default]: element =>
