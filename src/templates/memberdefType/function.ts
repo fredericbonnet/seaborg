@@ -3,6 +3,7 @@ import { Mappers, applyToChildrenGrouped, $default } from '..';
 import Handlebars from 'handlebars';
 
 import xsdString from '../xsd-string';
+import paramType from '../paramType';
 import descriptionType from '../descriptionType';
 
 Handlebars.registerHelper('fred', (language: string) => {
@@ -21,18 +22,31 @@ const template = Handlebars.compile(
 {{briefdescription}}
 
 {{detaileddescription}}
+
+{{#if param}}**Parameters**:
+{{#each param}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if TODO}}**TODO**:
+{{#each TODO}}
+* {{this}}
+{{/each}}
+{{/if}}
 `,
   { noEscape: true }
 );
 
 const mappers: Mappers = {
-  name: xsdString,
   definition: xsdString,
   argsstring: xsdString,
+  name: xsdString,
+  param: paramType,
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
   //TODO
-  [$default]: element => '* ' + element.name + ' ' + JSON.stringify(element),
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
 };
 
 export default (element: Element) => {
@@ -41,5 +55,5 @@ export default (element: Element) => {
   } = element;
   const context = applyToChildrenGrouped(mappers)(element);
 
-  return template({ ...context, id }) + '\n\n' + context[$default].join('\n');
+  return template({ ...context, id, TODO: context[$default] });
 };
