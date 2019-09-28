@@ -20,7 +20,7 @@ const refHelper = (refid: string, kindref: string, text: string) => {
 
 /** Handlebars helper for TODO lists */
 const todoHelper = (list: string[]) => {
-  return list.length
+  return list && list.length
     ? '**TODO**:\n' + list.map(e => `* ${e}`).join('\n')
     : undefined;
 };
