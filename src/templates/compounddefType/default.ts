@@ -17,6 +17,8 @@ const template = Handlebars.compile(
 {{#each sectiondef}}
 {{this}}
 {{/each}}
+
+{{TODO TODO}}
 `,
   { noEscape: true }
 );
@@ -28,7 +30,7 @@ const mappers: Mappers = {
   detaileddescription: descriptionType,
   sectiondef: sectiondefType,
   //TODO
-  [$default]: element => '* ' + element.name + ' ' + JSON.stringify(element),
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
 };
 
 export default (element: Element) => {
@@ -38,5 +40,5 @@ export default (element: Element) => {
   } = element;
   const context = applyToChildrenGrouped(mappers)(element);
 
-  return template({ ...context, kind }) + '\n\n' + context[$default].join('\n');
+  return template({ ...context, kind, TODO: context[$default] });
 };

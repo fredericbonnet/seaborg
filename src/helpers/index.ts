@@ -18,7 +18,15 @@ const refHelper = (refid: string, kindref: string, text: string) => {
   }
 };
 
+/** Handlebars helper for TODO lists */
+const todoHelper = (list: string[]) => {
+  return list.length
+    ? '**TODO**:\n' + list.map(e => `* ${e}`).join('\n')
+    : undefined;
+};
+
 /** Register Handlebars helpers */
 export function registerHelpers() {
   Handlebars.registerHelper('ref', refHelper);
+  Handlebars.registerHelper('TODO', todoHelper);
 }

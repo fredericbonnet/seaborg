@@ -29,11 +29,7 @@ const template = Handlebars.compile(
 {{/each}}
 {{/if}}
 
-{{#if TODO}}**TODO**:
-{{#each TODO}}
-* {{this}}
-{{/each}}
-{{/if}}
+{{TODO TODO}}
 `,
   { noEscape: true }
 );
