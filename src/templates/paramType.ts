@@ -14,5 +14,29 @@
 
 // TODO
 import { Element } from '@rgrove/parse-xml';
-export default (element: Element) =>
-  element.name + ' ' + JSON.stringify(element);
+import { Mappers, applyToChildrenGrouped, $default } from '.';
+import Handlebars from 'handlebars';
+
+import linkedTextType from './linkedTextType';
+import xsdString from './xsd-string';
+import descriptionType from './descriptionType';
+
+const mappers: Mappers = {
+  type: linkedTextType,
+  declname: xsdString,
+  briefdescription: descriptionType,
+  //TODO
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
+};
+
+const template = Handlebars.compile(
+  `**{{type}} {{declname}}**{{#if briefdescription}}: {{briefdescription}}{{/if}}
+  {{~TODO}}`,
+  { noEscape: true }
+);
+
+export default (element: Element) => {
+  const context = applyToChildrenGrouped(mappers)(element);
+
+  return template({ ...context, TODO: context[$default] });
+};
