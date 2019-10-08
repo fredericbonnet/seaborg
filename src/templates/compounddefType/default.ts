@@ -23,7 +23,7 @@ const template = Handlebars.compile(
   { noEscape: true }
 );
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   compoundname: xsdString,
   title: xsdString,
   briefdescription: descriptionType,
@@ -31,14 +31,14 @@ const mappers: Mappers = {
   sectiondef: sectiondefType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
-};
+});
 
 export default (element: Element) => {
   // TODO map kind to string
   const {
     attributes: { kind },
   } = element;
-  const context = applyToChildrenGrouped(mappers)(element);
+  const context = applyToChildrenGrouped(mappers())(element);
 
   return template({ ...context, kind, TODO: context[$default] });
 };

@@ -286,7 +286,7 @@ import docFormulaType from './docFormulaType';
 import docRefTextType from './docRefTextType';
 import docEmojiType from './docEmojiType';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   ulink: docURLLink,
   bold: docMarkupType,
   strike: docMarkupType,
@@ -557,6 +557,6 @@ const mappers: Mappers = {
   rsaquo: () => '&rsaquo', // single right-pointing angle quotation mark: ›
   euro: () => '&euro', // euro sign: €
   tm: () => '™', // trade mark sign: ™
-};
+});
 
-export default (element: Element) => applyToElement(mappers)(element);
+export default (element: Element) => applyToElement(mappers())(element);

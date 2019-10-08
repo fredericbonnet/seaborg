@@ -12,9 +12,9 @@ import { Mappers, applyToChildren } from '.';
 
 import compounddefType from './compounddefType';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   compounddef: compounddefType,
-};
+});
 
 export default (element: Element) =>
-  applyToChildren(mappers)(element).join('\n\n');
+  applyToChildren(mappers())(element).join('\n\n');

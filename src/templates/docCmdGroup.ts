@@ -40,7 +40,7 @@ import docHeadingType from './docHeadingType';
 import docParamListType from './docParamListType';
 import docParBlockType from './docParBlockType';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   linebreak: () => '\n',
   hruler: () => '---\n',
   simplesect: docSimpleSectType,
@@ -51,6 +51,6 @@ const mappers: Mappers = {
   //FIXME remove once all elements are implemented
   [$default]: element =>
     docTitleCmdGroup(element) || element.name + ' ' + JSON.stringify(element),
-};
+});
 
-export default (element: Element) => applyToElement(mappers)(element);
+export default (element: Element) => applyToElement(mappers())(element);

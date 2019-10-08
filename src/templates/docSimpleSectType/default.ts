@@ -43,17 +43,17 @@ import docParaType from '../docParaType';
 // TODO map kind to string
 const titleTemplate = (kind: string) => `**${kind}**`;
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   title: docTitleType,
   para: docParaType,
-};
+});
 
 export default (element: Element) => {
   const {
     attributes: { kind },
   } = element;
 
-  return [titleTemplate(kind), ...applyToChildren(mappers)(element)].join(
+  return [titleTemplate(kind), ...applyToChildren(mappers())(element)].join(
     '\\\n'
   );
 };

@@ -17,11 +17,11 @@ import docParaType from './docParaType';
 import textNode from './textNode';
 
 // TODO
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   title: title => `### ${xsdString(title)}`,
   para: docParaType,
   [$text]: textNode,
-};
+});
 
 export default (element: Element) =>
-  applyToChildren(mappers)(element).join('\n\n');
+  applyToChildren(mappers())(element).join('\n\n');

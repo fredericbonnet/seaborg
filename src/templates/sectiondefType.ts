@@ -30,15 +30,15 @@ const template = Handlebars.compile(
   { noEscape: true }
 );
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   header: xsdString,
   description: descriptionType,
   memberdef: memberdefType,
-};
+});
 
 export default (element: Element) => {
   // TODO kind attribute
-  const context = applyToChildrenGrouped(mappers)(element);
+  const context = applyToChildrenGrouped(mappers())(element);
 
   return template(context);
 };

@@ -22,10 +22,10 @@ import Handlebars from 'handlebars';
 import docTitleCmdGroup from './docTitleCmdGroup';
 import textNode from './textNode';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   [$default]: docTitleCmdGroup,
   [$text]: textNode,
-};
+});
 
 const template = Handlebars.compile('{{ref refid kindref text}}', {
   noEscape: true,
@@ -36,6 +36,6 @@ export default (element: Element) => {
   const {
     attributes: { refid, kindref },
   } = element;
-  const text = applyToChildren(mappers)(element).join('');
+  const text = applyToChildren(mappers())(element).join('');
   return template({ refid, kindref, text });
 };

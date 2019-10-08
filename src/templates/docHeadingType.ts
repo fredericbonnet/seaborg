@@ -11,15 +11,15 @@ import { Mappers, applyToChildren, $default, $text } from '.';
 import docTitleCmdGroup from './docTitleCmdGroup';
 import textNode from './textNode';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   [$default]: docTitleCmdGroup,
   [$text]: textNode,
-};
+});
 
 export default (element: Element) => {
   const {
     attributes: { level },
   } = element;
-  const text = applyToChildren(mappers)(element);
+  const text = applyToChildren(mappers())(element);
   return `${'#'.repeat(parseInt(level))} ${text}`;
 };

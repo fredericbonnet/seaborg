@@ -12,12 +12,12 @@ const template = Handlebars.compile(
   { noEscape: true }
 );
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   para: docParaType,
-};
+});
 
 export default (element: Element) => {
-  const context = applyToChildrenGrouped(mappers)(element);
+  const context = applyToChildrenGrouped(mappers())(element);
 
   return template(context);
 };

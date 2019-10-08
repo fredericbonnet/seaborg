@@ -11,8 +11,9 @@ import { Mappers, applyToChildren } from '.';
 import docParaType from './docParaType';
 import { Element } from '@rgrove/parse-xml';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   para: docParaType,
-};
+});
+
 export default (element: Element) =>
-  applyToChildren(mappers)(element).join('\\\n');
+  applyToChildren(mappers())(element).join('\\\n');

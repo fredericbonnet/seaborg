@@ -3,8 +3,9 @@ import { Mappers, applyToChildren, $text } from '.';
 
 import textNode from './textNode';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   [$text]: textNode,
-};
+});
 
-export default (element: Element) => applyToChildren(mappers)(element).join('');
+export default (element: Element) =>
+  applyToChildren(mappers())(element).join('');

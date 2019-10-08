@@ -12,9 +12,9 @@ import { Mappers, applyToChildren, $text } from '.';
 import refTextType from './refTextType';
 import textNode from './textNode';
 
-const mappers: Mappers = {
+const mappers = (): Mappers => ({
   ref: refTextType,
   [$text]: textNode,
-};
+});
 
-export default (element: Element) => applyToChildren(mappers)(element).join('');
+export default (element: Element) => applyToChildren(mappers())(element).join('');
