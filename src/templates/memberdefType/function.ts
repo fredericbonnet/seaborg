@@ -7,10 +7,6 @@ import xsdString from '../xsd-string';
 import paramType from '../paramType';
 import descriptionType from '../descriptionType';
 
-Handlebars.registerHelper('fred', (language: string) => {
-  return new Handlebars.SafeString('```c');
-});
-
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
