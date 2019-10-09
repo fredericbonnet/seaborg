@@ -33,6 +33,7 @@
 import { Element } from '@rgrove/parse-xml';
 import { Mappers, $default, applyToElement } from '.';
 
+import listingType from './listingType';
 import { itemizedlist, orderedlist } from './docListType';
 import docTitleCmdGroup from './docTitleCmdGroup';
 import docSimpleSectType from './docSimpleSectType';
@@ -44,6 +45,7 @@ import docParBlockType from './docParBlockType';
 const mappers = (): Mappers => ({
   linebreak: () => '\n',
   hruler: () => '---\n',
+  programlisting: listingType,
   orderedlist: orderedlist,
   itemizedlist: itemizedlist,
   simplesect: docSimpleSectType,
