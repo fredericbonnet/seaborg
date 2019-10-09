@@ -4,6 +4,8 @@ import parseXml, { Element } from '@rgrove/parse-xml';
 
 import configuration from './services/configuration.service';
 import index from './services/index.service';
+import context from './services/context.service';
+
 import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
 import { registerHelpers } from '../helpers';
@@ -42,10 +44,12 @@ const generateIndexFiles = (index: DoxygenType) => {
   const outputFile = 'index.md';
   console.log(`Generating [index](${outputFile})`);
 
+  const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     mainIndexFileTemplate(index)
   );
+  context.setContext(oldContext);
 
   // Compound kind files
   index.compounds
@@ -76,10 +80,12 @@ const generateCompoundIndexFiles = (
   const outputFile = `${kind}_index.md`;
   console.log(`Generating [${kind} index](${outputFile})`);
 
+  const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     compoundIndexFileTemplate(kind, compounds)
   );
+  context.setContext(oldContext);
 };
 
 /**
@@ -98,10 +104,12 @@ const generateCompoundFile = (compound: CompoundType) => {
       const root = parseXml(data.toString());
       const doxygen = root.children[0] as Element;
 
+      const oldContext = context.setContext({ filename: outputFile });
       fs.writeFileSync(
         path.join(configuration.options.outputDir, outputFile),
         compoundFileTemplate(doxygen)
       );
+      context.setContext(oldContext);
     }
   );
 };
