@@ -30,7 +30,7 @@ export type Mappers = {
 export const applyToChildren = (mappers: Mappers) => (element: Element) =>
   element.children
     .map(applyToNode(mappers))
-    .filter(e => typeof e !== 'undefined');
+    .filter(e => typeof e === 'string') as string[];
 
 /**
  * Apply mappers to an XML element node's children and return mapped strings grouped
