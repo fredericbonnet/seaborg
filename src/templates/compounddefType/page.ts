@@ -23,13 +23,13 @@ const template = Handlebars.compile(
   { noEscape: true }
 );
 
-const mappers = () : Mappers => ({
+const mappers = (): Mappers => ({
   title: xsdString,
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
   sectiondef: sectiondefType,
   //TODO
-  [$default]: element => +element.name + ' ' + JSON.stringify(element),
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
 
 export default (element: Element) => {

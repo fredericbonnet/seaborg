@@ -29,7 +29,7 @@ const mappers = (): Mappers => ({
   detaileddescription: descriptionType,
   sectiondef: sectiondefType,
   //TODO
-  [$default]: element => +element.name + ' ' + JSON.stringify(element),
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
 
 export default (element: Element) => {
