@@ -1,3 +1,6 @@
 import { Text } from '@rgrove/parse-xml';
+import Handlebars from 'handlebars';
 
-export default (text: Text) => text.text;
+const template = Handlebars.compile('{{text}}');
+
+export default (text: Text) => template({ text: text.text });
