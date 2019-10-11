@@ -21,19 +21,23 @@ import linkedTextType from './linkedTextType';
 import xsdString from './xsd-string';
 import descriptionType from './descriptionType';
 
+const template = Handlebars.compile(
+  `
+  {{~#if defname}}{{defname}}{{/if ~}}
+  {{~#if type}}**{{type}} {{declname}}**{{#if briefdescription}}: {{briefdescription}}{{/if}}{{/if ~}}
+  {{~TODO TODO ~}}
+  `,
+  { noEscape: true }
+);
+
 const mappers = (): Mappers => ({
   type: linkedTextType,
   declname: xsdString,
+  defname: xsdString,
   briefdescription: descriptionType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
-
-const template = Handlebars.compile(
-  `**{{type}} {{declname}}**{{#if briefdescription}}: {{briefdescription}}{{/if}}
-  {{~TODO}}`,
-  { noEscape: true }
-);
 
 export default (element: Element) => {
   const context = applyToChildrenGrouped(mappers())(element);
