@@ -6,8 +6,11 @@ import docParaType from '../docParaType';
 
 const template = Handlebars.compile(
   `
-**Returns**: {{#each para}}{{this}}{{#unless @last}}\\
-{{/unless}}{{/each}}
+**Returns**
+
+{{#each para}}
+{{this}}
+{{/each}}
 `,
   { noEscape: true }
 );
