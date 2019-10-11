@@ -24,4 +24,6 @@ const mappers = (): Mappers => ({
 });
 
 export default (element: Element) =>
-  applyToChildren(mappers())(element).join('\n\n');
+  applyToChildren(mappers())(element)
+    .join('\n\n')
+    .trim();
