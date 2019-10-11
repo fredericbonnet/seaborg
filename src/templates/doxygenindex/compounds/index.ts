@@ -6,7 +6,7 @@ const compoundTemplate = Handlebars.compile(`
 {{~#if title ~}}
 {{ref refid "compound" title}}
 {{~ else ~}}
-{{ref refid "compound" name}}
+{{ref refid "compound" (md name)}}
 {{~/if ~}}
 {{~#if briefdescription}}: {{briefdescription}}{{/if ~}}
 `);

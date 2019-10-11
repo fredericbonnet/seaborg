@@ -8,7 +8,7 @@ import descriptionType from '../descriptionType';
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
-### {{kind}} {{name}}
+### {{kind}} {{md name}}
 
 {{briefdescription}}
 

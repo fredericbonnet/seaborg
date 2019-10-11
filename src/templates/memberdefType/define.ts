@@ -10,7 +10,7 @@ import descriptionType from '../descriptionType';
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
-### Macro {{name}}
+### Macro {{md name}}
 
 \`\`\`c
 #define {{name}}

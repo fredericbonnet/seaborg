@@ -8,7 +8,7 @@ import sectiondefType from '../sectiondefType';
 
 const template = Handlebars.compile(
   `
-# {{kind}} {{compoundname}} {{title}}
+# {{kind}} {{md compoundname}} {{title}}
 
 {{briefdescription}}
 

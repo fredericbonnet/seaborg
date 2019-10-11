@@ -10,7 +10,7 @@ import descriptionType from '../descriptionType';
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
-### Function {{name}}
+### Function {{md name}}
 
 \`\`\`c
 {{definition}}{{argsstring}}

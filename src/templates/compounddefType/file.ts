@@ -9,7 +9,7 @@ import listingType from '../listingType';
 
 const template = Handlebars.compile(
   `
-# File {{compoundname}}
+# File {{md compoundname}}
 
 {{briefdescription}}
 

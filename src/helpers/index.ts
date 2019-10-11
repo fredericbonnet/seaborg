@@ -2,6 +2,12 @@ import Handlebars from 'handlebars';
 
 import index from '../app/services/index.service';
 
+/** Handlebars helper for Markdown escape. Useful with identifiers. */
+const mdHelper = (text: string | string[]): any =>
+  Handlebars.Utils.isArray(text)
+    ? (text as string[]).map(mdHelper)
+    : (text as string).replace(/_/g, '\\_');
+
 /** Handlebars helper for ref links */
 const refHelper = (refid: string, kindref: string, text: string) => {
   switch (kindref) {
@@ -34,6 +40,7 @@ const todoHelper = (list: string[]) => {
 
 /** Register Handlebars helpers */
 export function registerHelpers() {
+  Handlebars.registerHelper('md', mdHelper);
   Handlebars.registerHelper('ref', refHelper);
   Handlebars.registerHelper('bullet-item', bulletItemHelper);
   Handlebars.registerHelper('numbered-item', numberedItemHelper);
