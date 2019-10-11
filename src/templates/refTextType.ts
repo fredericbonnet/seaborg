@@ -25,12 +25,12 @@ import Handlebars from 'handlebars';
 
 import textNode from './textNode';
 
-const mappers = (): Mappers => ({
-  [$text]: textNode,
-});
-
 const template = Handlebars.compile('{{ref refid kindref text}}', {
   noEscape: true,
+});
+
+const mappers = (): Mappers => ({
+  [$text]: textNode,
 });
 
 export default (element: Element) => {

@@ -22,13 +22,13 @@ import Handlebars from 'handlebars';
 import docTitleCmdGroup from './docTitleCmdGroup';
 import textNode from './textNode';
 
+const template = Handlebars.compile('{{ref refid kindref text}}', {
+  noEscape: true,
+});
+
 const mappers = (): Mappers => ({
   [$default]: docTitleCmdGroup,
   [$text]: textNode,
-});
-
-const template = Handlebars.compile('{{ref refid kindref text}}', {
-  noEscape: true,
 });
 
 export default (element: Element) => {
