@@ -24,7 +24,7 @@ import descriptionType from './descriptionType';
 const template = Handlebars.compile(
   `
   {{~#if defname}}{{defname}}{{/if ~}}
-  {{~#if type}}**{{type}} {{declname}}**{{#if briefdescription}}: {{briefdescription}}{{/if}}{{/if ~}}
+  {{~#if type}}**{{type}}{{#if declname}} {{declname}}{{/if}}**{{#if briefdescription}}: {{briefdescription}}{{/if}}{{/if ~}}
   {{~TODO TODO ~}}
   `,
   { noEscape: true }
