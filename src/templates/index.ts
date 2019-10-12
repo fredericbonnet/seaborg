@@ -19,6 +19,13 @@ export type Mappers = {
   [$text]?: TextMapper;
 };
 
+/** Filter strings */
+export const isString = (s: string | undefined) => typeof s === 'string';
+
+/** Filter non-empty strings */
+export const nonEmpty = (s: string | undefined) =>
+  typeof s === 'string' && s.length;
+
 /**
  * Apply mappers to an XML element node's children and return mapped strings in
  * order of occurrence
@@ -28,9 +35,7 @@ export type Mappers = {
  * @return XML element node to string array mapper function
  */
 export const applyToChildren = (mappers: Mappers) => (element: Element) =>
-  element.children
-    .map(applyToNode(mappers))
-    .filter(e => typeof e === 'string') as string[];
+  element.children.map(applyToNode(mappers)).filter(isString) as string[];
 
 /**
  * Apply mappers to an XML element node's children and return mapped strings grouped
@@ -47,8 +52,11 @@ export const applyToChildrenGrouped = (mappers: Mappers) => (
   element: Element
 ) =>
   element.children
-    .map((node: NodeBase) => ({ node, value: applyToNode(mappers)(node) }))
-    .filter(e => typeof e.value !== 'undefined')
+    .map((node: NodeBase) => ({
+      node,
+      value: applyToNode(mappers)(node),
+    }))
+    .filter(e => isString(e.value))
     .reduce((acc: any, { node, value }) => {
       switch (node.type) {
         case 'element': {
