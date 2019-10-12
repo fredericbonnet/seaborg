@@ -28,12 +28,6 @@ const template = Handlebars.compile(
 
 {{inbodydescription}}
 
-{{#if param}}**Parameters**:
-{{#each param}}
-* {{this}}
-{{/each}}
-{{/if}}
-
 {{#if type}}**Return type**: {{type}}{{/if}}
 
 {{TODO TODO}}
