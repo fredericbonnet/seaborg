@@ -16,7 +16,7 @@
 
 //TODO
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren, $default, $text } from '.';
+import { Mappers, applyToChildren, $text } from '.';
 import Handlebars from 'handlebars';
 
 import docTitleCmdGroup from './docTitleCmdGroup';
@@ -27,7 +27,7 @@ const template = Handlebars.compile('{{ref refid kindref text}}', {
 });
 
 const mappers = (): Mappers => ({
-  [$default]: docTitleCmdGroup,
+  ...docTitleCmdGroup(),
   [$text]: textNode,
 });
 

@@ -30,8 +30,7 @@
   </xsd:group>
 */
 
-import { Element } from '@rgrove/parse-xml';
-import { Mappers, $default, applyToElement } from '.';
+import { Mappers, $default } from '.';
 
 import listingType from './listingType';
 import { itemizedlist, orderedlist } from './docListType';
@@ -42,7 +41,8 @@ import docHeadingType from './docHeadingType';
 import docParamListType from './docParamListType';
 import docParBlockType from './docParBlockType';
 
-const mappers = (): Mappers => ({
+export default (): Mappers => ({
+  ...docTitleCmdGroup(),
   linebreak: () => '\n',
   hruler: () => '---\n',
   programlisting: listingType,
@@ -53,9 +53,6 @@ const mappers = (): Mappers => ({
   heading: docHeadingType,
   parameterlist: docParamListType,
   parblock: docParBlockType,
-  //FIXME remove once all elements are implemented
-  [$default]: element =>
-    docTitleCmdGroup(element) || element.name + ' ' + JSON.stringify(element),
+  // TODO
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
-
-export default (element: Element) => applyToElement(mappers())(element);

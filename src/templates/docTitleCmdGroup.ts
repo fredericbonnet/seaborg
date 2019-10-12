@@ -275,8 +275,7 @@
   </xsd:group>
 */
 
-import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToElement } from '.';
+import { Mappers } from '.';
 
 import docURLLink from './docURLLink';
 import docMarkupType from './docMarkupType';
@@ -286,7 +285,7 @@ import docFormulaType from './docFormulaType';
 import docRefTextType from './docRefTextType';
 import docEmojiType from './docEmojiType';
 
-const mappers = (): Mappers => ({
+export default (): Mappers => ({
   ulink: docURLLink,
   bold: s => `**${docMarkupType(s)}**`,
   strike: s => `~~${docMarkupType(s)}~~`,
@@ -558,5 +557,3 @@ const mappers = (): Mappers => ({
   euro: () => '&euro', // euro sign: €
   tm: () => '™', // trade mark sign: ™
 });
-
-export default (element: Element) => applyToElement(mappers())(element);

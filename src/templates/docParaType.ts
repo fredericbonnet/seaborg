@@ -5,13 +5,13 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, $default, $text, applyToChildren } from '.';
+import { Mappers, $text, applyToChildren } from '.';
 
 import docCmdGroup from './docCmdGroup';
 import textNode from './textNode';
 
 const mappers = (): Mappers => ({
-  [$default]: docCmdGroup,
+  ...docCmdGroup(),
   [$text]: textNode,
 });
 
