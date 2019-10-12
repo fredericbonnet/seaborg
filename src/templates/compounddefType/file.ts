@@ -6,10 +6,13 @@ import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';
 import sectiondefType from '../sectiondefType';
 import listingType from '../listingType';
+import locationType from '../locationType';
 
 const template = Handlebars.compile(
   `
 # File {{md compoundname}}
+
+{{location}}
 
 {{briefdescription}}
 
@@ -37,6 +40,7 @@ const mappers = (): Mappers => ({
   detaileddescription: descriptionType,
   sectiondef: sectiondefType,
   programlisting: listingType,
+  location: locationType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });

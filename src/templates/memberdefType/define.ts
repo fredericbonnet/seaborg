@@ -6,11 +6,14 @@ import linkedTextType from '../linkedTextType';
 import xsdString from '../xsd-string';
 import paramType from '../paramType';
 import descriptionType from '../descriptionType';
+import locationType from '../locationType';
 
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
 ### Macro {{md name}}
+
+{{location}}
 
 \`\`\`c
 #define {{name}}
@@ -47,6 +50,7 @@ const mappers = (): Mappers => ({
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
   inbodydescription: descriptionType,
+  location: locationType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });

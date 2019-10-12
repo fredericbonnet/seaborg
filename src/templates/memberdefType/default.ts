@@ -4,11 +4,14 @@ import Handlebars from 'handlebars';
 
 import xsdString from '../xsd-string';
 import descriptionType from '../descriptionType';
+import locationType from '../locationType';
 
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
 ### {{kind}} {{md name}}
+
+{{location}}
 
 {{briefdescription}}
 
@@ -26,6 +29,7 @@ const mappers = (): Mappers => ({
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
   inbodydescription: descriptionType,
+  location: locationType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
