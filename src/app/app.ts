@@ -13,10 +13,8 @@ import mainIndexFileTemplate from '../templates/doxygenindex/main';
 import compoundIndexFileTemplate from '../templates/doxygenindex/compounds';
 import compoundFileTemplate from '../templates/DoxygenType';
 
-const inputDir = '../colibri/doc/public/xml';
-const outputDir = 'tmp/tmp';
-
-// TODO CLI argument parsing
+// TODO better CLI argument parsing
+const [, , inputDir, outputDir] = process.argv;
 configuration.options = { inputDir, outputDir };
 
 // Register helpers for template generation
