@@ -1,5 +1,5 @@
 import path from 'path';
-import { Element, NodeBase, Text } from '@rgrove/parse-xml';
+import { Element, NodeBase } from '@rgrove/parse-xml';
 
 import configuration from './configuration.service';
 import file from './file.service';
@@ -23,7 +23,7 @@ import {
   selectTexts,
 } from '../../operators';
 
-import { applyToChildrenGrouped } from '../../templates';
+import { applyToChildrenGrouped, voidIfEmpty } from '../../templates';
 import xsdString from '../../templates/xsd-string';
 import descriptionType from '../../templates/descriptionType';
 
@@ -148,11 +148,10 @@ export class IndexService {
     // 3. Extract info
     const info = applyToChildrenGrouped({
       title: xsdString,
-      briefdescription: element => {
-        // Return trimmed, non-empty descriptions only
-        const briefdescription = descriptionType(element).trim();
-        return briefdescription.length ? briefdescription : undefined;
-      },
+      briefdescription: pipe(
+        descriptionType,
+        voidIfEmpty
+      ),
     })(compounddef);
 
     return info;

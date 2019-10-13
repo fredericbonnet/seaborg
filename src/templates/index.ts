@@ -29,6 +29,10 @@ export const isString = (s: string | undefined) => typeof s === 'string';
 export const nonEmpty = (s: string | undefined) =>
   typeof s === 'string' && !!s.length;
 
+/** Map empty strings or arrays to undefined */
+export const voidIfEmpty = (s: string | any[]) =>
+  s && s.length ? s : undefined;
+
 /**
  * Apply mappers to an XML element node's children and return mapped strings in
  * order of occurrence
