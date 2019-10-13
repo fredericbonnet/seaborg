@@ -3,7 +3,7 @@
  */
 
 import { NodeBase, Element, Text } from '@rgrove/parse-xml';
-import { pipe, MapFunc } from './pipe';
+import { pipe, MapFunc, FilterFunc } from './pipe';
 import { filter, map } from './array';
 
 /**
@@ -66,3 +66,136 @@ export const $default = Symbol('default');
 
 /** Symbol for text node mapper */
 export const $text = Symbol('text');
+
+/** XML node mappers */
+export type NodeMappers<T> = {
+  [key: string]: MapFunc<Element, T>;
+  [$default]?: MapFunc<Element, T>;
+  [$text]?: MapFunc<Text, T>;
+};
+
+/** Map node function signature */
+export type MapNodeFunc<N, T> = MapFunc<
+  NodeMappers<T>,
+  MapFunc<N, T | undefined>
+>;
+
+/**
+ * Apply mappers to an XML node and return the mapped value
+ *
+ * @param mappers Mappers to apply
+ *
+ * @return XML node mapper function
+ */
+export const mapNode = <T>(mappers: NodeMappers<T>) => (node: NodeBase) => {
+  switch (node.type) {
+    case 'element':
+      return mapElement(mappers)(node as Element);
+    case 'text':
+      return mapText(mappers)(node as Text);
+  }
+};
+
+/**
+ * Apply mappers to an XML element node and return the mapped value
+ *
+ * @param mappers Mappers to apply
+ *
+ * @return XML element node mapper function
+ */
+export const mapElement = <T>(mappers: NodeMappers<T>) => (
+  element: Element
+) => {
+  if (mappers[element.name]) return mappers[element.name](element);
+  // @ts-ignore
+  if (mappers[$default]) return mappers[$default](element);
+};
+
+/**
+ * Apply mappers to an XML text node and return the mapped value
+ *
+ * @param mappers Mappers to apply
+ *
+ * @return XML text node mapper function
+ */
+export const mapText = <T>(mappers: NodeMappers<T>) => (text: Text) => {
+  // @ts-ignore
+  if (mappers[$text]) return mappers[$text](text);
+};
+
+/**
+ * Apply mappers to an array of XML element nodes and return mapped values in
+ * order of occurrence
+ *
+ * @param mappers Mappers to apply
+ */
+export const mapNodes = <T>(mappers: NodeMappers<T>) => (nodes: NodeBase[]) =>
+  nodes.map(mapNode(mappers));
+
+/** Group node with its mapped value */
+export type NodeValue<T> = { node: NodeBase; value: T | undefined };
+
+/**
+ * Apply mappers to an array of XML element nodes and return nodes along with
+ * their mapped value in order of occurrence.
+ *
+ * @param mappers Mappers to apply
+ */
+export const mapNodesWithValues = <T>(mappers: NodeMappers<T>) => (
+  nodes: NodeBase[]
+) =>
+  nodes.map(
+    (node: NodeBase) =>
+      ({
+        node,
+        value: mapNode(mappers)(node),
+      } as NodeValue<T>)
+  );
+
+/** Filter node by mapped value */
+export const filterNodeValue = <T>(f: FilterFunc<T | undefined>) =>
+  filter(({ value }: NodeValue<T>) => f(value));
+
+/** Mapped values grouped by node type */
+export type GroupedValues<T> = {
+  [key: string]: T;
+  [$default]?: T;
+  [$text]?: T;
+};
+
+/**
+ * Grouped mapped values by node type, each in order of occurrence
+ *
+ * @note Elements matching the $default mapper are grouped under both $default
+ * and their own element name
+ *
+ * @param mappers Mappers to apply
+ */
+export const groupValuesByNodeType = <T>(mappers: NodeMappers<T>) => (
+  nodeValues: NodeValue<T>[]
+) =>
+  nodeValues.reduce((acc: any, { node, value }) => {
+    switch (node.type) {
+      case 'element': {
+        const element = node as Element;
+        if (mappers[element.name]) {
+          return {
+            ...acc,
+            [element.name]: [...(acc[element.name] || []), value],
+          };
+        } else {
+          // Add under both $default and name keys
+          return {
+            ...acc,
+            [element.name]: [...(acc[element.name] || []), value],
+            [$default]: [...(acc[$default] || []), value],
+          };
+        }
+      }
+      case 'text':
+        return {
+          ...acc,
+          [$text]: [...(acc[$text] || []), value],
+        };
+    }
+  }, {}) as GroupedValues<T>;

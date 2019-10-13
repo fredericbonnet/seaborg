@@ -1,19 +1,25 @@
 import { Element, Text, NodeBase } from '@rgrove/parse-xml';
-import { isString, $default, $text } from '../operators';
+import {
+  pipe,
+  filter,
+  MapFunc,
+  isString,
+  toChildren,
+  NodeMappers,
+  MapNodeFunc,
+  mapNode,
+  mapElement,
+  mapText,
+  mapNodes,
+  mapNodesWithValues,
+  filterNodeValue,
+  groupValuesByNodeType,
+  GroupedValues,
+} from '../operators';
 export { $default, $text } from '../operators'; // TODO fix imports?
 
-/** XML element node to string mapper function */
-export type ElementMapper = (element: Element) => string | undefined;
-
-/** XML text node to string mapper function */
-export type TextMapper = (text: Text) => string | undefined;
-
 /** Node to string mappers */
-export type Mappers = {
-  [key: string]: ElementMapper;
-  [$default]?: ElementMapper;
-  [$text]?: TextMapper;
-};
+export type Mappers = NodeMappers<string>;
 
 /** Ignore node */
 export const ignore = () => undefined;
@@ -34,8 +40,12 @@ export const voidIfEmpty = (s: string | any[]) =>
  *
  * @return XML element node to string array mapper function
  */
-export const applyToChildren = (mappers: Mappers) => (element: Element) =>
-  element.children.map(applyToNode(mappers)).filter(isString) as string[];
+export const applyToChildren = (mappers: Mappers) =>
+  pipe(
+    toChildren,
+    mapNodes(mappers),
+    filter(isString)
+  ) as MapFunc<Element, string[]>;
 
 /**
  * Apply mappers to an XML element node's children and return mapped strings grouped
@@ -48,78 +58,19 @@ export const applyToChildren = (mappers: Mappers) => (element: Element) =>
  *
  * @return XML element node to string dictionary mapper function
  */
-export const applyToChildrenGrouped = (mappers: Mappers) => (
-  element: Element
-) =>
-  element.children
-    .map((node: NodeBase) => ({
-      node,
-      value: applyToNode(mappers)(node),
-    }))
-    .filter(e => isString(e.value))
-    .reduce((acc: any, { node, value }) => {
-      switch (node.type) {
-        case 'element': {
-          const element = node as Element;
-          if (mappers[element.name]) {
-            return {
-              ...acc,
-              [element.name]: [...(acc[element.name] || []), value],
-            };
-          } else {
-            // Add under both $default and name keys
-            return {
-              ...acc,
-              [element.name]: [...(acc[element.name] || []), value],
-              [$default]: [...(acc[$default] || []), value],
-            };
-          }
-        }
-        case 'text':
-          return {
-            ...acc,
-            [$text]: [...(acc[$text] || []), value],
-          };
-      }
-    }, {});
+export const applyToChildrenGrouped = (mappers: Mappers) =>
+  pipe(
+    toChildren,
+    mapNodesWithValues(mappers),
+    filterNodeValue(isString),
+    groupValuesByNodeType(mappers)
+  ) as MapFunc<Element, GroupedValues<string>>;
 
-/**
- * Apply mappers to an XML node and return the mapped string
- *
- * @param mappers Mappers to apply
- *
- * @return XML node to string mapper function
- */
-export const applyToNode = (mappers: Mappers) => (node: NodeBase) => {
-  switch (node.type) {
-    case 'element':
-      return applyToElement(mappers)(node as Element);
-    case 'text':
-      return applyToText(mappers)(node as Text);
-  }
-};
+/** Map node to string */
+export const applyToNode: MapNodeFunc<NodeBase, string> = mapNode;
 
-/**
- * Apply mappers to an XML element node and return the mapped string
- *
- * @param mappers Mappers to apply
- *
- * @return XML element node to string mapper function
- */
-export const applyToElement = (mappers: Mappers) => (element: Element) => {
-  if (mappers[element.name]) return mappers[element.name](element);
-  // @ts-ignore
-  if (mappers[$default]) return mappers[$default](element);
-};
+/** Map element node to string */
+export const applyToElement: MapNodeFunc<Element, string> = mapElement;
 
-/**
- * Apply mappers to an XML text node and return the mapped string
- *
- * @param mappers Mappers to apply
- *
- * @return XML text node to string mapper function
- */
-export const applyToText = (mappers: Mappers) => (text: Text) => {
-  // @ts-ignore
-  if (mappers[$text]) return mappers[$text](text);
-};
+/** Map text node to string */
+export const applyToText: MapNodeFunc<Text, string> = mapText;
