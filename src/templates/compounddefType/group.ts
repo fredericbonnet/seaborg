@@ -1,5 +1,5 @@
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildrenGrouped, $default } from '..';
+import { Mappers, applyToChildrenGrouped, $default, ignore } from '..';
 import Handlebars from 'handlebars';
 
 import xsdString from '../xsd-string';
@@ -24,6 +24,7 @@ const template = Handlebars.compile(
 );
 
 const mappers = (): Mappers => ({
+  compoundname: ignore,
   title: xsdString,
   briefdescription: descriptionType,
   detaileddescription: descriptionType,

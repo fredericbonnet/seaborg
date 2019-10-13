@@ -19,6 +19,9 @@ export type Mappers = {
   [$text]?: TextMapper;
 };
 
+/** Ignore node */
+export const ignore = () => undefined;
+
 /** Filter strings */
 export const isString = (s: string | undefined) => typeof s === 'string';
 
