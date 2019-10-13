@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import parseXml, { Element } from '@rgrove/parse-xml';
 
 import configuration from './services/configuration.service';
+import file from './services/file.service';
 import index from './services/index.service';
 import context from './services/context.service';
 
@@ -91,23 +91,19 @@ const generateCompoundIndexFiles = (
  *
  * @param compound Compound model
  */
-const generateCompoundFile = (compound: CompoundType) => {
+const generateCompoundFile = async (compound: CompoundType) => {
   const inputFile = `${compound.refid}.xml`;
   const outputFile = `${compound.refid}.md`;
   console.log(`Generating ${compound.kind} [${compound.name}](${outputFile})`);
 
-  fs.readFile(
-    path.join(configuration.options.inputDir, inputFile),
-    (err, data) => {
-      const root = parseXml(data.toString());
-      const doxygen = root.children[0] as Element;
-
-      const oldContext = context.setContext({ filename: outputFile });
-      fs.writeFileSync(
-        path.join(configuration.options.outputDir, outputFile),
-        compoundFileTemplate(doxygen)
-      );
-      context.setContext(oldContext);
-    }
+  const doxygen = await file.readFile(
+    path.join(configuration.options.inputDir, inputFile)
   );
+
+  const oldContext = context.setContext({ filename: outputFile });
+  fs.writeFileSync(
+    path.join(configuration.options.outputDir, outputFile),
+    compoundFileTemplate(doxygen)
+  );
+  context.setContext(oldContext);
 };
