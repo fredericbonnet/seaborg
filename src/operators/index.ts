@@ -26,6 +26,10 @@ export const filter = f => a => a.filter(f);
 // @ts-ignore
 export const map = f => a => a.map(f);
 
+/** Array flatMap operator */
+// @ts-ignore
+export const flatMap = f => a => a.flatMap(f);
+
 // XML operators
 
 /**
