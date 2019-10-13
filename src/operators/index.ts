@@ -10,9 +10,21 @@ import { NodeBase, Element, Text } from '@rgrove/parse-xml';
 // @ts-ignore
 export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 
-/** Negation operator */
+/** Not operator */
 // @ts-ignore
 export const not = v => !v;
+
+/** Negation operator */
+// @ts-ignore
+export const negate = f => v => !f(v);
+
+/** Array filter operator */
+// @ts-ignore
+export const filter = f => a => a.filter(f);
+
+/** Array map operator */
+// @ts-ignore
+export const map = f => a => a.map(f);
 
 // XML operators
 

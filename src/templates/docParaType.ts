@@ -6,7 +6,7 @@
 
 import { Element } from '@rgrove/parse-xml';
 import { Mappers, $text, applyToNode, nonEmpty } from '.';
-import { asElementNode, pipe, not } from '../operators';
+import { pipe, negate, filter, map } from '../operators';
 import Handlebars from 'handlebars';
 
 import docCmdGroup from './docCmdGroup';
@@ -37,22 +37,21 @@ const simplesect = kind => e =>
 
 export default (element: Element) => {
   /** Everything but "see" simplesects */
-  const para = element.children
-    .filter(
-      pipe(
-        simplesect('see'),
-        not
-      )
-    )
-    .map(applyToNode(mappers()))
-    .filter(nonEmpty);
+  const paraMapper = pipe(
+    filter(negate(simplesect('see'))),
+    map(applyToNode(mappers())),
+    filter(nonEmpty)
+  );
 
-  /** "see" simplesect children */
-  const see = element.children
-    .filter(simplesect('see'))
-    .map(asElementNode)
-    .map(seeInline)
-    .filter(nonEmpty);
+  /** Only "see" simplesect children */
+  const seeMapper = pipe(
+    filter(simplesect('see')),
+    map(seeInline),
+    filter(nonEmpty)
+  );
+
+  const para = paraMapper(element.children);
+  const see = seeMapper(element.children);
 
   return template({ para, see });
 };
