@@ -1,6 +1,7 @@
 import { NodeBase, Element, Text } from '@rgrove/parse-xml';
 
-// Generic operators
+/** Generic pipe function */
+export type PipeFunc<T, U> = (t: T) => U;
 
 /**
  * Function pipe
@@ -10,25 +11,37 @@ import { NodeBase, Element, Text } from '@rgrove/parse-xml';
 // @ts-ignore
 export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 
+// Generic operators
+
 /** Not operator */
-// @ts-ignore
-export const not = v => !v;
+export function not<T>(t: T): boolean {
+  return !t;
+}
 
 /** Negation operator */
 // @ts-ignore
 export const negate = f => v => !f(v);
 
+/** Genric filter pipe function */
+export type FilterFunc<T> = PipeFunc<T, boolean>;
+
 /** Array filter operator */
-// @ts-ignore
-export const filter = f => a => a.filter(f);
+export function filter<T>(f: FilterFunc<T>) {
+  return (a: Array<T>) => a.filter(f);
+}
+
+/** Genric map pipe function */
+export type MapFunc<T, U> = PipeFunc<T, U>;
 
 /** Array map operator */
-// @ts-ignore
-export const map = f => a => a.map(f);
+export function map<T, U>(f: MapFunc<T, U>) {
+  return (a: Array<T>) => a.map(f);
+}
 
 /** Array flatMap operator */
-// @ts-ignore
-export const flatMap = f => a => a.flatMap(f);
+export function flatMap<T, U>(f: MapFunc<T, U>) {
+  return (a: Array<T>) => a.flatMap(f);
+}
 
 // XML operators
 
@@ -67,3 +80,22 @@ export const toChildren = (node: Element) => node.children;
 
 /** Map XML text node to its text string */
 export const toText = (node: Text) => node.text;
+
+/** Select element nodes */
+export const selectElements = pipe(
+  filter(withType('element')),
+  map(asElementNode)
+) as MapFunc<NodeBase[], Element[]>;
+
+/** Filter element nodes by name */
+export const filterElements = (name: string) =>
+  pipe(
+    selectElements,
+    filter(withName(name))
+  ) as MapFunc<NodeBase[], Element[]>;
+
+/** Select text nodes */
+export const selectTexts = pipe(
+  filter(withType('text')),
+  map(asTextNode)
+) as MapFunc<NodeBase[], Text[]>;

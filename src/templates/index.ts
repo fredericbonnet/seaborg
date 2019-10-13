@@ -27,7 +27,7 @@ export const isString = (s: string | undefined) => typeof s === 'string';
 
 /** Filter non-empty strings */
 export const nonEmpty = (s: string | undefined) =>
-  typeof s === 'string' && s.length;
+  typeof s === 'string' && !!s.length;
 
 /**
  * Apply mappers to an XML element node's children and return mapped strings in

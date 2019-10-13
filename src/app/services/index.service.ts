@@ -1,5 +1,5 @@
 import path from 'path';
-import { Element } from '@rgrove/parse-xml';
+import { Element, NodeBase, Text } from '@rgrove/parse-xml';
 
 import configuration from './configuration.service';
 import file from './file.service';
@@ -11,17 +11,16 @@ import {
   MemberKind,
 } from '../models/doxygen';
 import {
-  withType,
-  asElementNode,
-  withName,
-  toChildren,
-  asTextNode,
-  toText,
-  withAttribute,
+  PipeFunc,
   pipe,
   filter,
   map,
   flatMap,
+  toChildren,
+  toText,
+  withAttribute,
+  filterElements,
+  selectTexts,
 } from '../../operators';
 
 import { applyToChildrenGrouped } from '../../templates';
@@ -34,25 +33,6 @@ const DOXYGEN_INDEX = 'index.xml';
 /*
  * Operators
  */
-
-/** Select element nodes */
-const selectElements = pipe(
-  filter(withType('element')),
-  map(asElementNode)
-);
-
-/** Select text nodes */
-const selectTexts = pipe(
-  filter(withType('text')),
-  map(asTextNode)
-);
-
-/** Filter element nodes by name */
-const filterElements = (name: string) =>
-  pipe(
-    selectElements,
-    filter(withName(name))
-  );
 
 /** Convert CompoundType XML to model */
 const toCompoundType = (compound: Element): CompoundType => {
@@ -88,18 +68,18 @@ const toMemberType = (member: Element): MemberType => {
   return { name, refid, kind: kind as MemberKind };
 };
 
-/** Filter compound elements */
+/** Select compound elements */
 const selectCompounds = pipe(
   filterElements('compound'),
   map(toCompoundType)
-);
+) as PipeFunc<NodeBase[], CompoundType[]>;
 
 /** Filter compounddef elements by ID */
 const filterCompounddef = (refid: string) =>
   pipe(
     filterElements('compounddef'),
     filter(withAttribute('id', refid))
-  );
+  ) as PipeFunc<NodeBase[], Element[]>;
 
 /**
  * Index service
