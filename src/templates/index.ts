@@ -1,16 +1,12 @@
 import { Element, Text, NodeBase } from '@rgrove/parse-xml';
+import { isString, $default, $text } from '../operators';
+export { $default, $text } from '../operators'; // TODO fix imports?
 
 /** XML element node to string mapper function */
 export type ElementMapper = (element: Element) => string | undefined;
 
 /** XML text node to string mapper function */
 export type TextMapper = (text: Text) => string | undefined;
-
-/** Symbol for default element mapper */
-export const $default = Symbol('default');
-
-/** Symbol for text node mapper */
-export const $text = Symbol('text');
 
 /** Node to string mappers */
 export type Mappers = {
@@ -21,9 +17,6 @@ export type Mappers = {
 
 /** Ignore node */
 export const ignore = () => undefined;
-
-/** Filter strings */
-export const isString = (s: string | undefined) => typeof s === 'string';
 
 /** Filter non-empty strings */
 export const nonEmpty = (s: string | undefined) =>
