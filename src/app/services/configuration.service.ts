@@ -11,12 +11,16 @@ export type ConfigurationOptions = {
 
   /** Contents file suffix */
   contentsSuffix: string;
+
+  /** Index file suffix */
+  indexSuffix: string;
 };
 
 /** Default option values */
 const defaultOptions: Partial<ConfigurationOptions> = {
   mdExtension: '.md',
   contentsSuffix: '_contents',
+  indexSuffix: '_index',
 };
 
 /** Configuration service */

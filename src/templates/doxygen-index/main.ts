@@ -6,18 +6,23 @@ import { DoxygenType, CompoundKind } from '../../app/models/doxygen';
 // FIXME label and file paths
 const template = Handlebars.compile(
   `
-# Main Index
+# Contents pages
 
 {{#each kinds}}
-* [{{this}}]({{this}}{{../suffix}})
+* [{{this}}]({{this}}{{../contentsSuffix}}{{../mdExtension}})
+{{/each}}
+
+# Index pages
+
+{{#each kinds}}
+* [{{this}}]({{this}}{{../indexSuffix}}{{../mdExtension}})
 {{/each}}
 `,
   { noEscape: true }
 );
 
 export default (index: DoxygenType) => {
-  const { contentsSuffix, mdExtension } = configuration.options;
-  const suffix = `${contentsSuffix}${mdExtension}`;
+  const { contentsSuffix, indexSuffix, mdExtension } = configuration.options;
   const kinds = index.compounds
     .map(compound => compound.kind)
     .reduce(
@@ -26,5 +31,5 @@ export default (index: DoxygenType) => {
       []
     );
 
-  return template({ kinds, suffix });
+  return template({ kinds, contentsSuffix, indexSuffix, mdExtension });
 };

@@ -5,11 +5,11 @@ import { CompoundType, CompoundKind } from '../../../../app/models/doxygen';
 import doxygenIndex from '../../../../app/services/doxygen-index.service';
 import { pipe, flatMap, filter, negate, map } from '../../../../operators';
 
-import { IndentedItem } from '.';
+import { IndentedItem } from '..';
 
 const template = Handlebars.compile(
   `
-# Index of modules
+# Modules
 
 {{> compound-tree items=compounds}}
 `,

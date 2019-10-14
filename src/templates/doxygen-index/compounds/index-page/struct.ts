@@ -2,15 +2,19 @@ import Handlebars from 'handlebars';
 
 import { CompoundType, CompoundKind } from '../../../../app/models/doxygen';
 
+import { groupBy, compoundInitial } from '.';
+
 const template = Handlebars.compile(
   `
-# Structures
+# Index of structures
 
-{{> compound-list items=compounds}}
+{{> compound-index}}
 `,
   { noEscape: true }
 );
 
 export default (kind: CompoundKind, compounds: CompoundType[]) => {
-  return template({ kind, compounds });
+  const index = groupBy(compoundInitial)(compounds);
+
+  return template({ kind, index });
 };

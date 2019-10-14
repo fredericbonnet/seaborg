@@ -10,7 +10,10 @@ import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
 import { registerHelpers } from '../helpers';
 import mainIndexFileTemplate from '../templates/doxygen-index/main';
-import compoundContentsFileTemplate from '../templates/doxygen-index/compounds/contents-page';
+import {
+  contentsPageTemplate as compoundContentsFileTemplate,
+  indexPageTemplate as compoundIndexFileTemplate,
+} from '../templates/doxygen-index/compounds';
 import compoundFileTemplate from '../templates/DoxygenType';
 
 // TODO better CLI argument parsing
@@ -63,6 +66,10 @@ const generateIndexFiles = (index: DoxygenType) => {
         kind,
         index.compounds.filter(compound => compound.kind === kind)
       );
+      generateCompoundIndexFiles(
+        kind,
+        index.compounds.filter(compound => compound.kind === kind)
+      );
     });
 };
 
@@ -78,12 +85,34 @@ const generateCompoundContentsFiles = (
 ) => {
   const { contentsSuffix, mdExtension } = configuration.options;
   const outputFile = `${kind}${contentsSuffix}${mdExtension}`;
-  console.log(`Generating [${kind} index](${outputFile})`);
+  console.log(`Generating [${kind} contents](${outputFile})`);
 
   const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     compoundContentsFileTemplate(kind, compounds)
+  );
+  context.setContext(oldContext);
+};
+
+/**
+ * Generate compound kind index file from model
+ *
+ * @param kind Compound kind
+ * @param compounds Compound models
+ */
+const generateCompoundIndexFiles = (
+  kind: CompoundKind,
+  compounds: CompoundType[]
+) => {
+  const { indexSuffix, mdExtension } = configuration.options;
+  const outputFile = `${kind}${indexSuffix}${mdExtension}`;
+  console.log(`Generating [${kind} index](${outputFile})`);
+
+  const oldContext = context.setContext({ filename: outputFile });
+  fs.writeFileSync(
+    path.join(configuration.options.outputDir, outputFile),
+    compoundIndexFileTemplate(kind, compounds)
   );
   context.setContext(oldContext);
 };
