@@ -8,7 +8,7 @@ const template = Handlebars.compile(
 # Main Index
 
 {{#each kinds}}
-* [{{this}}]({{this}}_index.md)
+* [{{this}}]({{this}}_contents.md)
 {{/each}}
 `,
   { noEscape: true }

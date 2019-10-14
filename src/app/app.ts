@@ -10,7 +10,7 @@ import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
 import { registerHelpers } from '../helpers';
 import mainIndexFileTemplate from '../templates/doxygen-index/main';
-import compoundIndexFileTemplate from '../templates/doxygen-index/compounds';
+import compoundContentsFileTemplate from '../templates/doxygen-index/compounds-contents';
 import compoundFileTemplate from '../templates/DoxygenType';
 
 // TODO better CLI argument parsing
@@ -58,7 +58,7 @@ const generateIndexFiles = (index: DoxygenType) => {
       []
     )
     .forEach(kind => {
-      generateCompoundIndexFiles(
+      generateCompoundContentsFiles(
         kind,
         index.compounds.filter(compound => compound.kind === kind)
       );
@@ -66,22 +66,22 @@ const generateIndexFiles = (index: DoxygenType) => {
 };
 
 /**
- * Generate compound kind index file from model
+ * Generate compound kind contents file from model
  *
  * @param kind Compound kind
  * @param compounds Compound models
  */
-const generateCompoundIndexFiles = (
+const generateCompoundContentsFiles = (
   kind: CompoundKind,
   compounds: CompoundType[]
 ) => {
-  const outputFile = `${kind}_index.md`;
+  const outputFile = `${kind}_contents.md`;
   console.log(`Generating [${kind} index](${outputFile})`);
 
   const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    compoundIndexFileTemplate(kind, compounds)
+    compoundContentsFileTemplate(kind, compounds)
   );
   context.setContext(oldContext);
 };
