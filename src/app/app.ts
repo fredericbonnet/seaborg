@@ -9,8 +9,8 @@ import context from './services/context.service';
 import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
 import { registerHelpers } from '../helpers';
-import mainIndexFileTemplate from '../templates/doxygenindex/main';
-import compoundIndexFileTemplate from '../templates/doxygenindex/compounds';
+import mainIndexFileTemplate from '../templates/doxygen-index/main';
+import compoundIndexFileTemplate from '../templates/doxygen-index/compounds';
 import compoundFileTemplate from '../templates/DoxygenType';
 
 // TODO better CLI argument parsing
