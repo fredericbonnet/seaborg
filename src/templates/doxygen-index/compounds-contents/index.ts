@@ -11,9 +11,9 @@ const compoundTemplate = Handlebars.compile(`
 {{~#if briefdescription}}: {{briefdescription}}{{/if ~}}
 `);
 
-export default (kind: CompoundKind, compounds: CompoundType[]) => {
-  Handlebars.registerPartial('compound-item', compoundTemplate);
+Handlebars.registerPartial('compound-item', compoundTemplate);
 
+export default (kind: CompoundKind, compounds: CompoundType[]) => {
   let template;
   try {
     template = require('./' + kind).default;
@@ -21,6 +21,6 @@ export default (kind: CompoundKind, compounds: CompoundType[]) => {
     template = require('./default').default;
   }
   const result = template(kind, compounds);
-  Handlebars.unregisterPartial('compound-item');
+
   return result;
 };
