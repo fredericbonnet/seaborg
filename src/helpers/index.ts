@@ -24,6 +24,9 @@ const refHelper = (refid: string, kindref: string, text: string) => {
   }
 };
 
+/** Handlebars helper for indentation */
+const indentHelper = (level: number) => '  '.repeat(level);
+
 /** Handlebars helper for bullet list items */
 const bulletItemHelper = (text: string) => `* ${text}`;
 
@@ -42,6 +45,7 @@ const todoHelper = (list: string[]) => {
 export function registerHelpers() {
   Handlebars.registerHelper('md', mdHelper);
   Handlebars.registerHelper('ref', refHelper);
+  Handlebars.registerHelper('indent', indentHelper);
   Handlebars.registerHelper('bullet-item', bulletItemHelper);
   Handlebars.registerHelper('numbered-item', numberedItemHelper);
   Handlebars.registerHelper('TODO', todoHelper);
