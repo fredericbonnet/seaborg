@@ -1,5 +1,6 @@
 import Handlebars from 'handlebars';
 
+import configuration from '../app/services/configuration.service';
 import doxygenIndex from '../app/services/doxygen-index.service';
 
 /** Handlebars helper for Markdown escape. Useful with identifiers. */
@@ -10,13 +11,14 @@ const mdHelper = (text: string | string[]): any =>
 
 /** Handlebars helper for ref links */
 const refHelper = (refid: string, kindref: string, text: string) => {
+  const { mdExtension } = configuration.options;
   switch (kindref) {
     case 'compound':
-      return `[${text}](${refid}.md)`;
+      return `[${text}](${refid}${mdExtension})`;
     case 'member': {
       const compound = doxygenIndex.findMemberCompound(refid);
       if (compound) {
-        return `[${text}](${compound.refid}.md#${refid})`;
+        return `[${text}](${compound.refid}${mdExtension}#${refid})`;
       } else {
         return `[${text}](#${refid})`;
       }

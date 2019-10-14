@@ -15,7 +15,7 @@ import compoundFileTemplate from '../templates/DoxygenType';
 
 // TODO better CLI argument parsing
 const [, , inputDir, outputDir] = process.argv;
-configuration.options = { inputDir, outputDir };
+configuration.options = { ...configuration.options, inputDir, outputDir };
 
 // Register helpers for template generation
 registerHelpers();
@@ -39,7 +39,8 @@ doxygenIndex.read().then(index => {
  */
 const generateIndexFiles = (index: DoxygenType) => {
   // Main file
-  const outputFile = 'index.md';
+  const { mdExtension } = configuration.options;
+  const outputFile = `index${mdExtension}`;
   console.log(`Generating [index](${outputFile})`);
 
   const oldContext = context.setContext({ filename: outputFile });
@@ -75,7 +76,8 @@ const generateCompoundContentsFiles = (
   kind: CompoundKind,
   compounds: CompoundType[]
 ) => {
-  const outputFile = `${kind}_contents.md`;
+  const { contentsSuffix, mdExtension } = configuration.options;
+  const outputFile = `${kind}${contentsSuffix}${mdExtension}`;
   console.log(`Generating [${kind} index](${outputFile})`);
 
   const oldContext = context.setContext({ filename: outputFile });
@@ -92,8 +94,9 @@ const generateCompoundContentsFiles = (
  * @param compound Compound model
  */
 const generateCompoundFile = async (compound: CompoundType) => {
+  const { mdExtension } = configuration.options;
   const inputFile = `${compound.refid}.xml`;
-  const outputFile = `${compound.refid}.md`;
+  const outputFile = `${compound.refid}${mdExtension}`;
   console.log(`Generating ${compound.kind} [${compound.name}](${outputFile})`);
 
   const doxygen = await file.readFile(

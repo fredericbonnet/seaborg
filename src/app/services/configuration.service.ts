@@ -5,11 +5,23 @@ export type ConfigurationOptions = {
 
   /** Output directory path for generated Markdown files */
   outputDir: string;
+
+  /** Markdown file extension */
+  mdExtension: string;
+
+  /** Contents file suffix */
+  contentsSuffix: string;
+};
+
+/** Default option values */
+const defaultOptions: Partial<ConfigurationOptions> = {
+  mdExtension: '.md',
+  contentsSuffix: '_contents',
 };
 
 /** Configuration service */
 class ConfigurationService {
-  private _options: ConfigurationOptions = {} as ConfigurationOptions;
+  private _options = defaultOptions as ConfigurationOptions;
   get options() {
     return this._options;
   }
