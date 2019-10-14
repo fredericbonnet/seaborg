@@ -87,7 +87,7 @@ const filterCompounddef = (refid: string) =>
  * Holds all the info for the compounds and members discovered from the
  * main index file and compound files
  */
-export class IndexService {
+export class DoxygenIndexService {
   private _doxygen: DoxygenType = {} as DoxygenType;
   get doxygen() {
     return this._doxygen;
@@ -159,6 +159,6 @@ export class IndexService {
 }
 
 /** Singleton instance */
-const instance = new IndexService();
+const instance = new DoxygenIndexService();
 Object.freeze(instance);
 export default instance;

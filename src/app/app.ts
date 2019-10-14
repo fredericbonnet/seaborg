@@ -3,7 +3,7 @@ import path from 'path';
 
 import configuration from './services/configuration.service';
 import file from './services/file.service';
-import index from './services/index.service';
+import doxygenIndex from './services/doxygen-index.service';
 import context from './services/context.service';
 
 import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
@@ -24,7 +24,7 @@ registerHelpers();
 fs.mkdirSync(configuration.options.outputDir, { recursive: true });
 
 // Read index file from input directory
-index.read().then(index => {
+doxygenIndex.read().then(index => {
   // Generate index files
   generateIndexFiles(index);
 
