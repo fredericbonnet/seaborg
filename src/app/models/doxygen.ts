@@ -50,6 +50,7 @@ export interface CompoundType {
 
   title?: string;
   briefdescription?: string;
+  innergroup?: string[];
 }
 
 /*

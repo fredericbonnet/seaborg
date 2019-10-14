@@ -1,5 +1,6 @@
 import path from 'path';
 import { Element, NodeBase } from '@rgrove/parse-xml';
+import { isUndefined } from 'util';
 
 import configuration from './configuration.service';
 import file from './file.service';
@@ -21,9 +22,14 @@ import {
   withAttribute,
   filterElements,
   selectTexts,
+  NodeMappers,
+  mapNodesWithValues,
+  filterNodeValue,
+  negate,
+  groupValuesByNodeType,
 } from '../../operators';
 
-import { applyToChildrenGrouped, voidIfEmpty } from '../../templates';
+import { voidIfEmpty } from '../../templates';
 import xsdString from '../../templates/xsd-string';
 import descriptionType from '../../templates/descriptionType';
 
@@ -124,6 +130,15 @@ export class DoxygenIndexService {
   }
 
   /**
+   * Find the compound with the given id
+   *
+   * @param refid Compound refid
+   */
+  findCompound(refid: string) {
+    return this.doxygen.compounds.find(compound => compound.refid === refid);
+  }
+
+  /**
    * Find the compound containing the given member
    *
    * @param refid Member refid
@@ -146,13 +161,20 @@ export class DoxygenIndexService {
     const [compounddef] = filterCompounddef(compound.refid)(doxygen.children);
 
     // 3. Extract info
-    const info = applyToChildrenGrouped({
+    const mappers: NodeMappers<any> = {
       title: xsdString,
       briefdescription: pipe(
         descriptionType,
         voidIfEmpty
       ),
-    })(compounddef);
+      innergroup: element => element.attributes.refid,
+    };
+    const info = pipe(
+      toChildren,
+      mapNodesWithValues(mappers),
+      filterNodeValue(negate(isUndefined)),
+      groupValuesByNodeType(mappers)
+    )(compounddef);
 
     return info;
   }
