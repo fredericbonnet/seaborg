@@ -6,11 +6,7 @@ const template = Handlebars.compile(
   `
 # Index of structures
 
-{{#each compounds}}
-{{#with this}}
-* {{> compound-item this}}
-{{/with}}
-{{/each}}
+{{> compound-list items=compounds}}
 `,
   { noEscape: true }
 );

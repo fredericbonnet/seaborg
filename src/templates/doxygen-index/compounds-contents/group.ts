@@ -5,15 +5,13 @@ import { CompoundType, CompoundKind } from '../../../app/models/doxygen';
 import doxygenIndex from '../../../app/services/doxygen-index.service';
 import { pipe, flatMap, filter, negate, map } from '../../../operators';
 
+import { IndentedItem } from '.';
+
 const template = Handlebars.compile(
   `
 # Index of modules
 
-{{#each compounds}}
-{{#with this}}
-{{indent level}}* {{> compound-item compound}}
-{{/with}}
-{{/each}}
+{{> compound-tree items=compounds}}
 `,
   { noEscape: true }
 );
@@ -33,9 +31,10 @@ export default (kind: CompoundKind, compounds: CompoundType[]) => {
   );
 
   // - Build tree as flattened list with level
-  type Item = { compound: CompoundType; level: number };
-  const flatten = (level: number) => (compound: CompoundType): Item[] => {
-    const self: Item = { compound, level };
+  const flatten = (level: number) => (
+    compound: CompoundType
+  ): IndentedItem[] => {
+    const self: IndentedItem = { compound, level };
 
     // Leaf
     if (!compound.innergroup) return [self];
