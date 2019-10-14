@@ -2,6 +2,8 @@
  * Array operators
  */
 
+import 'ts-polyfill/lib/es2019-array'; // for flatMap
+
 import { FilterFunc, MapFunc } from './pipe';
 
 /** Array filter pipe operator */
