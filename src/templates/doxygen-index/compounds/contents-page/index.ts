@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { CompoundKind, CompoundType } from '../../../app/models/doxygen';
+import { CompoundKind, CompoundType } from '../../../../app/models/doxygen';
 
 /** Indented compound item */
 export type IndentedItem = { compound: CompoundType; level: number };

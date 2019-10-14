@@ -1,11 +1,10 @@
 import Handlebars from 'handlebars';
 
-import { CompoundType, CompoundKind } from '../../../app/models/doxygen';
+import { CompoundType, CompoundKind } from '../../../../app/models/doxygen';
 
-// FIXME title paths
 const template = Handlebars.compile(
   `
-# Index of {{kind}}
+# Index of structures
 
 {{> compound-list items=compounds}}
 `,

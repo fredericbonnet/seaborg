@@ -10,7 +10,7 @@ import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
 import { registerHelpers } from '../helpers';
 import mainIndexFileTemplate from '../templates/doxygen-index/main';
-import compoundContentsFileTemplate from '../templates/doxygen-index/compounds-contents';
+import compoundContentsFileTemplate from '../templates/doxygen-index/compounds/contents-page';
 import compoundFileTemplate from '../templates/DoxygenType';
 
 // TODO better CLI argument parsing
