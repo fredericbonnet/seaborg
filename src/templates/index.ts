@@ -1,9 +1,9 @@
 import { Element, Text, NodeBase } from '@rgrove/parse-xml';
+import { isString } from 'util';
 import {
   pipe,
   filter,
   MapFunc,
-  isString,
   toChildren,
   NodeMappers,
   MapNodeFunc,
