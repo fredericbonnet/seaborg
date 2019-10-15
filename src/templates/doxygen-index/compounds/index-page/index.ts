@@ -23,9 +23,12 @@ Handlebars.registerPartial(
 /** Compound index type */
 export type CompoundIndex = { [initial: string]: CompoundType[] };
 
-/** Get initial character from compound  */
-export const compoundInitial = (compound: CompoundType) =>
-  (compound.title ? compound.title.join('') : compound.name)[0].toUpperCase();
+/** Get compound name */
+export const compoundName = (compound: CompoundType) =>
+  compound.title ? compound.title.join('') : compound.name;
+
+/** Get initial character from string  */
+export const initial = (s: string) => s[0].toUpperCase();
 
 /** Sort index by key */
 const sortByKey = (index: CompoundIndex) =>
