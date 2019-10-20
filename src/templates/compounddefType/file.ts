@@ -1,5 +1,5 @@
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildrenGrouped, $default } from '..';
+import { Mappers, applyToChildrenGrouped, $default, ignore } from '..';
 import Handlebars from 'handlebars';
 
 import xsdString from '../xsd-string';
@@ -41,6 +41,10 @@ const mappers = (): Mappers => ({
   sectiondef: sectiondefType,
   programlisting: listingType,
   location: locationType,
+
+  incdepgraph: ignore, // TODO graphs
+  invincdepgraph: ignore, // TODO graphs
+
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });

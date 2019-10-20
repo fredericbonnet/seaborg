@@ -22,7 +22,10 @@ export { $default, $text } from '../operators'; // TODO fix imports?
 export type Mappers = NodeMappers<string>;
 
 /** Ignore node */
-export const ignore = () => undefined;
+export const ignore = ((() => undefined) as unknown) as MapFunc<
+  Element,
+  string
+>;
 
 /** Filter non-empty strings */
 export const nonEmpty = (s: string | undefined) =>
