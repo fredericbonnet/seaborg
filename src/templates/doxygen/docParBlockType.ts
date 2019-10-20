@@ -6,10 +6,10 @@
   </xsd:complexType>
 */
 
-import { Mappers, applyToChildren } from '..';
-
-import docParaType from './docParaType';
 import { Element } from '@rgrove/parse-xml';
+
+import { Mappers, applyToChildren } from '../mappers';
+import { docParaType } from '.';
 
 const mappers = (): Mappers => ({
   para: docParaType,

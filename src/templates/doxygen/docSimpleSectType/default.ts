@@ -35,10 +35,9 @@
 // TODO merge sections of the same type?
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren } from '../..';
 
-import docTitleType from '../docTitleType';
-import docParaType from '../docParaType';
+import { Mappers, applyToChildren } from '../../mappers';
+import { docTitleType, docParaType } from '..';
 
 // TODO map kind to string
 const titleTemplate = (kind: string) => `**${kind}**`;

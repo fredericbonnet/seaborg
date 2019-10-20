@@ -7,10 +7,10 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren, $text } from '..';
 
-import refTextType from './refTextType';
-import { text } from '../textNode';
+import { Mappers, applyToChildren, $text } from '../mappers';
+import { text } from '../generic';
+import { refTextType } from '.';
 
 const mappers = (): Mappers => ({
   ref: refTextType,

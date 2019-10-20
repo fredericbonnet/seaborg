@@ -8,10 +8,10 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren } from '..';
 import Handlebars from 'handlebars';
 
-import codelineType from './codelineType';
+import { Mappers, applyToChildren } from '../mappers';
+import { codelineType } from '.';
 
 // TODO language
 const template = Handlebars.compile(

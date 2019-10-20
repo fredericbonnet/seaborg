@@ -30,16 +30,17 @@
   </xsd:group>
 */
 
-import { Mappers, $default } from '..';
-
-import listingType from './listingType';
+import { Mappers, $default } from '../mappers';
+import {
+  listingType,
+  docTitleCmdGroup,
+  docSimpleSectType,
+  docTitleType,
+  docHeadingType,
+  docParamListType,
+  docParBlockType,
+} from '.';
 import { itemizedlist, orderedlist } from './docListType';
-import docTitleCmdGroup from './docTitleCmdGroup';
-import docSimpleSectType from './docSimpleSectType';
-import docTitleType from './docTitleType';
-import docHeadingType from './docHeadingType';
-import docParamListType from './docParamListType';
-import docParBlockType from './docParBlockType';
 
 export default (): Mappers => ({
   ...docTitleCmdGroup(),

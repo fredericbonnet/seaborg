@@ -11,9 +11,9 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren } from '..';
 
-import highlightType from './highlightType';
+import { Mappers, applyToChildren } from '../mappers';
+import { highlightType } from '.';
 
 const mappers = (): Mappers => ({
   highlight: highlightType,

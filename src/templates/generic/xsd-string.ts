@@ -1,5 +1,5 @@
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren, $text } from '.';
+import { Mappers, applyToChildren, $text } from '../mappers';
 
 import textNode from './textNode';
 

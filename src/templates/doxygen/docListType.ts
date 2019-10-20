@@ -7,8 +7,10 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren } from '..';
 import Handlebars from 'handlebars';
+
+import { Mappers, applyToChildren } from '../mappers';
+import { docListItemType } from '.';
 
 const itemizedTemplate = Handlebars.compile(
   `
@@ -27,8 +29,6 @@ const orderedTemplate = Handlebars.compile(
 `,
   { noEscape: true }
 );
-
-import docListItemType from './docListItemType';
 
 const mappers = (): Mappers => ({
   listitem: docListItemType,

@@ -5,10 +5,10 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, $text, applyToChildren } from '..';
 
-import docCmdGroup from './docCmdGroup';
-import textNode from '../textNode';
+import { Mappers, $text, applyToChildren } from '../mappers';
+import { textNode } from '../generic';
+import { docCmdGroup } from '.';
 
 const mappers = (): Mappers => ({
   ...docCmdGroup(),

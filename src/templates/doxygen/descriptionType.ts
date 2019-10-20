@@ -10,11 +10,10 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren, $text } from '..';
 
-import xsdString from '../xsd-string';
-import docParaType from './docParaType';
-import textNode from '../textNode';
+import { Mappers, applyToChildren, $text } from '../mappers';
+import { xsdString, textNode } from '../generic';
+import { docParaType } from '.';
 
 // TODO
 const mappers = (): Mappers => ({

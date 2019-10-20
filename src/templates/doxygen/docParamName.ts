@@ -16,10 +16,10 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren, $text } from '..';
 
-import refTextType from './refTextType';
-import textNode from '../textNode';
+import { Mappers, applyToChildren, $text } from '../mappers';
+import { textNode } from '../generic';
+import { refTextType } from '.';
 
 const mappers = (): Mappers => ({
   ref: refTextType,

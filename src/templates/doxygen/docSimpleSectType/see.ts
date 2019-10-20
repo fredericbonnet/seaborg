@@ -1,8 +1,8 @@
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildrenGrouped, applyToChildren } from '../..';
 import Handlebars from 'handlebars';
 
-import docParaType from '../docParaType';
+import { Mappers, applyToChildrenGrouped, applyToChildren } from '../../mappers';
+import { docParaType } from '..';
 
 const template = Handlebars.compile(
   `

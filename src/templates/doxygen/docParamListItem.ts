@@ -8,11 +8,10 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildrenGrouped } from '..';
 import Handlebars from 'handlebars';
 
-import docParamNameList from './docParamNameList';
-import descriptionType from './descriptionType';
+import { Mappers, applyToChildrenGrouped } from '../mappers';
+import { docParamNameList, descriptionType } from '.';
 
 const template = Handlebars.compile(
   `**{{parameternamelist}}**{{#if parameterdescription}}: {{parameterdescription}}{{/if}}`,

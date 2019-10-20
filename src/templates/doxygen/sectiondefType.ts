@@ -10,12 +10,11 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildrenGrouped } from '..';
 import Handlebars from 'handlebars';
 
-import xsdString from '../xsd-string';
-import descriptionType from './descriptionType';
-import memberdefType from './memberdefType';
+import { Mappers, applyToChildrenGrouped } from '../mappers';
+import { xsdString } from '../generic';
+import { descriptionType, memberdefType } from '.';
 
 const template = Handlebars.compile(
   `

@@ -1,12 +1,10 @@
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildrenGrouped, $default, ignore } from '../..';
 import Handlebars from 'handlebars';
 
-import xsdString from '../../xsd-string';
-import descriptionType from '../descriptionType';
-import sectiondefType from '../sectiondefType';
-import listingType from '../listingType';
-import locationType from '../locationType';
+import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
+import { ignore } from '../../operators';
+import { xsdString } from '../../generic';
+import { descriptionType, sectiondefType, listingType, locationType } from '..';
 
 const template = Handlebars.compile(
   `

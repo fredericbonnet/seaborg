@@ -8,10 +8,9 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren } from '..';
 
-import docParamType from './docParamType';
-import docParamName from './docParamName';
+import { Mappers, applyToChildren } from '../mappers';
+import { docParamType, docParamName } from '.';
 
 const mappers = (): Mappers => ({
   parametertype: docParamType,

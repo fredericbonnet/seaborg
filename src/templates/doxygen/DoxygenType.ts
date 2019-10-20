@@ -8,9 +8,9 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildren } from '..';
 
-import compounddefType from './compounddefType';
+import { Mappers, applyToChildren } from '../mappers';
+import { compounddefType } from '.';
 
 const mappers = (): Mappers => ({
   compounddef: compounddefType,

@@ -275,15 +275,16 @@
   </xsd:group>
 */
 
-import { Mappers } from '..';
-
-import docURLLink from './docURLLink';
-import docMarkupType from './docMarkupType';
-import xsdString from '../xsd-string';
-import docAnchorType from './docAnchorType';
-import docFormulaType from './docFormulaType';
-import docRefTextType from './docRefTextType';
-import docEmojiType from './docEmojiType';
+import { Mappers } from '../mappers';
+import { xsdString } from '../generic';
+import {
+  docURLLink,
+  docMarkupType,
+  docAnchorType,
+  docFormulaType,
+  docRefTextType,
+  docEmojiType,
+} from '.';
 
 export default (): Mappers => ({
   ulink: docURLLink,

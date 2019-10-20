@@ -4,13 +4,13 @@ import path from 'path';
 import { configuration, file, doxygenIndex, context } from '../core/services';
 import { DoxygenType, CompoundType, CompoundKind } from '../core/models';
 
-import { registerHelpers } from '../templates/helpers';
-import mainIndexPageTemplate from '../templates/doxygen-index/main';
+import { init as templateInit } from '../templates';
 import {
-  contentsPageTemplate,
-  indexPageTemplate,
-} from '../templates/doxygen-index/compounds';
-import compoundPageTemplate from '../templates/doxygen/DoxygenType';
+  mainPage as mainPageTemplate,
+  contentsPage as contentsPageTemplate,
+  indexPage as indexPageTemplate,
+} from '../templates/doxygen-index';
+import { compoundPage as compoundPageTemplate } from '../templates/doxygen';
 
 // TODO better CLI argument parsing
 // Read input/output dirs from command line
@@ -25,8 +25,8 @@ try {
 }
 configuration.setOptions({ ...options, inputDir, outputDir });
 
-// Register helpers for template generation
-registerHelpers();
+// Initialize template generation
+templateInit();
 
 // Ensure that the output directory exists
 fs.mkdirSync(configuration.options.outputDir, { recursive: true });
@@ -54,7 +54,7 @@ const generateIndexFiles = (index: DoxygenType) => {
   const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    mainIndexPageTemplate(index)
+    mainPageTemplate(index)
   );
   context.setContext(oldContext);
 

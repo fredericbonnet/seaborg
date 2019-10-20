@@ -1,17 +1,20 @@
 import { Element } from '@rgrove/parse-xml';
+import Handlebars from 'handlebars';
+
 import {
   Mappers,
   applyToChildrenGrouped,
-  $default,
   applyToChildren,
-} from '../..';
-import Handlebars from 'handlebars';
-
-import linkedTextType from '../linkedTextType';
-import xsdString from '../../xsd-string';
-import enumvalueType, { def as enumvalueDef } from '../enumvalueType';
-import descriptionType from '../descriptionType';
-import locationType from '../locationType';
+  $default,
+} from '../../mappers';
+import { xsdString } from '../../generic';
+import {
+  linkedTextType,
+  enumvalueType,
+  descriptionType,
+  locationType,
+} from '..';
+import { def as enumvalueDef } from '../enumvalueType';
 
 const template = Handlebars.compile(
   `

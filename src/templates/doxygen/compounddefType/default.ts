@@ -1,11 +1,9 @@
 import { Element } from '@rgrove/parse-xml';
-import { Mappers, applyToChildrenGrouped, $default } from '../..';
 import Handlebars from 'handlebars';
 
-import xsdString from '../../xsd-string';
-import descriptionType from '../descriptionType';
-import sectiondefType from '../sectiondefType';
-import locationType from '../locationType';
+import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
+import { xsdString } from '../../generic';
+import { descriptionType, sectiondefType, locationType } from '..';
 
 const template = Handlebars.compile(
   `

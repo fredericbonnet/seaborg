@@ -29,9 +29,9 @@ import {
   groupValuesByNodeType,
 } from '../operators';
 
-import { voidIfEmpty } from '../../templates';
-import xsdString from '../../templates/xsd-string';
-import descriptionType from '../../templates/doxygen/descriptionType';
+import { voidIfEmpty } from '../../templates/operators';
+import { xsdString } from '../../templates/generic';
+import { descriptionType } from '../../templates/doxygen';
 
 /** Doxygen index file name */
 const DOXYGEN_INDEX = 'index.xml';
