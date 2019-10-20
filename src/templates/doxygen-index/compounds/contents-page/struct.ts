@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { CompoundType, CompoundKind } from '../../../../app/models/doxygen';
+import { CompoundType, CompoundKind } from '../../../../core/models';
 
 const template = Handlebars.compile(
   `

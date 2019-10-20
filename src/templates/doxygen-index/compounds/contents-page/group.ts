@@ -1,11 +1,9 @@
 import Handlebars from 'handlebars';
 import { isString, isUndefined } from 'util';
 
-import { CompoundType, CompoundKind } from '../../../../app/models/doxygen';
-import doxygenIndex, {
-  withRefId,
-} from '../../../../app/services/doxygen-index.service';
-import { pipe, flatMap, filter, negate, map } from '../../../../operators';
+import { CompoundType, CompoundKind } from '../../../../core/models';
+import { doxygenIndex, withRefId } from '../../../../core/services';
+import { pipe, flatMap, filter, negate, map } from '../../../../core/operators';
 
 import { IndentedItem } from '..';
 

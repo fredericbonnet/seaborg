@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 
-import { CompoundType, CompoundKind } from '../../../../app/models/doxygen';
-import { pipe } from '../../../../operators';
+import { CompoundType, CompoundKind } from '../../../../core/models';
+import { pipe } from '../../../../core/operators';
 
 import { groupBy, compoundName, initial } from '.';
 

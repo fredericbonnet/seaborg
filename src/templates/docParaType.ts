@@ -6,7 +6,7 @@
 
 import { Element } from '@rgrove/parse-xml';
 import { Mappers, $text, applyToNode, nonEmpty } from '.';
-import { pipe, negate, filter, map } from '../operators';
+import { pipe, negate, filter, map } from '../core/operators';
 import Handlebars from 'handlebars';
 
 import docCmdGroup from './docCmdGroup';

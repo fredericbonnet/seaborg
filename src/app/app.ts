@@ -1,12 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import configuration from './services/configuration.service';
-import file from './services/file.service';
-import doxygenIndex from './services/doxygen-index.service';
-import context from './services/context.service';
-
-import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
+import { configuration, file, doxygenIndex, context } from '../core/services';
+import { DoxygenType, CompoundType, CompoundKind } from '../core/models';
 
 import { registerHelpers } from '../helpers';
 import mainIndexPageTemplate from '../templates/doxygen-index/main';

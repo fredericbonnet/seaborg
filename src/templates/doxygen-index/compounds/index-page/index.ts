@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 
-import { CompoundKind, CompoundType } from '../../../../app/models/doxygen';
-import { MapFunc } from '../../../../operators';
+import { CompoundKind, CompoundType } from '../../../../core/models';
+import { MapFunc } from '../../../../core/operators';
 
 /**
  * Compound index template

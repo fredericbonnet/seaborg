@@ -27,7 +27,7 @@ import {
   filterNodeValue,
   negate,
   groupValuesByNodeType,
-} from '../../operators';
+} from '../operators';
 
 import { voidIfEmpty } from '../../templates';
 import xsdString from '../../templates/xsd-string';

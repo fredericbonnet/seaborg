@@ -15,8 +15,8 @@ import {
   filterNodeValue,
   groupValuesByNodeType,
   GroupedValues,
-} from '../operators';
-export { $default, $text } from '../operators'; // TODO fix imports?
+} from '../core/operators';
+export { $default, $text } from '../core/operators'; // TODO fix imports?
 
 /** Node to string mappers */
 export type Mappers = NodeMappers<string>;

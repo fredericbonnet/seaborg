@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { CompoundType } from '../../../app/models/doxygen';
+import { CompoundType } from '../../../core/models';
 
 export { default as contentsPageTemplate } from './contents-page';
 export { default as indexPageTemplate } from './index-page';
