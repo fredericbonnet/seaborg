@@ -2,10 +2,8 @@ import Handlebars from 'handlebars';
 
 import { CompoundType } from '../../../app/models/doxygen';
 
-import contentsPage from './contents-page';
-import indexPage from './index-page';
-export const contentsPageTemplate = contentsPage;
-export const indexPageTemplate = indexPage;
+export { default as contentsPageTemplate } from './contents-page';
+export { default as indexPageTemplate } from './index-page';
 
 /** Indented compound item */
 export type IndentedItem = { compound: CompoundType; level: number };

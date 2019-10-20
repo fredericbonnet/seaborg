@@ -9,12 +9,12 @@ import context from './services/context.service';
 import { DoxygenType, CompoundType, CompoundKind } from './models/doxygen';
 
 import { registerHelpers } from '../helpers';
-import mainIndexFileTemplate from '../templates/doxygen-index/main';
+import mainIndexPageTemplate from '../templates/doxygen-index/main';
 import {
-  contentsPageTemplate as compoundContentsFileTemplate,
-  indexPageTemplate as compoundIndexFileTemplate,
+  contentsPageTemplate,
+  indexPageTemplate,
 } from '../templates/doxygen-index/compounds';
-import compoundFileTemplate from '../templates/DoxygenType';
+import compoundPageTemplate from '../templates/DoxygenType';
 
 // TODO better CLI argument parsing
 // Read input/output dirs from command line
@@ -58,7 +58,7 @@ const generateIndexFiles = (index: DoxygenType) => {
   const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    mainIndexFileTemplate(index)
+    mainIndexPageTemplate(index)
   );
   context.setContext(oldContext);
 
@@ -99,7 +99,7 @@ const generateCompoundContentsFiles = (
   const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    compoundContentsFileTemplate(kind, compounds)
+    contentsPageTemplate(kind, compounds)
   );
   context.setContext(oldContext);
 };
@@ -121,7 +121,7 @@ const generateCompoundIndexFiles = (
   const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    compoundIndexFileTemplate(kind, compounds)
+    indexPageTemplate(kind, compounds)
   );
   context.setContext(oldContext);
 };
@@ -144,7 +144,7 @@ const generateCompoundFile = async (compound: CompoundType) => {
   const oldContext = context.setContext({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    compoundFileTemplate(doxygen)
+    compoundPageTemplate(doxygen)
   );
   context.setContext(oldContext);
 };
