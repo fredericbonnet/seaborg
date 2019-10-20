@@ -6,8 +6,10 @@ export type Context = {
 
 /** Context service */
 class ContextService {
-  /** Current context */
-  private context: Context = {} as Context;
+  private state = {
+    /** Current context */
+    context: {} as Context,
+  };
 
   constructor() {
     /* Ensure single instance */
@@ -16,7 +18,7 @@ class ContextService {
 
   /** Get current context */
   getContext(): Context {
-    return this.context;
+    return this.state.context;
   }
 
   /**
@@ -25,14 +27,15 @@ class ContextService {
    * @return previous context
    */
   setContext(context: Context): Context {
-    const oldContext = this.context;
-    this.context = context;
+    const oldContext = this.state.context;
+    this.state.context = context;
     return oldContext;
   }
 }
 
 /** Singleton instance */
 const instance = new ContextService();
+Object.freeze(instance);
 export default instance;
 
 /** Get current context */

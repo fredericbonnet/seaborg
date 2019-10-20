@@ -25,12 +25,14 @@ const defaultOptions: Partial<ConfigurationOptions> = {
 
 /** Configuration service */
 class ConfigurationService {
-  private _options = defaultOptions as ConfigurationOptions;
+  private state = {
+    options: defaultOptions as ConfigurationOptions,
+  };
   get options() {
-    return this._options;
+    return this.state.options;
   }
   set options(options: ConfigurationOptions) {
-    Object.assign(this._options, options);
+    this.state.options = options;
   }
 
   constructor() {

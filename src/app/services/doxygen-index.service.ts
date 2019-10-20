@@ -94,9 +94,11 @@ const filterCompounddef = (refid: string) =>
  * main index file and compound files
  */
 export class DoxygenIndexService {
-  private _doxygen: DoxygenType = {} as DoxygenType;
+  private state = {
+    doxygen: {} as DoxygenType,
+  };
   get doxygen() {
-    return this._doxygen;
+    return this.state.doxygen;
   }
 
   constructor() {
@@ -125,8 +127,8 @@ export class DoxygenIndexService {
     );
 
     // 3. Store & return model
-    Object.assign(this._doxygen, { compounds, version });
-    return this._doxygen;
+    this.state.doxygen = { compounds, version };
+    return this.state.doxygen;
   }
 
   /**
