@@ -17,8 +17,17 @@ import {
 import compoundFileTemplate from '../templates/DoxygenType';
 
 // TODO better CLI argument parsing
+// Read input/output dirs from command line
 const [, , inputDir, outputDir] = process.argv;
-configuration.options = { ...configuration.options, inputDir, outputDir };
+
+// Attempt to read options from file `seaborg-options.json`
+let options = {};
+try {
+  options = JSON.parse(fs.readFileSync('./seaborg-options.json').toString());
+} catch {
+  // Ignore
+}
+configuration.setOptions({ ...options, inputDir, outputDir });
 
 // Register helpers for template generation
 registerHelpers();

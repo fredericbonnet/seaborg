@@ -17,11 +17,9 @@ export type ConfigurationOptions = {
 };
 
 /** Default option values */
-const defaultOptions: Partial<ConfigurationOptions> = {
-  mdExtension: '.md',
-  contentsSuffix: '_contents',
-  indexSuffix: '_index',
-};
+export const defaultOptions: Partial<
+  ConfigurationOptions
+> = require('./default-options.json');
 
 /** Configuration service */
 class ConfigurationService {
@@ -31,8 +29,19 @@ class ConfigurationService {
   get options() {
     return this.state.options;
   }
-  set options(options: ConfigurationOptions) {
-    this.state.options = options;
+
+  /**
+   * Set option values
+   *
+   * Missing options will use default values
+   *
+   * @param options Option values
+   */
+  setOptions(options: Partial<ConfigurationOptions>) {
+    this.state.options = {
+      ...defaultOptions,
+      ...options,
+    } as ConfigurationOptions;
   }
 
   constructor() {
