@@ -87,6 +87,14 @@ const filterCompounddef = (refid: string) =>
     filter(withAttribute('id', refid))
   ) as PipeFunc<NodeBase[], Element[]>;
 
+/** Filter compound by refid */
+export const withRefId = (refid: string) => (compound: CompoundType) =>
+  compound.refid === refid;
+
+/** Filter compound having given member */
+export const hasMember = (refid: string) => (compound: CompoundType) =>
+  compound.members.some(member => member.refid === refid);
+
 /**
  * Index service
  *
@@ -97,8 +105,15 @@ export class DoxygenIndexService {
   private state = {
     doxygen: {} as DoxygenType,
   };
+
+  /** Get Doxygen root */
   get doxygen() {
     return this.state.doxygen;
+  }
+
+  /** Get compounds */
+  get compounds() {
+    return this.state.doxygen.compounds;
   }
 
   constructor() {
@@ -129,27 +144,6 @@ export class DoxygenIndexService {
     // 3. Store & return model
     this.state.doxygen = { compounds, version };
     return this.state.doxygen;
-  }
-
-  /**
-   * Find the compound with the given id
-   *
-   * @param refid Compound refid
-   */
-  findCompound(refid: string) {
-    return this.doxygen.compounds.find(compound => compound.refid === refid);
-  }
-
-  /**
-   * Find the compound containing the given member
-   *
-   * @param refid Member refid
-   */
-  findMemberCompound(refid: string) {
-    const [compound] = this.doxygen.compounds.filter(compound =>
-      compound.members.some(member => member.refid === refid)
-    );
-    return compound;
   }
 
   /** Read compound title and description from compound file */

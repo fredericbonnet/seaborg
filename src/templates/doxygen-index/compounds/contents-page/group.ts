@@ -2,7 +2,9 @@ import Handlebars from 'handlebars';
 import { isString, isUndefined } from 'util';
 
 import { CompoundType, CompoundKind } from '../../../../app/models/doxygen';
-import doxygenIndex from '../../../../app/services/doxygen-index.service';
+import doxygenIndex, {
+  withRefId,
+} from '../../../../app/services/doxygen-index.service';
 import { pipe, flatMap, filter, negate, map } from '../../../../operators';
 
 import { IndentedItem } from '..';
@@ -41,7 +43,7 @@ export default (kind: CompoundKind, compounds: CompoundType[]) => {
 
     // Node
     const children = pipe(
-      map((refid: string) => doxygenIndex.findCompound(refid)),
+      map((refid: string) => doxygenIndex.compounds.find(withRefId(refid))),
       filter(negate(isUndefined))
     )(compound.innergroup) as CompoundType[];
     return [self, ...children.flatMap(flatten(level + 1))];
