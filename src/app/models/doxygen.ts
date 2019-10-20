@@ -50,6 +50,12 @@ export interface CompoundType {
 
   title?: string[];
   briefdescription?: string[];
+
+  innerdir?: string[];
+  innerfile?: string[];
+  innerclass?: string[];
+  innernamespace?: string[];
+  innerpage?: string[];
   innergroup?: string[];
 }
 

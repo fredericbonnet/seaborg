@@ -169,6 +169,11 @@ export class DoxygenIndexService {
         descriptionType,
         voidIfEmpty
       ),
+      innerdir: element => element.attributes.refid,
+      innerfile: element => element.attributes.refid,
+      innerclass: element => element.attributes.refid,
+      innernamespace: element => element.attributes.refid,
+      innerpage: element => element.attributes.refid,
       innergroup: element => element.attributes.refid,
     };
     const info = pipe(
