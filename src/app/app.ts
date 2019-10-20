@@ -4,13 +4,13 @@ import path from 'path';
 import { configuration, file, doxygenIndex, context } from '../core/services';
 import { DoxygenType, CompoundType, CompoundKind } from '../core/models';
 
-import { registerHelpers } from '../helpers';
+import { registerHelpers } from '../templates/helpers';
 import mainIndexPageTemplate from '../templates/doxygen-index/main';
 import {
   contentsPageTemplate,
   indexPageTemplate,
 } from '../templates/doxygen-index/compounds';
-import compoundPageTemplate from '../templates/DoxygenType';
+import compoundPageTemplate from '../templates/doxygen/DoxygenType';
 
 // TODO better CLI argument parsing
 // Read input/output dirs from command line

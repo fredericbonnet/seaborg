@@ -31,7 +31,7 @@ import {
 
 import { voidIfEmpty } from '../../templates';
 import xsdString from '../../templates/xsd-string';
-import descriptionType from '../../templates/descriptionType';
+import descriptionType from '../../templates/doxygen/descriptionType';
 
 /** Doxygen index file name */
 const DOXYGEN_INDEX = 'index.xml';
