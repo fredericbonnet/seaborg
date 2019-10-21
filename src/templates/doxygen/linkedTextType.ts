@@ -9,12 +9,12 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
-import { text } from '../generic';
+import { textNode } from '../generic';
 import { refTextType } from '.';
 
 const mappers = (): Mappers => ({
   ref: refTextType,
-  [$text]: text,
+  [$text]: textNode,
 });
 
 export default (element: Element) =>

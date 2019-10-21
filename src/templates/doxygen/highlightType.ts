@@ -24,13 +24,13 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
-import { xsdString, text } from '../generic';
+import { xsdString, textNode } from '../generic';
 import { spType } from '.';
 
 const mappers = (): Mappers => ({
   sp: spType,
   ref: xsdString,
-  [$text]: text,
+  [$text]: textNode,
 });
 
 // TODO class attribute
