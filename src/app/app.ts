@@ -5,12 +5,16 @@ import { configuration, file, doxygenIndex, context } from '../core/services';
 import { DoxygenType, CompoundType, CompoundKind } from '../core/models';
 
 import { init as templateInit } from '../templates';
+import { xsdString } from '../templates/generic';
 import {
   mainPage as mainPageTemplate,
   contentsPage as contentsPageTemplate,
   indexPage as indexPageTemplate,
 } from '../templates/doxygen-index';
-import { compoundPage as compoundPageTemplate } from '../templates/doxygen';
+import {
+  compoundPage as compoundPageTemplate,
+  descriptionType,
+} from '../templates/doxygen';
 
 // TODO better CLI argument parsing
 // Read input/output dirs from command line
@@ -24,6 +28,9 @@ try {
   // Ignore
 }
 configuration.setOptions({ ...options, inputDir, outputDir });
+
+// Inject doxygenIndex dependencies
+doxygenIndex.inject({ xsdString, descriptionType });
 
 // Initialize template generation
 templateInit();

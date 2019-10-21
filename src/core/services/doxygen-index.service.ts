@@ -27,11 +27,8 @@ import {
   filterNodeValue,
   negate,
   groupValuesByNodeType,
+  MapFunc,
 } from '../operators';
-
-import { voidIfEmpty } from '../../templates/operators';
-import { xsdString } from '../../templates/generic';
-import { descriptionType } from '../../templates/doxygen';
 
 /** Doxygen index file name */
 const DOXYGEN_INDEX = 'index.xml';
@@ -39,6 +36,9 @@ const DOXYGEN_INDEX = 'index.xml';
 /*
  * Operators
  */
+
+/** Map empty strings or arrays to undefined */
+const voidIfEmpty = (s: string | any[]) => (s && s.length ? s : undefined);
 
 /** Convert CompoundType XML to model */
 const toCompoundType = (compound: Element): CompoundType => {
@@ -95,6 +95,19 @@ export const withRefId = (refid: string) => (compound: CompoundType) =>
 export const hasMember = (refid: string) => (compound: CompoundType) =>
   compound.members.some(member => member.refid === refid);
 
+/*
+ * Types
+ */
+
+/** Adapter interface for compounddef fields */
+export interface FieldMappers {
+  /** Mapper for xsd:string fields */
+  xsdString: MapFunc<Element, string>;
+
+  /** Mapper for descriptionType fields */
+  descriptionType: MapFunc<Element, string>;
+}
+
 /**
  * Index service
  *
@@ -104,6 +117,7 @@ export const hasMember = (refid: string) => (compound: CompoundType) =>
 export class DoxygenIndexService {
   private state = {
     doxygen: {} as DoxygenType,
+    fieldMappers: {} as FieldMappers,
   };
 
   /** Get Doxygen root */
@@ -119,6 +133,11 @@ export class DoxygenIndexService {
   constructor() {
     /* Ensure single instance */
     return instance || this;
+  }
+
+  /** 'Inject' dependencies */
+  inject(fieldMappers: FieldMappers) {
+    this.state.fieldMappers = fieldMappers;
   }
 
   /** Read & store Doxygen index file data from input directory */
@@ -158,9 +177,9 @@ export class DoxygenIndexService {
 
     // 3. Extract info
     const mappers: NodeMappers<any> = {
-      title: xsdString,
+      title: this.state.fieldMappers.xsdString,
       briefdescription: pipe(
-        descriptionType,
+        this.state.fieldMappers.descriptionType,
         voidIfEmpty
       ),
       innerdir: element => element.attributes.refid,
