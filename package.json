@@ -1,24 +1,21 @@
 {
   "name": "seaborg",
-  "version": "0.0.1",
+  "private": true,
   "description": "Seaborg is a Doxygen to Markdown converter",
-  "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/app/app.ts",
-    "prod": "tsc && node ./build/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "lerna run tsc --",
+    "dev:libs": "lerna run dev --parallel --ignore=@seaborg/cli",
+    "dev:cli": "lerna run dev --stream --scope=@seaborg/cli --"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@rgrove/parse-xml": "^2.0.1",
-    "handlebars": "^4.3.0",
     "ts-polyfill": "^3.5.3"
   },
   "devDependencies": {
-    "@types/node": "^12.7.5",
+    "@types/node": "^12.11.2",
     "@types/rgrove__parse-xml": "^1.1.0",
-    "ts-node-dev": "^1.0.0-pre.42",
-    "typescript": "^3.6.3"
+    "lerna": "^3.18.2",
+    "ts-node-dev": "^1.0.0-pre.43",
+    "typescript": "^3.6.4"
   }
 }

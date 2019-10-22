@@ -1,0 +1,31 @@
+{
+  "name": "@seaborg/cli",
+  "version": "0.0.1",
+  "description": "Seaborg command line interface",
+  "author": "Frédéric Bonnet <fredericbonnet@free.fr>",
+  "homepage": "https://github.com/fredericbonnet/seaborg#readme",
+  "license": "ISC",
+  "bin": {
+    "seaborg": "bin/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fredericbonnet/seaborg.git",
+    "directory": "packages/cli"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/cli.ts",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/fredericbonnet/seaborg/issues"
+  },
+  "dependencies": {
+    "@seaborg/core": "^0.0.1",
+    "@seaborg/markdown": "^0.0.1"
+  }
+}

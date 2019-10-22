@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "packages/core",
+    "packages/markdown",
+    "packages/cli"
+  ],
+  "version": "0.0.1"
+}
