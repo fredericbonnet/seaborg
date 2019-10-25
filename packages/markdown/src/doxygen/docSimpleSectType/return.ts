@@ -6,7 +6,7 @@ import { docParaType } from '..';
 
 const template = Handlebars.compile(
   `
-**Returns**
+**Returns**:
 
 {{#each para}}
 {{this}}

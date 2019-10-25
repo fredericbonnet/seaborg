@@ -6,7 +6,7 @@ import { docParamListItem } from '..';
 
 const template = Handlebars.compile(
   `
-**Exceptions**
+**Exceptions**:
 
 {{#each parameteritem}}
 * {{this}}

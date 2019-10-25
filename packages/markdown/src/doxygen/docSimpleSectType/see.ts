@@ -1,12 +1,16 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
-import { Mappers, applyToChildrenGrouped, applyToChildren } from '../../mappers';
+import {
+  Mappers,
+  applyToChildrenGrouped,
+  applyToChildren,
+} from '../../mappers';
 import { docParaType } from '..';
 
 const template = Handlebars.compile(
   `
-**See also**
+**See also**:
 
 {{#each para}}
 {{this}}

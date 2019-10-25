@@ -6,7 +6,7 @@ import { docParamListItem } from '..';
 
 const template = Handlebars.compile(
   `
-**Return values**
+**Return values**:
 
 {{#each parameteritem}}
 * {{this}}
