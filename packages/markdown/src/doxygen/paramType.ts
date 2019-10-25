@@ -22,9 +22,14 @@ import { linkedTextType, descriptionType } from '.';
 
 const template = Handlebars.compile(
   `
-  {{~#if defname}}{{defname}}{{/if ~}}
-  {{~#if type}}**{{type}}{{#if declname}} {{declname}}{{/if}}**{{#if briefdescription}}: {{briefdescription}}{{/if}}{{/if ~}}
-  {{~TODO TODO ~}}
+{{~#if defname}}{{defname}}{{/if ~}}
+{{~#if type}}
+{{~ type ~}}
+{{~#if declname}} **{{declname}}**{{/if ~}}
+{{~#if defval}} = {{defval}} {{/if ~}}
+{{~#if briefdescription}}: {{briefdescription}}{{/if ~}}
+{{/if ~}}
+{{~TODO TODO ~}}
   `,
   { noEscape: true }
 );
@@ -33,6 +38,7 @@ const mappers = (): Mappers => ({
   type: linkedTextType,
   declname: xsdString,
   defname: xsdString,
+  defval: linkedTextType,
   briefdescription: descriptionType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
