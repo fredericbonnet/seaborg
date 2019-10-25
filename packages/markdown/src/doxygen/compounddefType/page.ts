@@ -9,13 +9,9 @@ const template = Handlebars.compile(
   `
 # {{title}}
 
-{{briefdescription}}
+{{> compounddef-description}}
 
-{{detaileddescription}}
-
-{{#each sectiondef}}
-{{this}}
-{{/each}}
+{{> compounddef-sections}}
 
 {{TODO TODO}}
 `,

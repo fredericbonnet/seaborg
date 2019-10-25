@@ -13,19 +13,11 @@ const template = Handlebars.compile(
 
 {{location}}
 
-{{briefdescription}}
+{{> compounddef-description}}
 
-{{detaileddescription}}
+{{> compounddef-sections}}
 
-{{#each sectiondef}}
-{{this}}
-{{/each}}
-
-{{#if programlisting}}
-## Source
-
-{{programlisting}}
-{{/if}}
+{{> compounddef-source}}
 
 {{TODO TODO}}
 `,

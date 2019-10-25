@@ -59,10 +59,40 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
+import Handlebars from 'handlebars';
 
 import { Mappers, $default } from '../../mappers';
 import { xsdString } from '../../generic';
 import { descriptionType, sectiondefType } from '..';
+
+Handlebars.registerPartial(
+  'compounddef-description',
+  `
+{{briefdescription}}
+
+{{detaileddescription}}
+`
+);
+
+Handlebars.registerPartial(
+  'compounddef-sections',
+  `
+{{#each sectiondef}}
+{{this}}
+{{/each}}
+`
+);
+
+Handlebars.registerPartial(
+  'compounddef-source',
+  `
+{{#if programlisting}}
+## Source
+
+{{programlisting}}
+{{/if}}
+`
+);
 
 export const mappers = (): Mappers => ({
   compoundname: xsdString,

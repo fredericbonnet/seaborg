@@ -13,9 +13,7 @@ const template = Handlebars.compile(
 
 {{location}}
 
-{{briefdescription}}
-
-{{detaileddescription}}
+{{> compounddef-description}}
 
 {{#if innerdir}}
 ## Subdirectories
@@ -33,9 +31,9 @@ const template = Handlebars.compile(
 {{/each}}
 {{/if}}
 
-{{#each sectiondef}}
-{{this}}
-{{/each}}
+{{> compounddef-sections}}
+
+{{> compounddef-source}}
 
 {{TODO TODO}}
 `,
