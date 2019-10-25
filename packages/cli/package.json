@@ -18,7 +18,7 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/cli.ts",
+    "dev": "ts-node-dev --debounce 500 --clear --respawn --transpileOnly ./src/cli.ts",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
