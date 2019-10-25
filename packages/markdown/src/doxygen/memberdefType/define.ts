@@ -15,7 +15,7 @@ const template = Handlebars.compile(
 {{location}}
 
 \`\`\`c
-#define {{name}}{{argsstring}}
+#define {{name}}{{argsstring}}{{#if initializer}} {{initializer}}{{/if}}
 {{~#if param ~}}
 ( {{#each param}}{{this}}{{#unless @last}}, {{/unless}}{{/each }} )
 {{/if}}
@@ -38,6 +38,7 @@ const mappers = (): Mappers => ({
   definition: xsdString,
   argsstring: xsdString,
   param: paramType,
+  initializer: linkedTextType,
 });
 
 export default (element: Element) => {
