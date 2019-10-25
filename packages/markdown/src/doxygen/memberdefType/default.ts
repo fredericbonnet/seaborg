@@ -3,7 +3,7 @@ import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
-import { descriptionType, locationType } from '..';
+import { descriptionType, locationType, referenceType } from '..';
 
 const template = Handlebars.compile(
   `
@@ -18,6 +18,22 @@ const template = Handlebars.compile(
 
 {{inbodydescription}}
 
+{{#if references}}
+**References**: 
+
+{{#each references}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if referencedby}}
+**Referenced by**:
+
+{{#each referencedby}}
+* {{this}}
+{{/each}}
+{{/if}}
+
 {{TODO TODO}}
 `,
   { noEscape: true }
@@ -29,6 +45,8 @@ const mappers = (): Mappers => ({
   detaileddescription: descriptionType,
   inbodydescription: descriptionType,
   location: locationType,
+  references: referenceType,
+  referencedby: referenceType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });

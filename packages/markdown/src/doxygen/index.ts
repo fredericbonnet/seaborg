@@ -130,7 +130,7 @@ export { default as listingType } from './listingType';
 export { default as codelineType } from './codelineType';
 export { default as highlightType } from './highlightType';
 export { default as spType } from './spType';
-// export {default as referenceType} from './referenceType'
+export { default as referenceType } from './referenceType';
 export { default as locationType } from './locationType';
 // export {default as docSect1Type} from './docSect1Type'
 // export {default as docSect2Type} from './docSect2Type'
