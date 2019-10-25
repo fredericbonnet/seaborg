@@ -19,11 +19,7 @@ const template = Handlebars.compile(
 {{/if}}
 \`\`\`
 
-{{briefdescription}}
-
-{{detaileddescription}}
-
-{{inbodydescription}}
+{{> memberdef-description}}
 
 {{#if type}}**Return type**: {{type}}{{/if}}
 

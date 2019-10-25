@@ -90,6 +90,39 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
+import Handlebars from 'handlebars';
+
+Handlebars.registerPartial(
+  'memberdef-description',
+  `
+{{briefdescription}}
+
+{{detaileddescription}}
+
+{{inbodydescription}}
+`
+);
+
+Handlebars.registerPartial(
+  'memberdef-references',
+  `
+  {{#if references}}
+  **References**: 
+  
+  {{#each references}}
+  * {{this}}
+  {{/each}}
+  {{/if}}
+  
+  {{#if referencedby}}
+  **Referenced by**:
+  
+  {{#each referencedby}}
+  * {{this}}
+  {{/each}}
+  {{/if}}
+  `
+);
 
 export default (element: Element) => {
   const {

@@ -16,11 +16,7 @@ const template = Handlebars.compile(
 {{definition}}{{argsstring}}
 \`\`\`
 
-{{briefdescription}}
-
-{{detaileddescription}}
-
-{{inbodydescription}}
+{{> memberdef-description}}
 
 {{#if param}}**Parameters**:
 {{#each param}}

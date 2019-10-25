@@ -12,27 +12,9 @@ const template = Handlebars.compile(
 
 {{location}}
 
-{{briefdescription}}
+{{> memberdef-description}}
 
-{{detaileddescription}}
-
-{{inbodydescription}}
-
-{{#if references}}
-**References**: 
-
-{{#each references}}
-* {{this}}
-{{/each}}
-{{/if}}
-
-{{#if referencedby}}
-**Referenced by**:
-
-{{#each referencedby}}
-* {{this}}
-{{/each}}
-{{/if}}
+{{> memberdef-references}}
 
 {{TODO TODO}}
 `,

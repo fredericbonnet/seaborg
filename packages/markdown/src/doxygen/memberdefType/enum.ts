@@ -31,11 +31,7 @@ enum {{name}} {
 }
 \`\`\`
 
-{{briefdescription}}
-
-{{detaileddescription}}
-
-{{inbodydescription}}
+{{> memberdef-description}}
 
 {{#if enumvalue}}
 {{#each enumvalue}}
