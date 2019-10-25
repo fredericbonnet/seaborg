@@ -2,8 +2,7 @@ import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { ignore } from '../../operators';
-import { listingType, locationType } from '..';
+import { locationType } from '..';
 
 import { mappers as defaultMappers } from '.';
 
@@ -28,11 +27,7 @@ const template = Handlebars.compile(
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),
-  programlisting: listingType,
   location: locationType,
-
-  incdepgraph: ignore, // TODO graphs
-  invincdepgraph: ignore, // TODO graphs
 });
 
 export default (element: Element) => {

@@ -62,8 +62,9 @@ import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
 import { Mappers, $default } from '../../mappers';
+import { ignore } from '../../operators';
 import { xsdString } from '../../generic';
-import { descriptionType, sectiondefType, refType } from '..';
+import { descriptionType, sectiondefType, refType, listingType } from '..';
 
 Handlebars.registerPartial(
   'compounddef-description',
@@ -159,6 +160,10 @@ export const mappers = (): Mappers => ({
   innernamespace: refType,
   innerpage: refType,
   innergroup: refType,
+  programlisting: listingType,
+
+  incdepgraph: ignore, // TODO graphs
+  invincdepgraph: ignore, // TODO graphs
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
