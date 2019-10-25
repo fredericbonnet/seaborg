@@ -3,7 +3,7 @@ import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { ignore } from '../../operators';
-import { listingType, locationType } from '..';
+import { locationType, incType } from '..';
 
 import { mappers as defaultMappers } from '.';
 
@@ -17,6 +17,22 @@ const template = Handlebars.compile(
 
 {{> compounddef-innercompounds}}
 
+{{#if includes}}
+## Includes
+
+{{#each includes}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if includedby}}
+## Included by
+
+{{#each includedby}}
+* {{this}}
+{{/each}}
+{{/if}}
+
 {{> compounddef-sections}}
 
 {{> compounddef-source}}
@@ -28,8 +44,9 @@ const template = Handlebars.compile(
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),
-  programlisting: listingType,
   location: locationType,
+  includes: incType,
+  includedby: incType,
 
   incdepgraph: ignore, // TODO graphs
   invincdepgraph: ignore, // TODO graphs
