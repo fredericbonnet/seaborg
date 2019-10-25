@@ -8,13 +8,10 @@ import {
   $default,
 } from '../../mappers';
 import { xsdString } from '../../generic';
-import {
-  linkedTextType,
-  enumvalueType,
-  descriptionType,
-  locationType,
-} from '..';
+import { linkedTextType, enumvalueType } from '..';
 import { def as enumvalueDef } from '../enumvalueType';
+
+import { mappers as defaultMappers } from '.';
 
 const template = Handlebars.compile(
   `
@@ -45,16 +42,10 @@ enum {{name}} {
 );
 
 const mappers = (): Mappers => ({
+  ...defaultMappers(),
   type: linkedTextType,
   definition: xsdString,
   enumvalue: enumvalueType,
-  name: xsdString,
-  briefdescription: descriptionType,
-  detaileddescription: descriptionType,
-  inbodydescription: descriptionType,
-  location: locationType,
-  //TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
 
 const valueMappers = (): Mappers => ({

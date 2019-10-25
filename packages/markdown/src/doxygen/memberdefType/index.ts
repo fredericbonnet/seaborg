@@ -92,6 +92,10 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
+import { Mappers, $default } from '../../mappers';
+import { xsdString } from '../../generic';
+import { descriptionType, locationType, referenceType } from '..';
+
 Handlebars.registerPartial(
   'memberdef-description',
   `
@@ -123,6 +127,18 @@ Handlebars.registerPartial(
   {{/if}}
   `
 );
+
+export const mappers = (): Mappers => ({
+  name: xsdString,
+  briefdescription: descriptionType,
+  detaileddescription: descriptionType,
+  inbodydescription: descriptionType,
+  location: locationType,
+  references: referenceType,
+  referencedby: referenceType,
+  //TODO
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
+});
 
 export default (element: Element) => {
   const {

@@ -3,7 +3,9 @@ import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
-import { linkedTextType, paramType, descriptionType, locationType } from '..';
+import { linkedTextType, paramType } from '..';
+
+import { mappers as defaultMappers } from '.';
 
 const template = Handlebars.compile(
   `
@@ -32,17 +34,11 @@ const template = Handlebars.compile(
 );
 
 const mappers = (): Mappers => ({
+  ...defaultMappers(),
   type: linkedTextType,
   definition: xsdString,
   argsstring: xsdString,
-  name: xsdString,
   param: paramType,
-  briefdescription: descriptionType,
-  detaileddescription: descriptionType,
-  inbodydescription: descriptionType,
-  location: locationType,
-  //TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
 
 export default (element: Element) => {
