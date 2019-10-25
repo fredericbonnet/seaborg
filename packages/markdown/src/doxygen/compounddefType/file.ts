@@ -3,8 +3,9 @@ import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { ignore } from '../../operators';
-import { xsdString } from '../../generic';
-import { descriptionType, sectiondefType, listingType, locationType } from '..';
+import { listingType, locationType } from '..';
+
+import { mappers as defaultMappers } from '.';
 
 const template = Handlebars.compile(
   `
@@ -32,19 +33,12 @@ const template = Handlebars.compile(
 );
 
 const mappers = (): Mappers => ({
-  compoundname: xsdString,
-  title: xsdString,
-  briefdescription: descriptionType,
-  detaileddescription: descriptionType,
-  sectiondef: sectiondefType,
+  ...defaultMappers(),
   programlisting: listingType,
   location: locationType,
 
   incdepgraph: ignore, // TODO graphs
   invincdepgraph: ignore, // TODO graphs
-
-  //TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
 
 export default (element: Element) => {

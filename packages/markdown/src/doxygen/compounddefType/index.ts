@@ -60,6 +60,20 @@
 
 import { Element } from '@rgrove/parse-xml';
 
+import { Mappers, $default } from '../../mappers';
+import { xsdString } from '../../generic';
+import { descriptionType, sectiondefType } from '..';
+
+export const mappers = (): Mappers => ({
+  compoundname: xsdString,
+  title: xsdString,
+  briefdescription: descriptionType,
+  detaileddescription: descriptionType,
+  sectiondef: sectiondefType,
+  //TODO
+  [$default]: element => element.name + ' ' + JSON.stringify(element),
+});
+
 export default (element: Element) => {
   const {
     attributes: { kind },

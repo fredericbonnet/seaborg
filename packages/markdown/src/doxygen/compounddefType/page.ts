@@ -2,9 +2,8 @@ import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { ignore } from '../../operators';
-import { xsdString } from '../../generic';
-import { descriptionType, sectiondefType } from '..';
+
+import { mappers as defaultMappers } from '.';
 
 const template = Handlebars.compile(
   `
@@ -24,13 +23,7 @@ const template = Handlebars.compile(
 );
 
 const mappers = (): Mappers => ({
-  compoundname: ignore,
-  title: xsdString,
-  briefdescription: descriptionType,
-  detaileddescription: descriptionType,
-  sectiondef: sectiondefType,
-  //TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
+  ...defaultMappers(),
 });
 
 export default (element: Element) => {
