@@ -1,12 +1,22 @@
 import Handlebars from 'handlebars';
 
-import { configuration, doxygenIndex, hasMember } from '@seaborg/core/lib/services';
+import {
+  configuration,
+  doxygenIndex,
+  hasMember,
+} from '@seaborg/core/lib/services';
+
+/** Escaped Markdown char sequences */
+const escapedMdChars = /[_<>]/g;
+
+/** Escape single Markdown char sequence */
+const escapeMd = (c: string) => '\\' + c;
 
 /** Handlebars helper for Markdown escape. Useful with identifiers. */
 const mdHelper = (text: string | string[]): any =>
   Handlebars.Utils.isArray(text)
     ? (text as string[]).map(mdHelper)
-    : (text as string).replace(/_/g, '\\_');
+    : (text as string).replace(escapedMdChars, escapeMd);
 
 /** Handlebars helper for ref links */
 const refHelper = (refid: string, kindref: string, text: string) => {
