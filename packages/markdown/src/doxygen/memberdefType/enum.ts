@@ -30,6 +30,8 @@ enum {{name}} {
 
 {{> memberdef-description}}
 
+{{> memberdef-references}}
+
 {{#if enumvalue}}
 {{#each enumvalue}}
 {{this}}

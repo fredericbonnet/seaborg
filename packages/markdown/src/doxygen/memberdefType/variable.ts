@@ -22,6 +22,8 @@ const template = Handlebars.compile(
 
 {{#if type}}**Type**: {{type}}{{/if}}
 
+{{> memberdef-references}}
+
 {{TODO TODO}}
 `,
   { noEscape: true }
