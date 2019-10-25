@@ -63,7 +63,7 @@ import Handlebars from 'handlebars';
 
 import { Mappers, $default } from '../../mappers';
 import { xsdString } from '../../generic';
-import { descriptionType, sectiondefType } from '..';
+import { descriptionType, sectiondefType, refType } from '..';
 
 Handlebars.registerPartial(
   'compounddef-description',
@@ -72,6 +72,59 @@ Handlebars.registerPartial(
 
 {{detaileddescription}}
 `
+);
+
+Handlebars.registerPartial(
+  'compounddef-innercompounds',
+  `
+{{#if innerdir}}
+## Subdirectories
+
+{{#each innerdir}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if innerfile}}
+## Files
+
+{{#each innerfile}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if innerclass}}
+## Inner classes
+
+{{#each innerclass}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if innernamespace}}
+## Namespaces
+
+{{#each innernamespace}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if innerpage}}
+## Subpages
+
+{{#each innerpage}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if innergroup}}
+## Subgroups
+
+{{#each innergroup}}
+* {{this}}
+{{/each}}
+{{/if}}
+  `
 );
 
 Handlebars.registerPartial(
@@ -100,6 +153,12 @@ export const mappers = (): Mappers => ({
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
   sectiondef: sectiondefType,
+  innerdir: refType,
+  innerfile: refType,
+  innerclass: refType,
+  innernamespace: refType,
+  innerpage: refType,
+  innergroup: refType,
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });

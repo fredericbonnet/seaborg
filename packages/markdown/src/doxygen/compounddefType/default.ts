@@ -14,6 +14,8 @@ const template = Handlebars.compile(
 
 {{> compounddef-description}}
 
+{{> compounddef-innercompounds}}
+
 {{> compounddef-sections}}
 
 {{TODO TODO}}

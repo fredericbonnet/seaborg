@@ -3,7 +3,7 @@ import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { ignore } from '../../operators';
-import { listingType, locationType, refType } from '..';
+import { listingType, locationType } from '..';
 
 import { mappers as defaultMappers } from '.';
 
@@ -15,21 +15,7 @@ const template = Handlebars.compile(
 
 {{> compounddef-description}}
 
-{{#if innerdir}}
-## Subdirectories
-
-{{#each innerdir}}
-* {{this}}
-{{/each}}
-{{/if}}
-
-{{#if innerfile}}
-## Files
-
-{{#each innerfile}}
-* {{this}}
-{{/each}}
-{{/if}}
+{{> compounddef-innercompounds}}
 
 {{> compounddef-sections}}
 
@@ -44,8 +30,6 @@ const mappers = (): Mappers => ({
   ...defaultMappers(),
   programlisting: listingType,
   location: locationType,
-  innerdir: refType,
-  innerfile: refType,
 
   incdepgraph: ignore, // TODO graphs
   invincdepgraph: ignore, // TODO graphs
