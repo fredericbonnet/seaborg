@@ -15,7 +15,7 @@ const template = Handlebars.compile(
 {{location}}
 
 \`\`\`c
-#define {{name}}
+#define {{name}}{{argsstring}}
 {{~#if param ~}}
 ( {{#each param}}{{this}}{{#unless @last}}, {{/unless}}{{/each }} )
 {{/if}}

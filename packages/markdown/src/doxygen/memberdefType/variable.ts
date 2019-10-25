@@ -15,7 +15,7 @@ const template = Handlebars.compile(
 {{location}}
 
 \`\`\`c
-{{definition}}
+{{definition}}{{argsstring}}{{#if initializer}} {{initializer}}{{/if}}
 \`\`\`
 
 {{> memberdef-description}}
@@ -33,6 +33,8 @@ const mappers = (): Mappers => ({
   ...defaultMappers(),
   type: linkedTextType,
   definition: xsdString,
+  argsstring: xsdString,
+  initializer: linkedTextType,
 });
 
 // TODO attributes (e.g. static)

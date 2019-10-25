@@ -15,7 +15,7 @@ const template = Handlebars.compile(
 {{location}}
 
 \`\`\`c
-{{definition}}
+{{definition}}{{argsstring}}
 \`\`\`
 
 {{> memberdef-description}}
