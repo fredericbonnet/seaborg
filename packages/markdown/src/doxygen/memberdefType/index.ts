@@ -110,21 +110,21 @@ Handlebars.registerPartial(
 Handlebars.registerPartial(
   'memberdef-references',
   `
-  {{#if references}}
-  **References**: 
-  
-  {{#each references}}
-  * {{this}}
-  {{/each}}
-  {{/if}}
-  
-  {{#if referencedby}}
-  **Referenced by**:
-  
-  {{#each referencedby}}
-  * {{this}}
-  {{/each}}
-  {{/if}}
+{{#if references}}
+**References**: 
+
+{{#each references}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if referencedby}}
+**Referenced by**:
+
+{{#each referencedby}}
+* {{this}}
+{{/each}}
+{{/if}}
   `
 );
 
