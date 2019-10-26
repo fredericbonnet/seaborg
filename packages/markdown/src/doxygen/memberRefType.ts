@@ -34,7 +34,7 @@ import Handlebars from 'handlebars';
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
 
-const template = Handlebars.compile(`{{ref refid "member" name}}`, {
+const template = Handlebars.compile(`{{ref refid "member" (md name)}}`, {
   noEscape: true,
 });
 
