@@ -2,8 +2,7 @@ import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { ignore } from '../../operators';
-import { locationType, listofallmembersType } from '..';
+import { locationType, listofallmembersType, compoundRefType } from '..';
 
 import { mappers as defaultMappers } from '.';
 
@@ -14,6 +13,22 @@ const template = Handlebars.compile(
 {{location}}
 
 {{> compounddef-description}}
+
+{{#if basecompoundref}}
+**Inherits from**:
+
+{{#each basecompoundref}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if derivedcompoundref}}
+**Inherited by**:
+
+{{#each derivedcompoundref}}
+* {{this}}
+{{/each}}
+{{/if}}
 
 {{> compounddef-list list=innerclass label="Inner classes"}}
 
@@ -31,6 +46,8 @@ const template = Handlebars.compile(
 const mappers = (): Mappers => ({
   ...defaultMappers(),
   location: locationType,
+  basecompoundref: compoundRefType,
+  derivedcompoundref: compoundRefType,
   listofallmembers: listofallmembersType,
 });
 

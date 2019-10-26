@@ -110,7 +110,7 @@ export { default as DoxygenType } from './DoxygenType';
 export { default as compounddefType } from './compounddefType';
 export { default as listofallmembersType } from './listofallmembersType';
 export { default as memberRefType } from './memberRefType';
-// export {default as compoundRefType} from './compoundRefType'
+export { default as compoundRefType } from './compoundRefType';
 // export {default as reimplementType} from './reimplementType'
 export { default as incType } from './incType';
 export { default as refType } from './refType';
@@ -193,7 +193,7 @@ export { default as docEmojiType } from './docEmojiType';
 // export {default as DoxLanguage} from './DoxLanguage'
 // export {default as DoxVirtualKind} from './DoxVirtualKind'
 // export {default as DoxCompoundKind} from './DoxCompoundKind'
-// export {default as DoxSectionKind} from './DoxSectionKind'
+export { DoxSectionKind } from './DoxSectionKind';
 // export {default as DoxHighlightClass} from './DoxHighlightClass'
 // export {default as DoxSimpleSectKind} from './DoxSimpleSectKind'
 // export {default as DoxVersionNumber} from './DoxVersionNumber'
