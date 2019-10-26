@@ -164,6 +164,8 @@ export const mappers = (): Mappers => ({
 
   incdepgraph: ignore, // TODO graphs
   invincdepgraph: ignore, // TODO graphs
+  inheritancegraph: ignore, // TODO graphs
+  collaborationgraph: ignore, // TODO graphs
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
