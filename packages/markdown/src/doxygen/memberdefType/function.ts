@@ -3,7 +3,7 @@ import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
-import { linkedTextType, paramType } from '..';
+import { linkedTextType, paramType, reimplementType } from '..';
 
 import { mappers as defaultMappers } from '.';
 
@@ -28,6 +28,17 @@ const template = Handlebars.compile(
 
 {{#if type}}**Return type**: {{type}}{{/if}}
 
+{{#if reimplements}}**Reimplements**: {{reimplements}}{{/if}}
+
+{{#if reimplementedby}}
+**Reimplemented by**: 
+
+{{#each reimplementedby}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+
 {{> memberdef-references}}
 
 {{TODO TODO}}
@@ -41,6 +52,8 @@ const mappers = (): Mappers => ({
   definition: xsdString,
   argsstring: xsdString,
   param: paramType,
+  reimplements: reimplementType,
+  reimplementedby: reimplementType,
 });
 
 export default (element: Element) => {
