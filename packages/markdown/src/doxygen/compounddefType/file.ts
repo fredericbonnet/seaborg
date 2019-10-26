@@ -2,7 +2,6 @@ import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { ignore } from '../../operators';
 import { locationType, incType } from '..';
 
 import { mappers as defaultMappers } from '.';
@@ -17,21 +16,9 @@ const template = Handlebars.compile(
 
 {{> compounddef-innercompounds}}
 
-{{#if includes}}
-## Includes
+{{> compounddef-list list=includes label="Includes"}}
 
-{{#each includes}}
-* {{this}}
-{{/each}}
-{{/if}}
-
-{{#if includedby}}
-## Included by
-
-{{#each includedby}}
-* {{this}}
-{{/each}}
-{{/if}}
+{{> compounddef-list list=includedby label="Included by"}}
 
 {{> compounddef-sections}}
 
@@ -47,9 +34,6 @@ const mappers = (): Mappers => ({
   location: locationType,
   includes: incType,
   includedby: incType,
-
-  incdepgraph: ignore, // TODO graphs
-  invincdepgraph: ignore, // TODO graphs
 });
 
 export default (element: Element) => {
