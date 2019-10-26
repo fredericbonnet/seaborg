@@ -14,7 +14,9 @@ const template = Handlebars.compile(
 
 {{> compounddef-description}}
 
-{{> compounddef-innercompounds}}
+{{> compounddef-list list=innerdir label="Subdirectories"}}
+
+{{> compounddef-list list=innerfile label="Files"}}
 
 {{> compounddef-sections}}
 

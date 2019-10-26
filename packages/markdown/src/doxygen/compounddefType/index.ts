@@ -76,56 +76,33 @@ Handlebars.registerPartial(
 );
 
 Handlebars.registerPartial(
+  'compounddef-list',
+  `
+{{#if list}}
+## {{label}}
+
+{{#each list}}
+* {{this}}
+{{/each}}
+{{/if}}
+`
+);
+
+Handlebars.registerPartial(
   'compounddef-innercompounds',
   `
-{{#if innerdir}}
-## Subdirectories
+{{>compounddef-list list=innerdir label="Directories"}}
 
-{{#each innerdir}}
-* {{this}}
-{{/each}}
-{{/if}}
+{{>compounddef-list list=innerfile label="Files"}}
 
-{{#if innerfile}}
-## Files
+{{>compounddef-list list=innerclass label="Classes"}}
 
-{{#each innerfile}}
-* {{this}}
-{{/each}}
-{{/if}}
+{{>compounddef-list list=innernamespace label="Namespaces"}}
 
-{{#if innerclass}}
-## Inner classes
+{{>compounddef-list list=innerpage label="Pages"}}
 
-{{#each innerclass}}
-* {{this}}
-{{/each}}
-{{/if}}
-
-{{#if innernamespace}}
-## Namespaces
-
-{{#each innernamespace}}
-* {{this}}
-{{/each}}
-{{/if}}
-
-{{#if innerpage}}
-## Subpages
-
-{{#each innerpage}}
-* {{this}}
-{{/each}}
-{{/if}}
-
-{{#if innergroup}}
-## Subgroups
-
-{{#each innergroup}}
-* {{this}}
-{{/each}}
-{{/if}}
-  `
+{{>compounddef-list list=innergroup label="Modules"}}
+`
 );
 
 Handlebars.registerPartial(
