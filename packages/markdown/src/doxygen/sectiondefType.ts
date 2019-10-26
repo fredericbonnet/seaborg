@@ -7,7 +7,7 @@
     </xsd:sequence>
     <xsd:attribute name="kind" type="DoxSectionKind" />
   </xsd:complexType>
- */
+*/
 
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
@@ -15,6 +15,7 @@ import Handlebars from 'handlebars';
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
 import { descriptionType, memberdefType } from '.';
+import { labels } from './DoxSectionKind';
 
 const template = Handlebars.compile(
   `
@@ -36,8 +37,10 @@ const mappers = (): Mappers => ({
 });
 
 export default (element: Element) => {
-  // TODO kind attribute
+  const {
+    attributes: { kind },
+  } = element;
   const context = applyToChildrenGrouped(mappers())(element);
 
-  return template(context);
+  return template({ ...context, header: context.header || labels[kind] });
 };
