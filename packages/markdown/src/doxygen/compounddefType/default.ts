@@ -2,7 +2,7 @@ import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { locationType } from '..';
+import { locationType, listofallmembersType } from '..';
 
 import { mappers as defaultMappers } from '.';
 
@@ -16,6 +16,8 @@ const template = Handlebars.compile(
 
 {{> compounddef-innercompounds}}
 
+{{listofallmembers}}
+
 {{> compounddef-sections}}
 
 {{TODO TODO}}
@@ -26,6 +28,7 @@ const template = Handlebars.compile(
 const mappers = (): Mappers => ({
   ...defaultMappers(),
   location: locationType,
+  listofallmembers: listofallmembersType,
 });
 
 export default (element: Element) => {

@@ -108,8 +108,8 @@ export { default as compoundPage } from './DoxygenType';
 
 export { default as DoxygenType } from './DoxygenType';
 export { default as compounddefType } from './compounddefType';
-// export {default as listofallmembersType} from './listofallmembersType'
-// export {default as memberRefType} from './memberRefType'
+export { default as listofallmembersType } from './listofallmembersType';
+export { default as memberRefType } from './memberRefType';
 // export {default as compoundRefType} from './compoundRefType'
 // export {default as reimplementType} from './reimplementType'
 export { default as incType } from './incType';
