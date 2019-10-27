@@ -119,7 +119,7 @@ export { default as sectiondefType } from './sectiondefType';
 export { default as memberdefType } from './memberdefType';
 export { default as descriptionType } from './descriptionType';
 export { default as enumvalueType } from './enumvalueType';
-// export {default as templateparamlistType} from './templateparamlistType'
+export { default as templateparamlistType } from './templateparamlistType';
 export { default as paramType } from './paramType';
 export { default as linkedTextType } from './linkedTextType';
 // export {default as graphType} from './graphType'
