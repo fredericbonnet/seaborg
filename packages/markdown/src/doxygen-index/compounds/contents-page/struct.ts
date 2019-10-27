@@ -4,7 +4,7 @@ import { CompoundType, CompoundKind } from '@seaborg/core/lib/models';
 
 const template = Handlebars.compile(
   `
-# Structures
+# {{compound-plural kind}}
 
 {{> compound-list items=compounds}}
 `,

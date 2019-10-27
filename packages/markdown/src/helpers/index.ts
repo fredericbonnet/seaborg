@@ -6,6 +6,8 @@ import {
   hasMember,
 } from '@seaborg/core/lib/services';
 
+import { DoxCompoundKind, labels, plurals } from '../doxygen/DoxCompoundKind';
+
 /** Escaped Markdown char sequences */
 const escapedMdChars = /[_<>]/g;
 
@@ -52,6 +54,12 @@ const todoHelper = (list: string[]) => {
     : undefined;
 };
 
+/** Handlebars helper for compound label */
+const compoundLabel = (kind: DoxCompoundKind) => labels[kind];
+
+/** Handlebars helper for compound plural */
+const compoundPlural = (kind: DoxCompoundKind) => plurals[kind];
+
 /** Register Handlebars helpers */
 export function registerHelpers() {
   Handlebars.registerHelper('md', mdHelper);
@@ -59,5 +67,7 @@ export function registerHelpers() {
   Handlebars.registerHelper('indent', indentHelper);
   Handlebars.registerHelper('bullet-item', bulletItemHelper);
   Handlebars.registerHelper('numbered-item', numberedItemHelper);
+  Handlebars.registerHelper('compound-label', compoundLabel);
+  Handlebars.registerHelper('compound-plural', compoundPlural);
   Handlebars.registerHelper('TODO', todoHelper);
 }

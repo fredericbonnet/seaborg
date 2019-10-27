@@ -3,19 +3,18 @@ import Handlebars from 'handlebars';
 import { configuration } from '@seaborg/core/lib/services';
 import { DoxygenType, CompoundKind } from '@seaborg/core/lib/models';
 
-// FIXME label and file paths
 const template = Handlebars.compile(
   `
 # Contents pages
 
 {{#each kinds}}
-* [{{this}}]({{this}}{{../contentsSuffix}}{{../mdExtension}})
+* [{{compound-plural this}}]({{this}}{{../contentsSuffix}}{{../mdExtension}})
 {{/each}}
 
 # Index pages
 
 {{#each kinds}}
-* [{{this}}]({{this}}{{../indexSuffix}}{{../mdExtension}})
+* [{{compound-plural this}}]({{this}}{{../indexSuffix}}{{../mdExtension}})
 {{/each}}
 `,
   { noEscape: true }

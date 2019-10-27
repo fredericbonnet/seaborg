@@ -3,13 +3,19 @@ import { isString, isUndefined } from 'util';
 
 import { CompoundType, CompoundKind } from '@seaborg/core/lib/models';
 import { doxygenIndex, withRefId } from '@seaborg/core/lib/services';
-import { pipe, flatMap, filter, negate, map } from '@seaborg/core/lib/operators';
+import {
+  pipe,
+  flatMap,
+  filter,
+  negate,
+  map,
+} from '@seaborg/core/lib/operators';
 
 import { IndentedItem } from '..';
 
 const template = Handlebars.compile(
   `
-# Directories
+# {{compound-plural kind}}
 
 {{> compound-tree items=compounds}}
 `,

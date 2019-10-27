@@ -2,10 +2,9 @@ import Handlebars from 'handlebars';
 
 import { CompoundType, CompoundKind } from '@seaborg/core/lib/models';
 
-// FIXME title paths
 const template = Handlebars.compile(
   `
-# {{kind}} list
+# {{compound-plural kind}}
 
 {{> compound-list items=compounds}}
 `,

@@ -8,7 +8,7 @@ import { mappers as defaultMappers } from '.';
 
 const template = Handlebars.compile(
   `
-# {{kind}} {{md compoundname}} {{title}}
+# {{compound-label kind}} {{md compoundname}} {{title}}
 
 {{location}}
 
@@ -32,7 +32,6 @@ const mappers = (): Mappers => ({
 });
 
 export default (element: Element) => {
-  // TODO map kind to string
   const {
     attributes: { kind },
   } = element;

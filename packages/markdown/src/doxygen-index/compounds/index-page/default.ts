@@ -5,10 +5,9 @@ import { pipe } from '@seaborg/core/lib/operators';
 
 import { groupBy, compoundName, initial } from '.';
 
-// FIXME title paths
 const template = Handlebars.compile(
   `
-# Index of {{kind}}
+# Index of {{compound-plural kind}}
 
 {{> compound-index}}
 `,

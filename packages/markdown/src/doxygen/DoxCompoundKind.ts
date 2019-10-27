@@ -41,3 +41,43 @@ export type DoxCompoundKind =
   | 'page'
   | 'example'
   | 'dir';
+
+export const labels: { [key: string]: string } = {
+  class: 'Class',
+  struct: 'Structure',
+  union: 'Union',
+  interface: 'Interface',
+  protocol: 'Protocol',
+  category: 'Category',
+  exception: 'Exception',
+  service: 'Service',
+  singleton: 'Singleton',
+  module: 'Module',
+  type: 'Type',
+  file: 'File',
+  namespace: 'Namespace',
+  group: 'Module', //FIXME conflict with module
+  page: 'Page',
+  example: 'Example',
+  dir: 'Directory',
+};
+
+export const plurals: { [key: string]: string } = {
+  class: 'Classes',
+  struct: 'Structures',
+  union: 'Unions',
+  interface: 'Interfaces',
+  protocol: 'Protocols',
+  category: 'Categories',
+  exception: 'Exceptions',
+  service: 'Services',
+  singleton: 'Singletons',
+  module: 'Modules',
+  type: 'Types',
+  file: 'Files',
+  namespace: 'Namespaces',
+  group: 'Modules', //FIXME conflict with module
+  page: 'Pages',
+  example: 'Examples',
+  dir: 'Directories',
+};

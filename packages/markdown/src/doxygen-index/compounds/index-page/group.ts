@@ -7,7 +7,7 @@ import { groupBy, compoundName, initial } from '.';
 
 const template = Handlebars.compile(
   `
-# Index of modules
+# Index of {{compound-plural kind}}
 
 {{> compound-index}}
 `,
