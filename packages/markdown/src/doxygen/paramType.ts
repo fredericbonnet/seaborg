@@ -24,6 +24,7 @@ const template = Handlebars.compile(
   `
 {{~#if defname}}{{defname}}{{/if ~}}
 {{~#if type}}
+{{~#if attributes}}_{{attributes}}_ {{/if ~}}
 {{~ type ~}}
 {{~#if declname}} **{{declname}}**{{/if ~}}
 {{~#if defval}} = {{defval}} {{/if ~}}
@@ -35,6 +36,7 @@ const template = Handlebars.compile(
 );
 
 const mappers = (): Mappers => ({
+  attributes: xsdString, // Missing from compound.xsd!
   type: linkedTextType,
   declname: xsdString,
   defname: xsdString,
