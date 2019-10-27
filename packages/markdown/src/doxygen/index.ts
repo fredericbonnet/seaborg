@@ -153,9 +153,9 @@ export { default as docFormulaType } from './docFormulaType';
 export { default as docListType } from './docListType';
 export { default as docListItemType } from './docListItemType';
 export { default as docSimpleSectType } from './docSimpleSectType';
-// export {default as docVarListEntryType} from './docVarListEntryType'
-// export {default as docVariableListGroup} from './docVariableListGroup'
-// export {default as docVariableListType} from './docVariableListType'
+export { default as docVarListEntryType } from './docVarListEntryType';
+export { default as docVariableListGroup } from './docVariableListGroup';
+export { default as docVariableListType } from './docVariableListType';
 export { default as docRefTextType } from './docRefTextType';
 // export {default as docTableType} from './docTableType'
 // export {default as docRowType} from './docRowType'

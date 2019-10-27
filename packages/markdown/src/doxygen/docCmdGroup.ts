@@ -40,6 +40,7 @@ import {
   docParamListType,
   docParBlockType,
   docXRefSectType,
+  docVariableListType,
 } from '.';
 import { itemizedlist, orderedlist } from './docListType';
 
@@ -52,6 +53,7 @@ export default (): Mappers => ({
   itemizedlist: itemizedlist,
   simplesect: docSimpleSectType,
   title: docTitleType,
+  variablelist: docVariableListType,
   heading: docHeadingType,
   parameterlist: docParamListType,
   xrefsect: docXRefSectType,
