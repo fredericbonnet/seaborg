@@ -9,23 +9,6 @@
     <xsd:attribute name="virt" type="DoxVirtualKind" />
     <xsd:attribute name="ambiguityscope" type="xsd:string" />
   </xsd:complexType>
-
-  <xsd:simpleType name="DoxProtectionKind">
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="public" />
-      <xsd:enumeration value="protected" />
-      <xsd:enumeration value="private" />
-      <xsd:enumeration value="package" />
-    </xsd:restriction>
-  </xsd:simpleType>
-
-  <xsd:simpleType name="DoxVirtualKind">
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="non-virtual" />
-      <xsd:enumeration value="virtual" />
-      <xsd:enumeration value="pure-virtual" />
-    </xsd:restriction>
-  </xsd:simpleType>
 */
 
 import { Element } from '@rgrove/parse-xml';

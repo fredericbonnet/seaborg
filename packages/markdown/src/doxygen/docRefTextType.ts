@@ -5,14 +5,7 @@
     <xsd:attribute name="kindref" type="DoxRefKind" />
     <xsd:attribute name="external" type="xsd:string" />
   </xsd:complexType>
-
-  <xsd:simpleType name="DoxRefKind">
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="compound" />
-      <xsd:enumeration value="member" />
-    </xsd:restriction>
-  </xsd:simpleType>
-  */
+*/
 
 //TODO
 import { Element } from '@rgrove/parse-xml';

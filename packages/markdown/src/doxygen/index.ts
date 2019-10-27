@@ -105,7 +105,6 @@ export { default as compoundPage } from './DoxygenType';
 
 // Complex types
 // TODO
-
 export { default as DoxygenType } from './DoxygenType';
 export { default as compounddefType } from './compounddefType';
 export { default as listofallmembersType } from './listofallmembersType';
@@ -182,23 +181,21 @@ export { default as docParBlockType } from './docParBlockType';
 export { default as docEmojiType } from './docEmojiType';
 
 // Simple types
-// TODO
-
-// export {default as DoxBool} from './DoxBool'
-// export {default as DoxGraphRelation} from './DoxGraphRelation'
-// export {default as DoxRefKind} from './DoxRefKind'
-// export {default as DoxMemberKind} from './DoxMemberKind'
-// export {default as DoxProtectionKind} from './DoxProtectionKind'
-// export {default as DoxRefQualifierKind} from './DoxRefQualifierKind'
-// export {default as DoxLanguage} from './DoxLanguage'
-// export {default as DoxVirtualKind} from './DoxVirtualKind'
-// export {default as DoxCompoundKind} from './DoxCompoundKind'
+export { DoxBool } from './DoxBool';
+export { DoxGraphRelation } from './DoxGraphRelation';
+export { DoxRefKind } from './DoxRefKind';
+export { DoxMemberKind } from './DoxMemberKind';
+export { DoxProtectionKind } from './DoxProtectionKind';
+export { DoxRefQualifierKind } from './DoxRefQualifierKind';
+export { DoxLanguage } from './DoxLanguage';
+export { DoxVirtualKind } from './DoxVirtualKind';
+export { DoxCompoundKind } from './DoxCompoundKind';
 export { DoxSectionKind } from './DoxSectionKind';
-// export {default as DoxHighlightClass} from './DoxHighlightClass'
-// export {default as DoxSimpleSectKind} from './DoxSimpleSectKind'
-// export {default as DoxVersionNumber} from './DoxVersionNumber'
-// export {default as DoxImageKind} from './DoxImageKind'
-// export {default as DoxParamListKind} from './DoxParamListKind'
-// export {default as DoxCharRange} from './DoxCharRange'
-// export {default as DoxParamDir} from './DoxParamDir'
-// export {default as DoxAccessor} from './DoxAccessor'
+export { DoxHighlightClass } from './DoxHighlightClass';
+export { DoxSimpleSectKind } from './DoxSimpleSectKind';
+export { DoxVersionNumber } from './DoxVersionNumber';
+export { DoxImageKind } from './DoxImageKind';
+export { DoxParamListKind } from './DoxParamListKind';
+export { DoxCharRange } from './DoxCharRange';
+export { DoxParamDir } from './DoxParamDir';
+export { DoxAccessor } from './DoxAccessor';

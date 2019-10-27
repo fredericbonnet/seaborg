@@ -5,14 +5,6 @@
     </xsd:sequence>
     <xsd:attribute name="direction" type="DoxParamDir" use="optional" />
   </xsd:complexType>
-
-  <xsd:simpleType name="DoxParamDir">
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="in"/>
-      <xsd:enumeration value="out"/>
-      <xsd:enumeration value="inout"/>
-    </xsd:restriction>
-  </xsd:simpleType>
 */
 
 import { Element } from '@rgrove/parse-xml';
