@@ -6,7 +6,16 @@ import {
   hasMember,
 } from '@seaborg/core/lib/services';
 
-import { DoxCompoundKind, labels, plurals } from '../doxygen/DoxCompoundKind';
+import {
+  DoxCompoundKind,
+  labels as compoundLabels,
+  plurals as compoundPlurals,
+} from '../doxygen/DoxCompoundKind';
+import {
+  DoxMemberKind,
+  labels as memberLabels,
+  plurals as memberPlurals,
+} from '../doxygen/DoxMemberKind';
 
 /** Escaped Markdown char sequences */
 const escapedMdChars = /[_<>]/g;
@@ -55,10 +64,16 @@ const todoHelper = (list: string[]) => {
 };
 
 /** Handlebars helper for compound label */
-const compoundLabel = (kind: DoxCompoundKind) => labels[kind];
+const compoundLabel = (kind: DoxCompoundKind) => compoundLabels[kind];
 
 /** Handlebars helper for compound plural */
-const compoundPlural = (kind: DoxCompoundKind) => plurals[kind];
+const compoundPlural = (kind: DoxCompoundKind) => compoundPlurals[kind];
+
+/** Handlebars helper for member label */
+const memberLabel = (kind: DoxMemberKind) => memberLabels[kind];
+
+/** Handlebars helper for member plural */
+const memberPlural = (kind: DoxMemberKind) => memberPlurals[kind];
 
 /** Register Handlebars helpers */
 export function registerHelpers() {
@@ -69,5 +84,7 @@ export function registerHelpers() {
   Handlebars.registerHelper('numbered-item', numberedItemHelper);
   Handlebars.registerHelper('compound-label', compoundLabel);
   Handlebars.registerHelper('compound-plural', compoundPlural);
+  Handlebars.registerHelper('member-label', memberLabel);
+  Handlebars.registerHelper('member-plural', memberPlural);
   Handlebars.registerHelper('TODO', todoHelper);
 }

@@ -35,3 +35,37 @@ export type DoxMemberKind =
   | 'slot'
   | 'interface'
   | 'service';
+
+export const labels: { [key: string]: string } = {
+  define: 'Macro',
+  property: 'Property',
+  event: 'Event',
+  variable: 'Variable',
+  typedef: 'Typedef',
+  enum: 'Enumeration type',
+  function: 'Function',
+  signal: 'Signal',
+  prototype: 'Prototype',
+  friend: 'Friend',
+  // dcop: 'dcop', //TODO
+  slot: 'Slot',
+  interface: 'Interface',
+  service: 'Service',
+};
+
+export const plurals: { [key: string]: string } = {
+  define: 'Macros',
+  property: 'Properties',
+  event: 'Events',
+  variable: 'Variables',
+  typedef: 'Typedefs',
+  enum: 'Enumeration types',
+  function: 'Functions',
+  signal: 'Signals',
+  prototype: 'Prototypes',
+  friend: 'Friends',
+  // dcop: 'dcop', //TODO
+  slot: 'Slots',
+  interface: 'Interfaces',
+  service: 'Services',
+};

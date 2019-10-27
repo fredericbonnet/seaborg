@@ -10,7 +10,7 @@ import { mappers as defaultMappers } from '.';
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
-### Variable {{md name}}
+### {{member-label kind}} {{md name}}
 
 {{location}}
 
@@ -40,9 +40,9 @@ const mappers = (): Mappers => ({
 // TODO attributes (e.g. static)
 export default (element: Element) => {
   const {
-    attributes: { id },
+    attributes: { kind, id },
   } = element;
   const context = applyToChildrenGrouped(mappers())(element);
 
-  return template({ ...context, id, TODO: context[$default] });
+  return template({ ...context, kind, id, TODO: context[$default] });
 };

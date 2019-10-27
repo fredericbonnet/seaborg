@@ -16,7 +16,7 @@ import { mappers as defaultMappers } from '.';
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
-### Enumeration type {{md name}}
+### {{member-label kind}} {{md name}}
 
 {{location}}
 
@@ -56,10 +56,10 @@ const valueMappers = (): Mappers => ({
 
 export default (element: Element) => {
   const {
-    attributes: { id },
+    attributes: { kind, id },
   } = element;
   const context = applyToChildrenGrouped(mappers())(element);
   const valuelist = applyToChildren(valueMappers())(element);
 
-  return template({ ...context, id, valuelist, TODO: context[$default] });
+  return template({ ...context, kind, id, valuelist, TODO: context[$default] });
 };

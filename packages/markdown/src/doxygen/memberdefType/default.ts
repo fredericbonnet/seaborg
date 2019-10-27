@@ -8,7 +8,7 @@ import { mappers } from '.';
 const template = Handlebars.compile(
   `
 <a id="{{id}}"></a>
-### {{kind}} {{md name}}
+### {{member-label kind}} {{md name}}
 
 {{location}}
 
@@ -22,7 +22,6 @@ const template = Handlebars.compile(
 );
 
 export default (element: Element) => {
-  // TODO map kind to string
   const {
     attributes: { kind, id },
   } = element;
