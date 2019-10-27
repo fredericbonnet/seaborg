@@ -2,7 +2,6 @@ import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { ignore } from '../../operators';
 import { locationType } from '..';
 
 import { mappers as defaultMappers } from '.';
