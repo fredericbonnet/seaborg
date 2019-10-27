@@ -1,6 +1,8 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
+import { currentContext } from '@seaborg/core/lib/services';
+
 import {
   Mappers,
   applyToChildrenGrouped,
@@ -20,7 +22,7 @@ const template = Handlebars.compile(
 
 {{location}}
 
-\`\`\`c
+\`\`\`{{language-code language}}
 enum {{name}} {
   {{#each valuelist}}
   {{this}}{{#unless @last}},{{/unless}}
@@ -58,8 +60,16 @@ export default (element: Element) => {
   const {
     attributes: { kind, id },
   } = element;
+  const { language } = currentContext();
   const context = applyToChildrenGrouped(mappers())(element);
   const valuelist = applyToChildren(valueMappers())(element);
 
-  return template({ ...context, kind, id, valuelist, TODO: context[$default] });
+  return template({
+    ...context,
+    kind,
+    id,
+    language,
+    valuelist,
+    TODO: context[$default],
+  });
 };

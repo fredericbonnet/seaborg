@@ -2,6 +2,9 @@
 export type Context = {
   /** Name of file being generated */
   filename: string;
+
+  /** Current language */
+  language?: string;
 };
 
 /** Context service */

@@ -39,6 +39,8 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
+import { context, currentContext } from '@seaborg/core/lib/services';
+
 import { Mappers, $default } from '../../mappers';
 import { ignore } from '../../operators';
 import { xsdString } from '../../generic';
@@ -127,13 +129,16 @@ export const mappers = (): Mappers => ({
 
 export default (element: Element) => {
   const {
-    attributes: { kind },
+    attributes: { kind, language },
   } = element;
+  const oldContext = context.setContext({ ...currentContext(), language });
   let template;
   try {
     template = require('./' + kind).default;
   } catch {
     template = require('./default').default;
   }
-  return template(element);
+  const result = template(element);
+  context.setContext(oldContext);
+  return result;
 };

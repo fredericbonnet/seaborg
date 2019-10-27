@@ -10,13 +10,15 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
+import { currentContext } from '@seaborg/core/lib/services';
+
 import { Mappers, applyToChildren } from '../mappers';
 import { codelineType } from '.';
 
 // TODO language
 const template = Handlebars.compile(
   `
-\`\`\`c
+\`\`\`{{language-code language}}
 {{#each lines}}
 {{this}}
 {{/each}}
@@ -30,7 +32,8 @@ const mappers = (): Mappers => ({
 });
 
 export default (element: Element) => {
+  const { language } = currentContext();
   const lines = applyToChildren(mappers())(element);
 
-  return template({ lines });
+  return template({ lines, language });
 };

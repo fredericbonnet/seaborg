@@ -1,6 +1,8 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
+import { currentContext } from '@seaborg/core/lib/services';
+
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
 import { linkedTextType, paramType } from '..';
@@ -14,7 +16,7 @@ const template = Handlebars.compile(
 
 {{location}}
 
-\`\`\`c
+\`\`\`{{language-code language}}
 #define {{name}}{{argsstring}}{{#if initializer}} {{initializer}}{{/if}}
 {{~#if param ~}}
 ( {{#each param}}{{this}}{{#unless @last}}, {{/unless}}{{/each }} )
@@ -45,7 +47,14 @@ export default (element: Element) => {
   const {
     attributes: { kind, id },
   } = element;
+  const { language } = currentContext();
   const context = applyToChildrenGrouped(mappers())(element);
 
-  return template({ ...context, kind, id, TODO: context[$default] });
+  return template({
+    ...context,
+    kind,
+    id,
+    language,
+    TODO: context[$default],
+  });
 };

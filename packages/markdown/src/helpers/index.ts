@@ -6,6 +6,7 @@ import {
   hasMember,
 } from '@seaborg/core/lib/services';
 
+import { codes } from '../doxygen/DoxLanguage';
 import {
   DoxCompoundKind,
   labels as compoundLabels,
@@ -28,6 +29,9 @@ const mdHelper = (text: string | string[]): any =>
   Handlebars.Utils.isArray(text)
     ? (text as string[]).map(mdHelper)
     : (text as string).replace(escapedMdChars, escapeMd);
+
+/** Handlebars helper for Markdown language code */
+const languageCodeHelper = (code: string) => codes[code];
 
 /** Handlebars helper for ref links */
 const refHelper = (refid: string, kindref: string, text: string) => {
@@ -64,27 +68,28 @@ const todoHelper = (list: string[]) => {
 };
 
 /** Handlebars helper for compound label */
-const compoundLabel = (kind: DoxCompoundKind) => compoundLabels[kind];
+const compoundLabelHelper = (kind: DoxCompoundKind) => compoundLabels[kind];
 
 /** Handlebars helper for compound plural */
-const compoundPlural = (kind: DoxCompoundKind) => compoundPlurals[kind];
+const compoundPluralHelper = (kind: DoxCompoundKind) => compoundPlurals[kind];
 
 /** Handlebars helper for member label */
-const memberLabel = (kind: DoxMemberKind) => memberLabels[kind];
+const memberLabelHelper = (kind: DoxMemberKind) => memberLabels[kind];
 
 /** Handlebars helper for member plural */
-const memberPlural = (kind: DoxMemberKind) => memberPlurals[kind];
+const memberPluralHelper = (kind: DoxMemberKind) => memberPlurals[kind];
 
 /** Register Handlebars helpers */
 export function registerHelpers() {
   Handlebars.registerHelper('md', mdHelper);
+  Handlebars.registerHelper('language-code', languageCodeHelper);
   Handlebars.registerHelper('ref', refHelper);
   Handlebars.registerHelper('indent', indentHelper);
   Handlebars.registerHelper('bullet-item', bulletItemHelper);
   Handlebars.registerHelper('numbered-item', numberedItemHelper);
-  Handlebars.registerHelper('compound-label', compoundLabel);
-  Handlebars.registerHelper('compound-plural', compoundPlural);
-  Handlebars.registerHelper('member-label', memberLabel);
-  Handlebars.registerHelper('member-plural', memberPlural);
+  Handlebars.registerHelper('compound-label', compoundLabelHelper);
+  Handlebars.registerHelper('compound-plural', compoundPluralHelper);
+  Handlebars.registerHelper('member-label', memberLabelHelper);
+  Handlebars.registerHelper('member-plural', memberPluralHelper);
   Handlebars.registerHelper('TODO', todoHelper);
 }

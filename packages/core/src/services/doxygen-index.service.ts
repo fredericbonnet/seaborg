@@ -165,7 +165,7 @@ export class DoxygenIndexService {
     return this.state.doxygen;
   }
 
-  /** Read compound title and description from compound file */
+  /** Read compound info from compound file */
   private async readCompoundInfo(compound: CompoundType) {
     // 1. Read compound file
     const doxygen = await file.readFile(
@@ -176,6 +176,9 @@ export class DoxygenIndexService {
     const [compounddef] = filterCompounddef(compound.refid)(doxygen.children);
 
     // 3. Extract info
+    const {
+      attributes: { language },
+    } = compounddef;
     const mappers: NodeMappers<any> = {
       title: this.state.fieldMappers.xsdString,
       briefdescription: pipe(
@@ -196,7 +199,7 @@ export class DoxygenIndexService {
       groupValuesByNodeType(mappers)
     )(compounddef);
 
-    return info;
+    return { ...info, language };
   }
 }
 

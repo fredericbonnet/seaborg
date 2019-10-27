@@ -38,3 +38,23 @@ export type DoxLanguage =
   | 'SQL'
   | 'Tcl'
   | 'Markdown';
+
+/** Map Doxygen to Markdown language codes */
+export const codes: { [key: string]: string } = {
+  Unknown: '',
+  IDL: '',
+  Java: 'java',
+  'C#': 'csharp',
+  D: 'd',
+  PHP: 'php',
+  'Objective-C': 'objectivec',
+  'C++': 'cpp',
+  Javascript: 'javascript',
+  Python: 'python',
+  Fortran: 'fortran',
+  VHDL: 'vhdl',
+  XML: 'xml',
+  SQL: 'sql',
+  Tcl: 'tcl',
+  Markdown: 'markdown',
+};

@@ -48,6 +48,8 @@ export interface CompoundType {
   refid: string;
   kind: CompoundKind;
 
+  language?: string;
+
   title?: string[];
   briefdescription?: string[];
 

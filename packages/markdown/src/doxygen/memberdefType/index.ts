@@ -73,6 +73,13 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
+import {
+  doxygenIndex,
+  hasMember,
+  context,
+  currentContext,
+} from '@seaborg/core/lib/services';
+
 import { Mappers, $default } from '../../mappers';
 import { xsdString } from '../../generic';
 import { descriptionType, locationType, referenceType } from '..';
@@ -123,13 +130,20 @@ export const mappers = (): Mappers => ({
 
 export default (element: Element) => {
   const {
-    attributes: { kind },
+    attributes: { kind, id },
   } = element;
+  const language = doxygenIndex.compounds
+    .filter(hasMember(id))
+    .map(compound => compound.language)
+    .find(language => !!language);
+  const oldContext = context.setContext({ ...currentContext(), language });
   let template;
   try {
     template = require('./' + kind).default;
   } catch {
     template = require('./default').default;
   }
-  return template(element);
+  const result = template(element);
+  context.setContext(oldContext);
+  return result;
 };
