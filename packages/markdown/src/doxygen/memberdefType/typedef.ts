@@ -20,7 +20,9 @@ const template = Handlebars.compile(
 
 {{> memberdef-description}}
 
-{{#if param}}**Parameters**:
+{{#if param}}
+**Parameters**:
+
 {{#each param}}
 * {{this}}
 {{/each}}
