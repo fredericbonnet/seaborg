@@ -172,7 +172,7 @@ export { default as docParamListItem } from './docParamListItem';
 export { default as docParamNameList } from './docParamNameList';
 export { default as docParamType } from './docParamType';
 export { default as docParamName } from './docParamName';
-// export {default as docXRefSectType} from './docXRefSectType'
+export { default as docXRefSectType } from './docXRefSectType';
 // export {default as docCopyType} from './docCopyType'
 // export {default as docBlockQuoteType} from './docBlockQuoteType'
 export { default as docParBlockType } from './docParBlockType';

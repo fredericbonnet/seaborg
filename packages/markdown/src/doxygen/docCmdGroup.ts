@@ -39,6 +39,7 @@ import {
   docHeadingType,
   docParamListType,
   docParBlockType,
+  docXRefSectType,
 } from '.';
 import { itemizedlist, orderedlist } from './docListType';
 
@@ -53,6 +54,7 @@ export default (): Mappers => ({
   title: docTitleType,
   heading: docHeadingType,
   parameterlist: docParamListType,
+  xrefsect: docXRefSectType,
   parblock: docParBlockType,
   // TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
