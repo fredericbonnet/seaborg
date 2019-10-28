@@ -10,8 +10,11 @@ export type Context = {
 /** Context service */
 class ContextService {
   private state = {
-    /** Current context */
-    context: {} as Context,
+    /** Root context */
+    root: {} as Context,
+
+    /** State stack */
+    stack: [] as Partial<Context>[],
   };
 
   constructor() {
@@ -20,19 +23,24 @@ class ContextService {
   }
 
   /** Get current context */
-  getContext(): Context {
-    return this.state.context;
+  getCurrent(): Context {
+    return Object.assign({}, this.state.root, ...this.state.stack);
   }
 
-  /**
-   * Set current context
-   *
-   * @return previous context
-   */
-  setContext(context: Context): Context {
-    const oldContext = this.state.context;
-    this.state.context = context;
-    return oldContext;
+  /** Set root context (resets stack) */
+  setRoot(context: Context) {
+    this.state.root = context;
+    this.state.stack = [];
+  }
+
+  /** Push state in stack */
+  pushState(state: Partial<Context>) {
+    this.state.stack.push(state);
+  }
+
+  /** Pop state from stack */
+  popState() {
+    return this.state.stack.pop();
   }
 }
 
@@ -43,5 +51,5 @@ export default instance;
 
 /** Get current context */
 export function currentContext() {
-  return instance.getContext();
+  return instance.getCurrent();
 }

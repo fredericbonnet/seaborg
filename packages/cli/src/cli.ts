@@ -67,12 +67,11 @@ const generateIndexFiles = (index: DoxygenType) => {
   const outputFile = `index${mdExtension}`;
   console.log(`Generating [index](${outputFile})`);
 
-  const oldContext = context.setContext({ filename: outputFile });
+  context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     mainPageTemplate(index)
   );
-  context.setContext(oldContext);
 
   // Compound kind files
   index.compounds
@@ -108,12 +107,11 @@ const generateCompoundContentsFiles = (
   const outputFile = `${kind}${contentsSuffix}${mdExtension}`;
   console.log(`Generating [${kind} contents](${outputFile})`);
 
-  const oldContext = context.setContext({ filename: outputFile });
+  context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     contentsPageTemplate(kind, compounds)
   );
-  context.setContext(oldContext);
 };
 
 /**
@@ -130,12 +128,11 @@ const generateCompoundIndexFiles = (
   const outputFile = `${kind}${indexSuffix}${mdExtension}`;
   console.log(`Generating [${kind} index](${outputFile})`);
 
-  const oldContext = context.setContext({ filename: outputFile });
+  context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     indexPageTemplate(kind, compounds)
   );
-  context.setContext(oldContext);
 };
 
 /**
@@ -153,10 +150,9 @@ const generateCompoundFile = async (compound: CompoundType) => {
     path.join(configuration.options.inputDir, inputFile)
   );
 
-  const oldContext = context.setContext({ filename: outputFile });
+  context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     compoundPageTemplate(doxygen)
   );
-  context.setContext(oldContext);
 };

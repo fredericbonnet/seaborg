@@ -39,7 +39,7 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
-import { context, currentContext } from '@seaborg/core/lib/services';
+import { context } from '@seaborg/core/lib/services';
 
 import { Mappers, $default } from '../../mappers';
 import { ignore } from '../../operators';
@@ -131,7 +131,7 @@ export default (element: Element) => {
   const {
     attributes: { kind, language },
   } = element;
-  const oldContext = context.setContext({ ...currentContext(), language });
+  context.pushState({ language });
   let template;
   try {
     template = require('./' + kind).default;
@@ -139,6 +139,6 @@ export default (element: Element) => {
     template = require('./default').default;
   }
   const result = template(element);
-  context.setContext(oldContext);
+  context.popState();
   return result;
 };
