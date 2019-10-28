@@ -116,6 +116,17 @@ Handlebars.registerPartial(
   `
 );
 
+// TODO other attributes?
+Handlebars.registerPartial(
+  'memberdef-badges',
+  `
+{{language-badge language}}
+{{protection-badge attributes.prot}}
+{{bool-badge "static" "lightgrey" attributes.static}}
+{{bool-badge "const" "lightblue" attributes.const}}
+`
+);
+
 export const mappers = (): Mappers => ({
   name: xsdString,
   briefdescription: descriptionType,
@@ -129,11 +140,10 @@ export const mappers = (): Mappers => ({
 });
 
 export const templateContext = (element: Element) => {
-  const {
-    attributes: { kind, id },
-  } = element;
+  const { attributes } = element;
+  const { kind, id } = attributes;
   const { language } = currentContext();
-  return { kind, id, language };
+  return { kind, id, language, attributes };
 };
 
 export default (element: Element) => {

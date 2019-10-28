@@ -10,6 +10,8 @@ const template = Handlebars.compile(
 <a id="{{id}}"></a>
 ### {{member-label kind}} {{md name}}
 
+{{> memberdef-badges}}
+
 {{location}}
 
 {{> memberdef-description}}

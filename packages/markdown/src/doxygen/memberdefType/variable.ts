@@ -12,7 +12,7 @@ const template = Handlebars.compile(
 <a id="{{id}}"></a>
 ### {{member-label kind}} {{md name}}
 
-{{language-badge language}}
+{{> memberdef-badges}}
 
 {{location}}
 
@@ -39,7 +39,6 @@ const mappers = (): Mappers => ({
   initializer: linkedTextType,
 });
 
-// TODO attributes (e.g. static)
 export default (element: Element) => {
   const context = applyToChildrenGrouped(mappers())(element);
 
