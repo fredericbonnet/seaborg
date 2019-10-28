@@ -73,7 +73,12 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
-import { doxygenIndex, hasMember, context } from '@seaborg/core/lib/services';
+import {
+  doxygenIndex,
+  hasMember,
+  context,
+  currentContext,
+} from '@seaborg/core/lib/services';
 
 import { Mappers, $default } from '../../mappers';
 import { xsdString } from '../../generic';
@@ -122,6 +127,14 @@ export const mappers = (): Mappers => ({
   //TODO
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
+
+export const templateContext = (element: Element) => {
+  const {
+    attributes: { kind, id },
+  } = element;
+  const { language } = currentContext();
+  return { kind, id, language };
+};
 
 export default (element: Element) => {
   const {

@@ -3,7 +3,7 @@ import Handlebars from 'handlebars';
 
 import { applyToChildrenGrouped, $default } from '../../mappers';
 
-import { mappers } from '.';
+import { mappers, templateContext } from '.';
 
 const template = Handlebars.compile(
   `
@@ -22,10 +22,11 @@ const template = Handlebars.compile(
 );
 
 export default (element: Element) => {
-  const {
-    attributes: { kind, id },
-  } = element;
   const context = applyToChildrenGrouped(mappers())(element);
 
-  return template({ ...context, kind, id, TODO: context[$default] });
+  return template({
+    ...templateContext(element),
+    ...context,
+    TODO: context[$default],
+  });
 };

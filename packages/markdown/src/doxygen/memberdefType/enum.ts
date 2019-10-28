@@ -1,8 +1,6 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
-import { currentContext } from '@seaborg/core/lib/services';
-
 import {
   Mappers,
   applyToChildrenGrouped,
@@ -13,7 +11,7 @@ import { xsdString } from '../../generic';
 import { linkedTextType, enumvalueType } from '..';
 import { def as enumvalueDef } from '../enumvalueType';
 
-import { mappers as defaultMappers } from '.';
+import { mappers as defaultMappers, templateContext } from '.';
 
 const template = Handlebars.compile(
   `
@@ -59,18 +57,12 @@ const valueMappers = (): Mappers => ({
 });
 
 export default (element: Element) => {
-  const {
-    attributes: { kind, id },
-  } = element;
-  const { language } = currentContext();
   const context = applyToChildrenGrouped(mappers())(element);
   const valuelist = applyToChildren(valueMappers())(element);
 
   return template({
+    ...templateContext(element),
     ...context,
-    kind,
-    id,
-    language,
     valuelist,
     TODO: context[$default],
   });
