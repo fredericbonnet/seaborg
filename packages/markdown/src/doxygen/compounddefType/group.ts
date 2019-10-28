@@ -9,6 +9,8 @@ const template = Handlebars.compile(
   `
 # {{title}}
 
+{{> compounddef-badges}}
+
 {{> compounddef-description}}
 
 {{> compounddef-list list=innergroup label="Submodules"}}

@@ -105,6 +105,15 @@ Handlebars.registerPartial(
 `
 );
 
+// TODO other attributes?
+Handlebars.registerPartial(
+  'compounddef-badges',
+  `
+{{language-badge language}}
+{{protection-badge attributes.prot}}
+`
+);
+
 export const mappers = (): Mappers => ({
   compoundname: xsdString,
   title: xsdString,

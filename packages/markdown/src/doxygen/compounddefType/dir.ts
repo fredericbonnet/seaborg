@@ -10,6 +10,8 @@ const template = Handlebars.compile(
   `
 # {{compound-label kind}} {{md compoundname}}
 
+{{> compounddef-badges}}
+
 {{location}}
 
 {{> compounddef-description}}

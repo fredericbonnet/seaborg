@@ -24,7 +24,7 @@ const badgeHelper = (
 
 /** Handlebars helper for language badges */
 const languageBadgeHelper = (code: DoxLanguage) =>
-  badgeHelper(code, 'language', code, 'blue');
+  code ? badgeHelper(code, 'language', code, 'blue') : '';
 
 /** Handlebars helper for protection badges */
 const protectionBadgeHelper = (code: DoxProtectionKind) => {
