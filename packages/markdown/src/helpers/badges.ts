@@ -15,7 +15,9 @@ const badgeHelper = (
   message: string,
   color: string
 ) => {
-  const url = `https://img.shields.io/badge/${label}-${message}-${color}`;
+  const url = `https://img.shields.io/badge/${encodeURIComponent(
+    label
+  )}-${encodeURIComponent(message)}-${color}`;
   context.addReference(key, url);
   return `![][${key}]`;
 };
