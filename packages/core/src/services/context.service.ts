@@ -1,8 +1,16 @@
-/** Context data */
-export type Context = {
+/** Root context data */
+export type Root = {
   /** Name of file being generated */
   filename: string;
 
+  /** Reference links */
+  references: { [label: string]: { url: string; title?: string } };
+};
+
+const defaultRoot: Partial<Root> = { references: {} };
+
+/** State context data */
+export type State = {
   /** Current language */
   language?: string;
 };
@@ -11,10 +19,10 @@ export type Context = {
 class ContextService {
   private state = {
     /** Root context */
-    root: {} as Context,
+    root: {} as Root,
 
     /** State stack */
-    stack: [] as Partial<Context>[],
+    stack: [] as State[],
   };
 
   constructor() {
@@ -23,18 +31,23 @@ class ContextService {
   }
 
   /** Get current context */
-  getCurrent(): Context {
+  getCurrent(): Root & State {
     return Object.assign({}, this.state.root, ...this.state.stack);
   }
 
   /** Set root context (resets stack) */
-  setRoot(context: Context) {
-    this.state.root = context;
+  setRoot(root: Partial<Root>) {
+    Object.assign(this.state.root, defaultRoot, root);
     this.state.stack = [];
   }
 
+  /** Add reference */
+  addReference(label: string, url: string, title?: string) {
+    this.state.root.references[label] = { url, title };
+  }
+
   /** Push state in stack */
-  pushState(state: Partial<Context>) {
+  pushState(state: State) {
     this.state.stack.push(state);
   }
 

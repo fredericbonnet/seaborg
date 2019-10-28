@@ -4,6 +4,7 @@ import {
   configuration,
   doxygenIndex,
   hasMember,
+  currentContext,
 } from '@seaborg/core/lib/services';
 
 import { codes } from '../doxygen/DoxLanguage';
@@ -79,6 +80,12 @@ const memberLabelHelper = (kind: DoxMemberKind) => memberLabels[kind];
 /** Handlebars helper for member plural */
 const memberPluralHelper = (kind: DoxMemberKind) => memberPlurals[kind];
 
+/** Handlebars helper for reference list */
+const referencesHelper = () =>
+  Object.entries(currentContext().references)
+    .map(([label, { url, title }]) => `[${label}]: ${url} (${title})`)
+    .join('\n');
+
 /** Register Handlebars helpers */
 export function registerHelpers() {
   Handlebars.registerHelper('md', mdHelper);
@@ -91,5 +98,6 @@ export function registerHelpers() {
   Handlebars.registerHelper('compound-plural', compoundPluralHelper);
   Handlebars.registerHelper('member-label', memberLabelHelper);
   Handlebars.registerHelper('member-plural', memberPluralHelper);
+  Handlebars.registerHelper('references', referencesHelper);
   Handlebars.registerHelper('TODO', todoHelper);
 }
