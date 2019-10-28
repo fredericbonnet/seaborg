@@ -19,6 +19,8 @@ import {
   plurals as memberPlurals,
 } from '../doxygen/DoxMemberKind';
 
+import { registerHelpers as registerBadges } from './badges';
+
 /** Escaped Markdown char sequences */
 const escapedMdChars = /[_<>]/g;
 
@@ -100,4 +102,6 @@ export function registerHelpers() {
   Handlebars.registerHelper('member-plural', memberPluralHelper);
   Handlebars.registerHelper('references', referencesHelper);
   Handlebars.registerHelper('TODO', todoHelper);
+
+  registerBadges();
 }
