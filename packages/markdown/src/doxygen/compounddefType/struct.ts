@@ -10,7 +10,7 @@ import {
   templateparamlistType,
 } from '..';
 
-import { mappers as defaultMappers } from '.';
+import { mappers as defaultMappers, templateContext } from '.';
 
 const template = Handlebars.compile(
   `
@@ -62,10 +62,11 @@ const mappers = (): Mappers => ({
 });
 
 export default (element: Element) => {
-  const {
-    attributes: { kind },
-  } = element;
   const context = applyToChildrenGrouped(mappers())(element);
 
-  return template({ ...context, kind, TODO: context[$default] });
+  return template({
+    ...templateContext(element),
+    ...context,
+    TODO: context[$default],
+  });
 };

@@ -127,6 +127,12 @@ export const mappers = (): Mappers => ({
   [$default]: element => element.name + ' ' + JSON.stringify(element),
 });
 
+export const templateContext = (element: Element) => {
+  const { attributes } = element;
+  const { kind, language } = attributes;
+  return { kind, language, attributes };
+};
+
 export default (element: Element) => {
   const {
     attributes: { kind, language },
