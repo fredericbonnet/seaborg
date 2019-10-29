@@ -3,7 +3,8 @@ import Handlebars from 'handlebars';
 import { CompoundType, CompoundKind } from '@seaborg/core/lib/models';
 import { pipe } from '@seaborg/core/lib/operators';
 
-import { groupBy, compoundName, initial } from '.';
+import { compoundName } from '.';
+import { initial, groupBy } from '../../../operators';
 
 const template = Handlebars.compile(
   `

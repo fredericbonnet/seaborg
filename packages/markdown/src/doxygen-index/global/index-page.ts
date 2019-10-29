@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { MapFunc, pipe, reduce } from '@seaborg/core';
+import { pipe, reduce } from '@seaborg/core';
 import {
   DoxygenType,
   CompoundType,
@@ -10,6 +10,7 @@ import {
 import { DoxRefKind } from '../../doxygen';
 import { labels as compoundLabels } from '../../doxygen/DoxCompoundKind';
 import { labels as memberLabels } from '../../doxygen/DoxMemberKind';
+import { uniqueBy, sortBy, groupBy, initial } from '../../operators';
 
 const template = Handlebars.compile(
   `
@@ -35,9 +36,6 @@ type Reference = {
   label: string;
 };
 
-/** Index type */
-type Index = { [key: string]: Reference[] };
-
 /** Get reference from compound */
 const compoundReference = (compound: CompoundType): Reference => ({
   kind: 'compound',
@@ -61,8 +59,8 @@ const compoundName = (compound: CompoundType) =>
 /** Get reference name */
 const referenceName = (reference: Reference) => reference.name;
 
-/** Get initial character from string  */
-const initial = (s: string) => s[0].toUpperCase();
+/** Get reference ID */
+const referenceId = (reference: Reference) => reference.refid;
 
 /** Get reference key */
 const referenceKey = pipe(
@@ -70,44 +68,9 @@ const referenceKey = pipe(
   initial
 );
 
-/** Compare strings */
-const compareStrings = (a: string, b: string) => a.localeCompare(b);
-
-/** Sort references */
-const sortBy = (mapFunc: MapFunc<Reference, string>) => (
-  references: Reference[]
-) =>
-  references.sort((a: Reference, b: Reference) =>
-    compareStrings(mapFunc(a), mapFunc(b))
-  );
-
-/** Reduce array to unique reference IDs */
-const uniqueIds = (a: Array<Reference>, reference: Reference) =>
-  a.some(r => reference.refid === r.refid) ? a : [...a, reference];
-
-/** Sort index by key */
-const sortIndexByKey = (index: Index) =>
-  Object.keys(index)
-    .sort()
-    .reduce((acc, key) => ({ ...acc, [key]: index[key] }), {} as Index);
-
-/** Group references by key */
-const groupBy = (keyFunc: MapFunc<Reference, string>) => (
-  references: Reference[]
-) =>
-  sortIndexByKey(
-    references.reduce(
-      (acc, reference) => {
-        const key = keyFunc(reference);
-        return { ...acc, [key]: [...(acc[key] || []), reference] };
-      },
-      {} as Index
-    )
-  );
-
 /** Build index from references */
 const buildIndex = pipe(
-  reduce(uniqueIds, []),
+  reduce(uniqueBy(referenceId), []),
   sortBy(referenceName),
   groupBy(referenceKey)
 );

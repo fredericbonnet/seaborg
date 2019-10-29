@@ -6,7 +6,8 @@ import {
   CompoundType,
   CompoundKind,
 } from '@seaborg/core/lib/models';
-import { map, pipe, reduce } from '@seaborg/core/lib/operators';
+import { map, pipe, reduce, ReduceFunc } from '@seaborg/core/lib/operators';
+import { unique } from '../operators';
 
 const template = Handlebars.compile(
   `
@@ -31,8 +32,7 @@ const template = Handlebars.compile(
 const toKind = (compound: CompoundType) => compound.kind;
 
 /** Reduce array to unique kinds */
-const uniqueKinds = (a: Array<CompoundKind>, kind: CompoundKind) =>
-  a.includes(kind) ? a : [...a, kind];
+const uniqueKinds = unique as ReduceFunc<CompoundKind, CompoundKind[]>;
 
 export default (index: DoxygenType) => {
   const { contentsSuffix, indexSuffix, mdExtension } = configuration.options;
