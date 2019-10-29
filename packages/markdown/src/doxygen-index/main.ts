@@ -1,7 +1,12 @@
 import Handlebars from 'handlebars';
 
 import { configuration } from '@seaborg/core/lib/services';
-import { DoxygenType, CompoundKind } from '@seaborg/core/lib/models';
+import {
+  DoxygenType,
+  CompoundType,
+  CompoundKind,
+} from '@seaborg/core/lib/models';
+import { map, pipe, reduce } from '@seaborg/core/lib/operators';
 
 const template = Handlebars.compile(
   `
@@ -22,15 +27,19 @@ const template = Handlebars.compile(
   { noEscape: true }
 );
 
+/** Map compound to its kind */
+const toKind = (compound: CompoundType) => compound.kind;
+
+/** Reduce array to unique kinds */
+const uniqueKinds = (a: Array<CompoundKind>, kind: CompoundKind) =>
+  a.includes(kind) ? a : [...a, kind];
+
 export default (index: DoxygenType) => {
   const { contentsSuffix, indexSuffix, mdExtension } = configuration.options;
-  const kinds = index.compounds
-    .map(compound => compound.kind)
-    .reduce(
-      (acc: CompoundKind[], kind) =>
-        acc.includes(kind) ? acc : [...acc, kind],
-      []
-    );
+  const kinds = pipe(
+    map(toKind),
+    reduce(uniqueKinds, [])
+  )(index.compounds);
 
   return template({ kinds, contentsSuffix, indexSuffix, mdExtension });
 };
