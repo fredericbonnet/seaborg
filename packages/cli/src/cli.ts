@@ -55,7 +55,10 @@ doxygenIndex.read().then(index => {
   generateIndexFiles(index);
 
   // Generate compound files
-  index.compounds.forEach(generateCompoundFile);
+  Promise.all(index.compounds.map(generateCompoundFile)).then(
+    // Generate compound list file with all the generated files above
+    generateCompoundListFile
+  );
 });
 
 /**
@@ -99,8 +102,8 @@ const generateIndexFiles = (index: DoxygenType) => {
 const generateMainIndexFile = (index: DoxygenType) => {
   const { mdExtension } = configuration.options;
   const outputFile = `index${mdExtension}`;
-  console.log(`Generating [index](${outputFile})`);
 
+  console.log(`Generating [index](${outputFile})`);
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
@@ -116,8 +119,8 @@ const generateMainIndexFile = (index: DoxygenType) => {
 const generateGlobalContentsFile = (index: DoxygenType) => {
   const { contentsSuffix, mdExtension } = configuration.options;
   const outputFile = `global${contentsSuffix}${mdExtension}`;
-  console.log(`Generating [global contents](${outputFile})`);
 
+  console.log(`Generating [global contents](${outputFile})`);
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
@@ -133,8 +136,8 @@ const generateGlobalContentsFile = (index: DoxygenType) => {
 const generateGlobalIndexFile = (index: DoxygenType) => {
   const { indexSuffix, mdExtension } = configuration.options;
   const outputFile = `global${indexSuffix}${mdExtension}`;
-  console.log(`Generating [global index](${outputFile})`);
 
+  console.log(`Generating [global index](${outputFile})`);
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
@@ -154,8 +157,8 @@ const generateCompoundContentsFile = (
 ) => {
   const { contentsSuffix, mdExtension } = configuration.options;
   const outputFile = `${kind}${contentsSuffix}${mdExtension}`;
-  console.log(`Generating [${kind} contents](${outputFile})`);
 
+  console.log(`Generating [${kind} contents](${outputFile})`);
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
@@ -175,8 +178,8 @@ const generateCompoundIndexFile = (
 ) => {
   const { indexSuffix, mdExtension } = configuration.options;
   const outputFile = `${kind}${indexSuffix}${mdExtension}`;
-  console.log(`Generating [${kind} index](${outputFile})`);
 
+  console.log(`Generating [${kind} index](${outputFile})`);
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
@@ -188,20 +191,53 @@ const generateCompoundIndexFile = (
  * Generate compound file from XML
  *
  * @param compound Compound model
+ *
+ * @return generated file name
  */
 const generateCompoundFile = async (compound: CompoundType) => {
   const { mdExtension } = configuration.options;
   const inputFile = `${compound.refid}.xml`;
   const outputFile = `${compound.refid}${mdExtension}`;
-  console.log(`Generating ${compound.kind} [${compound.name}](${outputFile})`);
 
   const doxygen = await file.readFile(
     path.join(configuration.options.inputDir, inputFile)
   );
 
+  console.log(`Generating ${compound.kind} [${compound.name}](${outputFile})`);
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
     compoundPageTemplate(doxygen)
+  );
+
+  return outputFile;
+};
+
+/**
+ * Generate compound list file as a IIFE Javascript file for browser consumption
+ *
+ * Usage:
+ * ```html
+ * <script id="compound-list" data-varname="xxx" src="compound-list.js"></script>
+ * ```
+ *
+ * Where `data-varname` gives the name of the global variable that will receive
+ * the list.
+ *
+ * The main use case for this file is as a search index for Docsify.
+ *
+ * @param files File list
+ */
+const generateCompoundListFile = async (files: string[]) => {
+  const outputFile = 'compound-list.js';
+
+  console.log(`Generating [compound list file](${outputFile})`);
+  fs.writeFileSync(
+    path.join(configuration.options.outputDir, outputFile),
+    `(function() {
+const script = document.getElementById('compound-list');
+const varname = script.getAttribute('data-varname');
+this[varname] = ${JSON.stringify(files)};
+})();`
   );
 };
