@@ -7,12 +7,14 @@ const template = Handlebars.compile(
   `
 # Contents pages
 
+* [Global contents](global{{contentsSuffix}}{{mdExtension}})
 {{#each kinds}}
 * [{{compound-plural this}}]({{this}}{{../contentsSuffix}}{{../mdExtension}})
 {{/each}}
 
 # Index pages
 
+* [Global index](global{{indexSuffix}}{{mdExtension}})
 {{#each kinds}}
 * [{{compound-plural this}}]({{this}}{{../indexSuffix}}{{../mdExtension}})
 {{/each}}

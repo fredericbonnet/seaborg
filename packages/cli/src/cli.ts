@@ -16,9 +16,11 @@ import {
 import { init as templateInit } from '@seaborg/markdown';
 import { xsdString } from '@seaborg/markdown/lib/generic';
 import {
-  mainPage as mainPageTemplate,
-  contentsPage as contentsPageTemplate,
-  indexPage as indexPageTemplate,
+  mainPage,
+  globalContentsPage,
+  globalIndexPage,
+  compoundsContentsPage,
+  compoundsIndexPage,
 } from '@seaborg/markdown/lib/doxygen-index';
 import {
   compoundPage as compoundPageTemplate,
@@ -57,21 +59,17 @@ doxygenIndex.read().then(index => {
 });
 
 /**
- * Generate main index file from model
+ * Generate contents and index files from model
  *
  * @param index Index model
  */
 const generateIndexFiles = (index: DoxygenType) => {
   // Main file
-  const { mdExtension } = configuration.options;
-  const outputFile = `index${mdExtension}`;
-  console.log(`Generating [index](${outputFile})`);
+  generateMainIndexFile(index);
 
-  context.setRoot({ filename: outputFile });
-  fs.writeFileSync(
-    path.join(configuration.options.outputDir, outputFile),
-    mainPageTemplate(index)
-  );
+  // Global files
+  generateGlobalContentsFile(index);
+  generateGlobalIndexFile(index);
 
   // Compound kind files
   index.compounds
@@ -82,15 +80,66 @@ const generateIndexFiles = (index: DoxygenType) => {
       []
     )
     .forEach(kind => {
-      generateCompoundContentsFiles(
+      generateCompoundContentsFile(
         kind,
         index.compounds.filter(compound => compound.kind === kind)
       );
-      generateCompoundIndexFiles(
+      generateCompoundIndexFile(
         kind,
         index.compounds.filter(compound => compound.kind === kind)
       );
     });
+};
+
+/**
+ * Generate main index file from model
+ *
+ * @param index Index model
+ */
+const generateMainIndexFile = (index: DoxygenType) => {
+  const { mdExtension } = configuration.options;
+  const outputFile = `index${mdExtension}`;
+  console.log(`Generating [index](${outputFile})`);
+
+  context.setRoot({ filename: outputFile });
+  fs.writeFileSync(
+    path.join(configuration.options.outputDir, outputFile),
+    mainPage(index)
+  );
+};
+
+/**
+ * Generate global contents file from model
+ *
+ * @param index Index model
+ */
+const generateGlobalContentsFile = (index: DoxygenType) => {
+  const { contentsSuffix, mdExtension } = configuration.options;
+  const outputFile = `global${contentsSuffix}${mdExtension}`;
+  console.log(`Generating [global contents](${outputFile})`);
+
+  context.setRoot({ filename: outputFile });
+  fs.writeFileSync(
+    path.join(configuration.options.outputDir, outputFile),
+    globalContentsPage(index)
+  );
+};
+
+/**
+ * Generate global index file from model
+ *
+ * @param index Index model
+ */
+const generateGlobalIndexFile = (index: DoxygenType) => {
+  const { indexSuffix, mdExtension } = configuration.options;
+  const outputFile = `global${indexSuffix}${mdExtension}`;
+  console.log(`Generating [global index](${outputFile})`);
+
+  context.setRoot({ filename: outputFile });
+  fs.writeFileSync(
+    path.join(configuration.options.outputDir, outputFile),
+    globalIndexPage(index)
+  );
 };
 
 /**
@@ -99,7 +148,7 @@ const generateIndexFiles = (index: DoxygenType) => {
  * @param kind Compound kind
  * @param compounds Compound models
  */
-const generateCompoundContentsFiles = (
+const generateCompoundContentsFile = (
   kind: CompoundKind,
   compounds: CompoundType[]
 ) => {
@@ -110,7 +159,7 @@ const generateCompoundContentsFiles = (
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    contentsPageTemplate(kind, compounds)
+    compoundsContentsPage(kind, compounds)
   );
 };
 
@@ -120,7 +169,7 @@ const generateCompoundContentsFiles = (
  * @param kind Compound kind
  * @param compounds Compound models
  */
-const generateCompoundIndexFiles = (
+const generateCompoundIndexFile = (
   kind: CompoundKind,
   compounds: CompoundType[]
 ) => {
@@ -131,7 +180,7 @@ const generateCompoundIndexFiles = (
   context.setRoot({ filename: outputFile });
   fs.writeFileSync(
     path.join(configuration.options.outputDir, outputFile),
-    indexPageTemplate(kind, compounds)
+    compoundsIndexPage(kind, compounds)
   );
 };
 
