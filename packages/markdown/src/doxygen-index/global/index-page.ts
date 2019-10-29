@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { MapFunc, pipe } from '@seaborg/core';
+import { MapFunc, pipe, reduce } from '@seaborg/core';
 import {
   DoxygenType,
   CompoundType,
@@ -81,6 +81,10 @@ const sortBy = (mapFunc: MapFunc<Reference, string>) => (
     compareStrings(mapFunc(a), mapFunc(b))
   );
 
+/** Reduce array to unique reference IDs */
+const uniqueIds = (a: Array<Reference>, reference: Reference) =>
+  a.some(r => reference.refid === r.refid) ? a : [...a, reference];
+
 /** Sort index by key */
 const sortIndexByKey = (index: Index) =>
   Object.keys(index)
@@ -103,6 +107,7 @@ const groupBy = (keyFunc: MapFunc<Reference, string>) => (
 
 /** Build index from references */
 const buildIndex = pipe(
+  reduce(uniqueIds, []),
   sortBy(referenceName),
   groupBy(referenceKey)
 );
