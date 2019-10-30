@@ -4,7 +4,7 @@
   "description": "Seaborg command line interface",
   "author": "Frédéric Bonnet <fredericbonnet@free.fr>",
   "homepage": "https://github.com/fredericbonnet/seaborg#readme",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "bin": {
     "seaborg": "bin/cli.js"
   },
