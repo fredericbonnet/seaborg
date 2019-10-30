@@ -29,6 +29,7 @@
     "url": "https://github.com/fredericbonnet/seaborg/issues"
   },
   "dependencies": {
+    "@rgrove/parse-xml": "^2.0.1",
     "@seaborg/core": "^0.1.0",
     "handlebars": "^4.4.5"
   }

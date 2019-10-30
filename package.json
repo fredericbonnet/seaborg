@@ -7,10 +7,6 @@
     "dev:libs": "lerna run dev --parallel --ignore=@seaborg/cli",
     "dev:cli": "lerna run dev --stream --scope=@seaborg/cli --"
   },
-  "dependencies": {
-    "@rgrove/parse-xml": "^2.0.1",
-    "ts-polyfill": "^3.5.3"
-  },
   "devDependencies": {
     "@types/node": "^12.11.2",
     "@types/rgrove__parse-xml": "^1.1.0",

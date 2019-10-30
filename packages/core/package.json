@@ -27,5 +27,9 @@
   },
   "bugs": {
     "url": "https://github.com/fredericbonnet/seaborg/issues"
+  },
+  "dependencies": {
+    "@rgrove/parse-xml": "^2.0.1",
+    "ts-polyfill": "^3.5.3"
   }
 }
