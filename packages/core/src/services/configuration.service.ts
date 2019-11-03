@@ -14,6 +14,9 @@ export type ConfigurationOptions = {
 
   /** Index file suffix */
   indexSuffix: string;
+
+  /** Prefix string/regexp to ignore in index pages */
+  ignorePrefix: string;
 };
 
 /** Default option values */
@@ -45,6 +48,10 @@ class ConfigurationService {
   constructor() {
     /* Ensure single instance */
     return instance || this;
+  }
+
+  getIgnoredPrefixRE() {
+    return new RegExp(`^(${this.state.options.ignorePrefix})`);
   }
 }
 

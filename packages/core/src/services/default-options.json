@@ -1,5 +1,6 @@
 {
   "mdExtension": ".md",
   "contentsSuffix": "_contents",
-  "indexSuffix": "_index"
+  "indexSuffix": "_index",
+  "ignorePrefix": ""
 }
