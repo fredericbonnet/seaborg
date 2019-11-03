@@ -143,7 +143,7 @@ export class DoxygenIndexService {
   /** Read & store Doxygen index file data from input directory */
   async read(): Promise<DoxygenType> {
     // 1. Read main index file
-    const doxygenindex = await file.readFile(
+    const doxygenindex = await file.readXml(
       path.join(configuration.options.inputDir, DOXYGEN_INDEX)
     );
     const {
@@ -168,7 +168,7 @@ export class DoxygenIndexService {
   /** Read compound info from compound file */
   private async readCompoundInfo(compound: CompoundType) {
     // 1. Read compound file
-    const doxygen = await file.readFile(
+    const doxygen = await file.readXml(
       path.join(configuration.options.inputDir, `${compound.refid}.xml`)
     );
 

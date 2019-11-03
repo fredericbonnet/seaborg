@@ -3,8 +3,6 @@ import parseXml, { Element } from '@rgrove/parse-xml';
 
 /**
  * File service
- *
- * Read, parse & cache XML files.
  */
 class FileService {
   constructor() {
@@ -13,24 +11,47 @@ class FileService {
   }
 
   /**
+   * Read file asynchronously
+   *
+   * @param file file to read
+   *
+   * @return string
+   */
+  async read(file: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      fs.readFile(file, (err, data) => {
+        if (err) reject(err);
+        resolve(data.toString());
+      });
+    });
+  }
+
+  /**
+   * Write file asynchronously
+   *
+   * @param file file to write
+   */
+  async write(file: string, data: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      fs.writeFile(file, data, err => {
+        if (err) reject(err);
+        resolve();
+      });
+    });
+  }
+
+  /**
    * Read XML file
+   *
+   * @param file XML file to read
    *
    * @return root element
    */
-  async readFile(file: string): Promise<Element> {
-    return new Promise<Element>((resolve, reject) => {
-      fs.readFile(file, (err, data) => {
-        if (err) reject(err);
-
-        try {
-          const root = parseXml(data.toString());
-          resolve(root.children[0] as Element);
-          // TODO store in cache
-        } catch (e) {
-          reject(e);
-        }
-      });
-    });
+  async readXml(file: string): Promise<Element> {
+    const data = await this.read(file);
+    const root = parseXml(data);
+    return root.children[0] as Element;
+    // TODO store in cache
   }
 }
 
