@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { pipe, reduce } from '@seaborg/core';
+import { pipe, reduce, configuration } from '@seaborg/core';
 import {
   DoxygenType,
   CompoundType,
@@ -62,9 +62,14 @@ const referenceName = (reference: Reference) => reference.name;
 /** Get reference ID */
 const referenceId = (reference: Reference) => reference.refid;
 
+/** Strip ignored prefix from reference name */
+const stripPrefix = (name: string) =>
+  name.replace(configuration.getIgnoredPrefixRE(), '');
+
 /** Get reference key */
 const referenceKey = pipe(
   referenceName,
+  stripPrefix,
   initial
 );
 
