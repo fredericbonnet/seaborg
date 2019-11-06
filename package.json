@@ -5,13 +5,28 @@
   "scripts": {
     "tsc": "lerna run tsc --",
     "dev:libs": "lerna run dev --parallel --ignore=@seaborg/cli",
-    "dev:cli": "lerna run dev --stream --scope=@seaborg/cli --"
+    "dev:cli": "lerna run dev --stream --scope=@seaborg/cli --",
+    "dev:test": "mocha -w --reporter min",
+    "test": "mocha"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.4",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^12.11.2",
     "@types/rgrove__parse-xml": "^1.1.0",
+    "@types/sinon": "^7.5.0",
+    "chai": "^4.2.0",
     "lerna": "^3.18.2",
+    "mocha": "^6.2.2",
+    "sinon": "^7.5.0",
     "ts-node-dev": "^1.0.0-pre.43",
     "typescript": "^3.6.4"
+  },
+  "mocha": {
+    "spec": "packages/**/*.spec.ts",
+    "require": "ts-node/register",
+    "extension": [
+      "ts"
+    ]
   }
 }
