@@ -63,6 +63,13 @@ class ConfigurationServiceAdapter implements ConfigurationService {
   }
 }
 
+/** Default configuration service factory */
+export class ConfigurationServiceFactory {
+  static create() {
+    return new ConfigurationServiceAdapter();
+  }
+}
+
 /** Singleton instance */
-const instance: ConfigurationService = new ConfigurationServiceAdapter();
+const instance: ConfigurationService = ConfigurationServiceFactory.create();
 export default instance;

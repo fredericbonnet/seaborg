@@ -67,8 +67,17 @@ class ContextServiceAdapter implements ContextService {
   }
 }
 
+/**
+ * Configuration service factory
+ */
+export class ContextServiceFactory {
+  static create(): ContextService {
+    return new ContextServiceAdapter();
+  }
+}
+
 /** Singleton instance */
-const instance: ContextService = new ContextServiceAdapter();
+const instance: ContextService = ContextServiceFactory.create();
 export default instance;
 
 /** Get current context */

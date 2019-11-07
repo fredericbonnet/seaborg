@@ -216,10 +216,15 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
     return { ...info, language };
   }
 }
+/**
+ * Configuration service factory
+ */
+export class DoxygenIndexServiceFactory {
+  static create(): DoxygenIndexService {
+    return new DoxygenIndexServiceAdapter(configuration, file);
+  }
+}
 
 /** Singleton instance */
-const instance: DoxygenIndexService = new DoxygenIndexServiceAdapter(
-  configuration,
-  file
-);
+const instance: DoxygenIndexService = DoxygenIndexServiceFactory.create();
 export default instance;

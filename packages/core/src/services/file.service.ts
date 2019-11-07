@@ -63,6 +63,15 @@ class FileServiceAdapter implements FileService {
   }
 }
 
+/**
+ * Configuration service factory
+ */
+export class FileServiceFactory {
+  static create(): FileService {
+    return new FileServiceAdapter();
+  }
+}
+
 /** Singleton instance */
-const instance: FileService = new FileServiceAdapter();
+const instance: FileService = FileServiceFactory.create();
 export default instance;
