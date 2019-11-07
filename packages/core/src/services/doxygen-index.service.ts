@@ -2,8 +2,8 @@ import path from 'path';
 import { Element, NodeBase } from '@rgrove/parse-xml';
 import { isUndefined } from 'util';
 
-import configuration from './configuration.service';
-import file from './file.service';
+import configuration, { ConfigurationService } from './configuration.service';
+import file, { FileService } from './file.service';
 import {
   DoxygenType,
   CompoundType,
@@ -109,42 +109,56 @@ export interface FieldMappers {
 }
 
 /**
- * Index service
+ * Index service interface
  *
  * Holds all the info for the compounds and members discovered from the
  * main index file and compound files
  */
-export class DoxygenIndexService {
+export interface DoxygenIndexService {
+  /** Doxygen root */
+  readonly doxygen: DoxygenType;
+
+  /** Doxygen compounds */
+  readonly compounds: CompoundType[];
+
+  /** 'Inject' dependencies */
+  inject(fieldMappers: FieldMappers): void;
+
+  /** Read & store Doxygen index file data from input directory */
+  read(): Promise<DoxygenType>;
+}
+
+/**
+ * Index service implementation
+ *
+ * Reads index and compound files from input directory
+ */
+class DoxygenIndexServiceAdapter implements DoxygenIndexService {
+  constructor(
+    private configuration: ConfigurationService,
+    private file: FileService
+  ) {}
+
   private state = {
     doxygen: {} as DoxygenType,
     fieldMappers: {} as FieldMappers,
   };
 
-  /** Get Doxygen root */
   get doxygen() {
     return this.state.doxygen;
   }
-
-  /** Get compounds */
   get compounds() {
     return this.state.doxygen.compounds;
   }
 
-  constructor() {
-    /* Ensure single instance */
-    return instance || this;
-  }
-
-  /** 'Inject' dependencies */
   inject(fieldMappers: FieldMappers) {
     this.state.fieldMappers = fieldMappers;
   }
 
-  /** Read & store Doxygen index file data from input directory */
   async read(): Promise<DoxygenType> {
     // 1. Read main index file
-    const doxygenindex = await file.readXml(
-      path.join(configuration.options.inputDir, DOXYGEN_INDEX)
+    const doxygenindex = await this.file.readXml(
+      path.join(this.configuration.options.inputDir, DOXYGEN_INDEX)
     );
     const {
       attributes: { version },
@@ -168,8 +182,8 @@ export class DoxygenIndexService {
   /** Read compound info from compound file */
   private async readCompoundInfo(compound: CompoundType) {
     // 1. Read compound file
-    const doxygen = await file.readXml(
-      path.join(configuration.options.inputDir, `${compound.refid}.xml`)
+    const doxygen = await this.file.readXml(
+      path.join(this.configuration.options.inputDir, `${compound.refid}.xml`)
     );
 
     // 2. Select compounddef
@@ -204,6 +218,8 @@ export class DoxygenIndexService {
 }
 
 /** Singleton instance */
-const instance = new DoxygenIndexService();
-Object.freeze(instance);
+const instance: DoxygenIndexService = new DoxygenIndexServiceAdapter(
+  configuration,
+  file
+);
 export default instance;

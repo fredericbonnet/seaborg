@@ -7,59 +7,68 @@ export type Root = {
   references: { [label: string]: { url: string; title?: string } };
 };
 
-const defaultRoot: Partial<Root> = { references: {} };
-
 /** State context data */
 export type State = {
   /** Current language */
   language?: string;
 };
 
-/** Context service */
-class ContextService {
-  private state = {
-    /** Root context */
-    root: {} as Root,
-
-    /** State stack */
-    stack: [] as State[],
-  };
-
-  constructor() {
-    /* Ensure single instance */
-    return instance || this;
-  }
-
+/**
+ * Context service interface
+ */
+export interface ContextService {
   /** Get current context */
-  getCurrent(): Root & State {
-    return Object.assign({}, this.state.root, ...this.state.stack);
-  }
+  getCurrent(): Root & State;
 
   /** Set root context (resets stack) */
-  setRoot(root: Partial<Root>) {
-    Object.assign(this.state.root, defaultRoot, root);
-    this.state.stack = [];
-  }
+  setRoot(root: Partial<Root>): void;
 
   /** Add reference */
-  addReference(label: string, url: string, title?: string) {
-    this.state.root.references[label] = { url, title };
-  }
+  addReference(label: string, url: string, title?: string): void;
 
   /** Push state in stack */
-  pushState(state: State) {
-    this.state.stack.push(state);
-  }
+  pushState(state: State): void;
 
   /** Pop state from stack */
+  popState(): State | undefined;
+}
+
+const defaultRoot: Partial<Root> = { references: {} };
+
+/** Context service implementation */
+class ContextServiceAdapter implements ContextService {
+  constructor() {}
+
+  /** Root context */
+  private root: Root = {} as Root;
+
+  /** State stack */
+  private stack: State[] = [];
+
+  getCurrent(): Root & State {
+    return Object.assign({}, this.root, ...this.stack);
+  }
+
+  setRoot(root: Partial<Root>) {
+    Object.assign(this.root, defaultRoot, root);
+    this.stack = [];
+  }
+
+  addReference(label: string, url: string, title?: string) {
+    this.root.references[label] = { url, title };
+  }
+
+  pushState(state: State) {
+    this.stack.push(state);
+  }
+
   popState() {
-    return this.state.stack.pop();
+    return this.stack.pop();
   }
 }
 
 /** Singleton instance */
-const instance = new ContextService();
-Object.freeze(instance);
+const instance: ContextService = new ContextServiceAdapter();
 export default instance;
 
 /** Get current context */

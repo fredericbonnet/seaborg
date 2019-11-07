@@ -2,14 +2,9 @@ import fs from 'fs';
 import parseXml, { Element } from '@rgrove/parse-xml';
 
 /**
- * File service
+ * File service interface
  */
-class FileService {
-  constructor() {
-    /* Ensure single instance */
-    return instance || this;
-  }
-
+export interface FileService {
   /**
    * Read file asynchronously
    *
@@ -17,6 +12,31 @@ class FileService {
    *
    * @return string
    */
+  read(file: string): Promise<string>;
+
+  /**
+   * Write file asynchronously
+   *
+   * @param file file to write
+   */
+  write(file: string, data: string): Promise<void>;
+
+  /**
+   * Read XML file
+   *
+   * @param file XML file to read
+   *
+   * @return root element
+   */
+  readXml(file: string): Promise<Element>;
+}
+
+/**
+ * File service implementation over `fs` package
+ */
+class FileServiceAdapter implements FileService {
+  constructor() {}
+
   async read(file: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       fs.readFile(file, (err, data) => {
@@ -26,11 +46,6 @@ class FileService {
     });
   }
 
-  /**
-   * Write file asynchronously
-   *
-   * @param file file to write
-   */
   async write(file: string, data: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       fs.writeFile(file, data, err => {
@@ -40,13 +55,6 @@ class FileService {
     });
   }
 
-  /**
-   * Read XML file
-   *
-   * @param file XML file to read
-   *
-   * @return root element
-   */
   async readXml(file: string): Promise<Element> {
     const data = await this.read(file);
     const root = parseXml(data);
@@ -56,6 +64,5 @@ class FileService {
 }
 
 /** Singleton instance */
-const instance = new FileService();
-Object.freeze(instance);
+const instance: FileService = new FileServiceAdapter();
 export default instance;

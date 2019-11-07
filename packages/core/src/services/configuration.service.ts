@@ -19,17 +19,17 @@ export type ConfigurationOptions = {
   ignorePrefix: string;
 };
 
-/** Default option values */
-import defaultOptions from './default-options.json';
+/**
+ * Configuration service interface
+ */
+export interface ConfigurationService {
+  /** Current options */
+  readonly options: ConfigurationOptions;
 
-/** Configuration service */
-class ConfigurationService {
-  private state = {
-    options: defaultOptions as ConfigurationOptions,
-  };
-  get options() {
-    return this.state.options;
-  }
+  /**
+   * Get regular expression for ignored prefix in indexes
+   */
+  getIgnoredPrefixRE(): RegExp;
 
   /**
    * Set option values
@@ -38,24 +38,31 @@ class ConfigurationService {
    *
    * @param options Option values
    */
+  setOptions(options: Partial<ConfigurationOptions>): void;
+}
+
+/** Default option values */
+import defaultOptions from './default-options.json';
+
+/**
+ * Configuration service implementation
+ */
+class ConfigurationServiceAdapter implements ConfigurationService {
+  constructor() {}
+
+  options: ConfigurationOptions = defaultOptions as ConfigurationOptions;
+
+  getIgnoredPrefixRE() {
+    return new RegExp(`^(${this.options.ignorePrefix})`);
+  }
   setOptions(options: Partial<ConfigurationOptions>) {
-    this.state.options = {
+    this.options = {
       ...defaultOptions,
       ...options,
     } as ConfigurationOptions;
   }
-
-  constructor() {
-    /* Ensure single instance */
-    return instance || this;
-  }
-
-  getIgnoredPrefixRE() {
-    return new RegExp(`^(${this.state.options.ignorePrefix})`);
-  }
 }
 
 /** Singleton instance */
-const instance = new ConfigurationService();
-Object.freeze(instance);
+const instance: ConfigurationService = new ConfigurationServiceAdapter();
 export default instance;
