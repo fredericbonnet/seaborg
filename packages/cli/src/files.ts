@@ -4,21 +4,19 @@
 
 import path from 'path';
 
-import { configuration, file, context } from '@seaborg/core/lib/services';
+import {
+  configuration,
+  file,
+  context,
+  RenderServiceRegistry,
+} from '@seaborg/core/lib/services';
 import {
   DoxygenType,
   CompoundType,
   CompoundKind,
 } from '@seaborg/core/lib/models';
 
-import {
-  mainPage,
-  globalContentsPage,
-  globalIndexPage,
-  compoundsContentsPage,
-  compoundsIndexPage,
-} from '@seaborg/markdown/lib/doxygen-index';
-import { compoundPage as compoundPageTemplate } from '@seaborg/markdown/lib/doxygen';
+const render = RenderServiceRegistry.get('markdown');
 
 /** Generate all files from Doxygen index */
 export const generateFiles = async (index: DoxygenType) => {
@@ -75,7 +73,7 @@ const generateMainIndexFile = async (index: DoxygenType) => {
   context.setRoot({ filename: outputFile });
   await file.write(
     path.join(configuration.options.outputDir, outputFile),
-    mainPage(index)
+    render.mainPage(index)
   );
 };
 
@@ -92,7 +90,7 @@ const generateGlobalContentsFile = async (index: DoxygenType) => {
   context.setRoot({ filename: outputFile });
   await file.write(
     path.join(configuration.options.outputDir, outputFile),
-    globalContentsPage(index)
+    render.globalContentsPage(index)
   );
 };
 
@@ -109,7 +107,7 @@ const generateGlobalIndexFile = async (index: DoxygenType) => {
   context.setRoot({ filename: outputFile });
   await file.write(
     path.join(configuration.options.outputDir, outputFile),
-    globalIndexPage(index)
+    render.globalIndexPage(index)
   );
 };
 
@@ -130,7 +128,7 @@ const generateCompoundContentsFile = async (
   context.setRoot({ filename: outputFile });
   await file.write(
     path.join(configuration.options.outputDir, outputFile),
-    compoundsContentsPage(kind, compounds)
+    render.compoundsContentsPage(kind, compounds)
   );
 };
 
@@ -151,7 +149,7 @@ const generateCompoundIndexFile = async (
   context.setRoot({ filename: outputFile });
   await file.write(
     path.join(configuration.options.outputDir, outputFile),
-    compoundsIndexPage(kind, compounds)
+    render.compoundsIndexPage(kind, compounds)
   );
 };
 
@@ -175,7 +173,7 @@ const generateCompoundFile = async (compound: CompoundType) => {
   context.setRoot({ filename: outputFile });
   await file.write(
     path.join(configuration.options.outputDir, outputFile),
-    compoundPageTemplate(doxygen)
+    render.compoundPage(doxygen)
   );
 
   return outputFile;
