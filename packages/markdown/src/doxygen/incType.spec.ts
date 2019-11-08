@@ -3,9 +3,7 @@ import { expect } from 'chai';
 
 import parseXml, { Element } from '@rgrove/parse-xml';
 
-import { init } from '..';
 import incType from './incType';
-import { before } from 'mocha';
 
 const render = (xml: string) => {
   const {
@@ -13,8 +11,6 @@ const render = (xml: string) => {
   } = parseXml(xml);
   return incType(root as Element);
 };
-
-before(init);
 
 describe('incType', () => {
   specify('non-local', () => {

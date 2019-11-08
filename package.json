@@ -23,7 +23,10 @@
     "typescript": "^3.6.4"
   },
   "mocha": {
-    "spec": "packages/**/*.spec.ts",
+    "spec": [
+      "packages/**/test/bootstrap.ts",
+      "packages/**/*.spec.ts"
+    ],
     "require": "ts-node/register",
     "extension": [
       "ts"
