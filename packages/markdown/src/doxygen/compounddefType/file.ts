@@ -20,6 +20,8 @@ const template = Handlebars.compile(
 
 {{> compounddef-list list=includes label="Includes"}}
 
+{{incdepgraph}}
+
 {{> compounddef-list list=includedby label="Included by"}}
 
 {{> compounddef-sections}}
