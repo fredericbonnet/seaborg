@@ -121,10 +121,10 @@ export { default as enumvalueType } from './enumvalueType';
 export { default as templateparamlistType } from './templateparamlistType';
 export { default as paramType } from './paramType';
 export { default as linkedTextType } from './linkedTextType';
-// export {default as graphType} from './graphType'
-// export {default as nodeType} from './nodeType'
-// export {default as childnodeType} from './childnodeType'
-// export {default as linkType} from './linkType'
+export { default as graphType } from './graphType';
+export { default as nodeType } from './nodeType';
+export { default as childnodeType } from './childnodeType';
+export { default as linkType } from './linkType';
 export { default as listingType } from './listingType';
 export { default as codelineType } from './codelineType';
 export { default as highlightType } from './highlightType';

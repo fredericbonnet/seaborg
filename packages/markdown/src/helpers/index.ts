@@ -36,21 +36,26 @@ const mdHelper = (text: string | string[]): any =>
 /** Handlebars helper for Markdown language code */
 const languageCodeHelper = (code: string) => codes[code];
 
-/** Handlebars helper for ref links */
-const refHelper = (refid: string, kindref: string, text: string) => {
+/** Handlebars helper for links */
+const linkHelper = (refid: string, kindref: string) => {
   const { mdExtension } = configuration.options;
   switch (kindref) {
     case 'compound':
-      return `[${text}](${refid}${mdExtension})`;
+      return `${refid}${mdExtension}`;
     case 'member': {
       const compound = doxygenIndex.compounds.find(hasMember(refid));
       if (compound) {
-        return `[${text}](${compound.refid}${mdExtension}#${refid})`;
+        return `${compound.refid}${mdExtension}#${refid}`;
       } else {
-        return `[${text}](#${refid})`;
+        return `#${refid}`;
       }
     }
   }
+};
+
+/** Handlebars helper for ref links */
+const refHelper = (refid: string, kindref: string, text: string) => {
+  return `[${text}](${linkHelper(refid, kindref)})`;
 };
 
 /** Handlebars helper for indentation */
@@ -92,6 +97,7 @@ const referencesHelper = () =>
 export function registerHelpers() {
   Handlebars.registerHelper('md', mdHelper);
   Handlebars.registerHelper('language-code', languageCodeHelper);
+  Handlebars.registerHelper('link', linkHelper);
   Handlebars.registerHelper('ref', refHelper);
   Handlebars.registerHelper('indent', indentHelper);
   Handlebars.registerHelper('bullet-item', bulletItemHelper);
