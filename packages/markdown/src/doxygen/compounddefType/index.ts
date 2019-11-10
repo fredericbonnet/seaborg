@@ -44,13 +44,8 @@ import { context } from '@seaborg/core/lib/services';
 import { Mappers, $default } from '../../mappers';
 import { ignore } from '../../operators';
 import { xsdString } from '../../generic';
-import {
-  descriptionType,
-  sectiondefType,
-  refType,
-  listingType,
-  graphType,
-} from '..';
+import { descriptionType, sectiondefType, refType, listingType } from '..';
+import { incdepgraph, invincdepgraph } from '../graphType';
 
 Handlebars.registerPartial(
   'compounddef-description',
@@ -134,8 +129,8 @@ export const mappers = (): Mappers => ({
   innergroup: refType,
   programlisting: listingType,
 
-  incdepgraph: graphType,
-  invincdepgraph: ignore, // TODO graphs
+  incdepgraph: incdepgraph,
+  invincdepgraph: invincdepgraph,
   inheritancegraph: ignore, // TODO graphs
   collaborationgraph: ignore, // TODO graphs
   //TODO

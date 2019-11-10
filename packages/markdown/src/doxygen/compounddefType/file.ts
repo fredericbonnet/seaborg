@@ -24,6 +24,8 @@ const template = Handlebars.compile(
 
 {{> compounddef-list list=includedby label="Included by"}}
 
+{{invincdepgraph}}
+
 {{> compounddef-sections}}
 
 {{> compounddef-source}}

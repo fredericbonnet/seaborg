@@ -11,11 +11,11 @@
 import { Element } from '@rgrove/parse-xml';
 import Handlebars from 'handlebars';
 
-const template = Handlebars.compile('{{parentid}} --> {{refid}}', {
+const template = Handlebars.compile('{{source}} --> {{destination}}', {
   noEscape: true,
 });
 
-export default (element: Element) => {
+export default (reverse: boolean) => (element: Element) => {
   const {
     attributes: { id: parentid },
   } = element.parent as Element;
@@ -23,5 +23,8 @@ export default (element: Element) => {
     attributes: { refid },
   } = element;
 
-  return template({ parentid, refid });
+  return template({
+    source: reverse ? refid : parentid,
+    destination: reverse ? parentid : refid,
+  });
 };

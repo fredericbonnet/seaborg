@@ -5,11 +5,11 @@ import parseXml, { Element } from '@rgrove/parse-xml';
 
 import graphType from './graphType';
 
-const render = (xml: string) => {
+const render = (direction: string, reverse: boolean) => (xml: string) => {
   const {
     children: [root],
   } = parseXml(xml);
-  return graphType(root as Element);
+  return graphType(direction, reverse)(root as Element);
 };
 
 describe('graphType', () => {
@@ -17,10 +17,10 @@ describe('graphType', () => {
     const xml = `<incdepgraph></incdepgraph>`;
     const md = `
 \`\`\`mermaid
-graph TB
+graph LR
 \`\`\`
 `;
-    expect(render(xml)).to.equal(md);
+    expect(render('LR', false)(xml)).to.equal(md);
   });
   specify('full example', () => {
     const xml = `<incdepgraph>
@@ -39,7 +39,7 @@ graph TB
         </incdepgraph>`;
     const md = `
 \`\`\`mermaid
-graph TB
+graph LR
 1["first node"]
 click 1 "file_12345.md"
 1 --> 1
@@ -52,6 +52,6 @@ click 2 "file_67890.md"
 
 \`\`\`
 `;
-    expect(render(xml)).to.equal(md);
+    expect(render('LR', false)(xml)).to.equal(md);
   });
 });

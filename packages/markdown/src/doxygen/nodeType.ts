@@ -30,17 +30,17 @@ const template = Handlebars.compile(
   }
 );
 
-const mappers = (): Mappers => ({
+const mappers = (reverse: boolean): Mappers => ({
   label: xsdString,
   link: linkType,
-  childnode: childnodeType,
+  childnode: childnodeType(reverse),
 });
 
-export default (element: Element) => {
+export default (reverse: boolean) => (element: Element) => {
   const {
     attributes: { id },
   } = element;
-  const context = applyToChildrenGrouped(mappers())(element);
+  const context = applyToChildrenGrouped(mappers(reverse))(element);
 
   return template({ ...context, id });
 };

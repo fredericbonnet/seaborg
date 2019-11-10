@@ -15,7 +15,7 @@ import nodeType from './nodeType';
 const template = Handlebars.compile(
   `
 \`\`\`mermaid
-graph TB
+graph {{direction}}
 {{#each nodes}}
 {{this}}
 {{/each}}
@@ -24,12 +24,18 @@ graph TB
   { noEscape: true }
 );
 
-const mappers = (): Mappers => ({
-  node: nodeType,
+const mappers = (reverse: boolean): Mappers => ({
+  node: nodeType(reverse),
 });
 
-export default (element: Element) => {
-  const nodes = applyToChildren(mappers())(element);
+const graphType = (direction: string, reverse: boolean) => (
+  element: Element
+) => {
+  const nodes = applyToChildren(mappers(reverse))(element);
 
-  return template({ nodes });
+  return template({ direction, nodes });
 };
+export default graphType;
+
+export const incdepgraph = graphType('LR', false);
+export const invincdepgraph = graphType('RL', true);
