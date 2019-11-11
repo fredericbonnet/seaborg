@@ -5,14 +5,14 @@ import parseXml, { Element } from '@rgrove/parse-xml';
 
 import nodeType from './nodeType';
 
-const render = (reverse: boolean) => (xml: string) => {
-  const {
-    children: [root],
-  } = parseXml(xml);
-  return nodeType(reverse)(root as Element);
-};
-
 describe('nodeType', () => {
+  const render = (reverse: boolean) => (xml: string) => {
+    const {
+      children: [root],
+    } = parseXml(xml);
+    return nodeType(reverse)(root as Element);
+  };
+
   specify('empty', () => {
     const xml = `<node id="1"></node>`;
     const md = '1\n';

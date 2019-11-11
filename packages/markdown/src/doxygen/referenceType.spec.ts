@@ -5,14 +5,14 @@ import sinon from 'sinon';
 import parseXml, { Element } from '@rgrove/parse-xml';
 import { doxygenIndex, file } from '@seaborg/core/lib/services';
 
-import refTextType from './refTextType';
+import referenceType from './referenceType';
 
-describe('refTextType', () => {
+describe('referenceType', () => {
   const render = (xml: string) => {
     const {
       children: [root],
     } = parseXml(xml);
-    return refTextType(root as Element);
+    return referenceType(root as Element);
   };
 
   beforeEach(async () => {
@@ -37,15 +37,15 @@ describe('refTextType', () => {
   });
   afterEach(() => sinon.restore());
 
-  specify('compound', () => {
-    const xml = `<ref refid="compound_12345" kindref="compound">some text</ref>`;
-    const md = '[some text](compound_12345.md)';
+  specify('basic', async () => {
+    const xml = `<referencedby refid="member_67890">FunctionName</referencedby>`;
+    const md = '[FunctionName](compound_12345.md#member_67890)';
     expect(render(xml)).to.equal(md);
   });
 
-  specify('member', async () => {
-    const xml = `<ref refid="member_67890" kindref="member">some text</ref>`;
-    const md = '[some text](compound_12345.md#member_67890)';
+  specify('special chars', async () => {
+    const xml = `<referencedby refid="member_67890">function_name&lt;T&gt;</referencedby>`;
+    const md = '[function\\_name\\<T\\>](compound_12345.md#member_67890)';
     expect(render(xml)).to.equal(md);
   });
 });

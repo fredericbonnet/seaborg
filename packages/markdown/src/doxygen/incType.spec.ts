@@ -5,14 +5,14 @@ import parseXml, { Element } from '@rgrove/parse-xml';
 
 import incType from './incType';
 
-const render = (xml: string) => {
-  const {
-    children: [root],
-  } = parseXml(xml);
-  return incType(root as Element);
-};
-
 describe('incType', () => {
+  const render = (xml: string) => {
+    const {
+      children: [root],
+    } = parseXml(xml);
+    return incType(root as Element);
+  };
+
   specify('non-local', () => {
     const xml = `<includes local="no">file.h</includes>`;
     const md = '<file.h>';

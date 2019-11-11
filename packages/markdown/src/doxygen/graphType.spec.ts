@@ -5,14 +5,14 @@ import parseXml, { Element } from '@rgrove/parse-xml';
 
 import graphType from './graphType';
 
-const render = (direction: string, reverse: boolean) => (xml: string) => {
-  const {
-    children: [root],
-  } = parseXml(xml);
-  return graphType(direction, reverse)(root as Element);
-};
-
 describe('graphType', () => {
+  const render = (direction: string, reverse: boolean) => (xml: string) => {
+    const {
+      children: [root],
+    } = parseXml(xml);
+    return graphType(direction, reverse)(root as Element);
+  };
+
   specify('empty', () => {
     const xml = `<incdepgraph></incdepgraph>`;
     const md = `

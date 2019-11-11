@@ -18,7 +18,7 @@ import Handlebars from 'handlebars';
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
 
-const template = Handlebars.compile('{{ref refid kindref text}}', {
+const template = Handlebars.compile('{{ref refid kindref (md text)}}', {
   noEscape: true,
 });
 

@@ -13,7 +13,7 @@ import Handlebars from 'handlebars';
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
 
-const template = Handlebars.compile('{{ref refid kindref text}}', {
+const template = Handlebars.compile('{{ref refid kindref (md text)}}', {
   noEscape: true,
 });
 
@@ -22,8 +22,9 @@ const mappers = (): Mappers => ({
 });
 
 export default (element: Element) => {
+  // TODO other attributes?
   const {
-    attributes: { refid, compoundref },
+    attributes: { refid },
   } = element;
   const text = applyToChildren(mappers())(element).join('');
   return template({ refid, kindref: 'member', text });

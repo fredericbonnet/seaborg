@@ -3,21 +3,19 @@ import { expect } from 'chai';
 
 import parseXml, { Element } from '@rgrove/parse-xml';
 
-import linkType from './linkType';
+import docAnchorType from './docAnchorType';
 
-describe('linkType', () => {
+describe('docAnchorType', () => {
   const render = (xml: string) => {
     const {
       children: [root],
     } = parseXml(xml);
-    return linkType((root as Element).children[0] as Element);
+    return docAnchorType(root as Element);
   };
 
   specify('regular', () => {
-    const xml = `<node id="1"><link refid="file_12345"></link></node>`;
-    const md = 'click 1 "file_12345.md"';
+    const xml = `<anchor id="member_12345"/>`;
+    const md = '<a id="member_12345"></a>';
     expect(render(xml)).to.equal(md);
   });
-
-  // TODO external
 });
