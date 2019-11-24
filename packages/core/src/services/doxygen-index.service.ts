@@ -124,6 +124,12 @@ export interface DoxygenIndexService {
   /** 'Inject' dependencies */
   inject(fieldMappers: FieldMappers): void;
 
+  /** Take a snapshot of the service state */
+  snapshot(): any;
+
+  /** Restore a snaphot of the service state */
+  restore(data: any): DoxygenType;
+
   /** Read & store Doxygen index file data from input directory */
   read(): Promise<DoxygenType>;
 }
@@ -153,6 +159,15 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
 
   inject(fieldMappers: FieldMappers) {
     this.state.fieldMappers = fieldMappers;
+  }
+
+  snapshot() {
+    return this.state.doxygen;
+  }
+
+  restore(data: any): DoxygenType {
+    this.state.doxygen = data;
+    return this.state.doxygen;
   }
 
   async read(): Promise<DoxygenType> {
@@ -216,6 +231,7 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
     return { ...info, language };
   }
 }
+
 /**
  * Configuration service factory
  */
