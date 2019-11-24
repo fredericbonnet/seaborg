@@ -19,46 +19,50 @@ import {
 const render = RenderServiceRegistry.get('markdown');
 
 /** Generate all files from Doxygen index */
-export const generateFiles = async (index: DoxygenType) => {
-  // Generate index files
-  await generateIndexFiles(index);
+export const generateFiles = (index: DoxygenType) =>
+  Promise.all([
+    // Generate index files
+    generateIndexFiles(index),
 
-  // Generate all compound files
-  const list = await Promise.all(index.compounds.map(generateCompoundFile));
-
-  // Generate compound list file with all the generated files above
-  generateCompoundListFile(list);
-};
+    // Generate all compound files
+    Promise.all(index.compounds.map(generateCompoundFile)).then(
+      // Generate compound list file with all the generated files above
+      generateCompoundListFile
+    ),
+  ]);
 
 /**
  * Generate contents and index files from model
  *
  * @param index Index model
  */
-const generateIndexFiles = async (index: DoxygenType) => {
-  // Main file
-  await generateMainIndexFile(index);
+const generateIndexFiles = (index: DoxygenType) =>
+  Promise.all([
+    // Main file
+    generateMainIndexFile(index),
 
-  // Global files
-  await generateGlobalContentsFile(index);
-  await generateGlobalIndexFile(index);
+    // Global files
+    generateGlobalContentsFile(index),
+    generateGlobalIndexFile(index),
 
-  // Compound kind files
-  index.compounds
-    .map(compound => compound.kind)
-    .reduce(
-      (acc: CompoundKind[], kind) =>
-        acc.includes(kind) ? acc : [...acc, kind],
-      []
-    )
-    .forEach(async kind => {
-      const compounds = index.compounds.filter(
-        compound => compound.kind === kind
-      );
-      await generateCompoundContentsFile(kind, compounds);
-      await generateCompoundIndexFile(kind, compounds);
-    });
-};
+    // Compound kind files
+    ...index.compounds
+      .map(compound => compound.kind)
+      .reduce(
+        (acc: CompoundKind[], kind) =>
+          acc.includes(kind) ? acc : [...acc, kind],
+        []
+      )
+      .flatMap(kind => {
+        const compounds = index.compounds.filter(
+          compound => compound.kind === kind
+        );
+        return [
+          generateCompoundContentsFile(kind, compounds),
+          generateCompoundIndexFile(kind, compounds),
+        ];
+      }),
+  ]);
 
 /**
  * Generate main index file from model
