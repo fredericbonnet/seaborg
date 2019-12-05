@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 import fs from 'fs';
 
-import { configuration, doxygenIndex } from '@seaborg/core/lib/services';
+import { configuration } from '@seaborg/core/lib/services';
 
-import { init as templateInit } from '@seaborg/markdown';
-import { xsdString } from '@seaborg/markdown/lib/generic';
-import { descriptionType } from '@seaborg/markdown/lib/doxygen';
-
+import { init } from './init';
 import { generateFiles } from './files';
 
 // TODO better CLI argument parsing
@@ -22,17 +19,10 @@ try {
 }
 configuration.setOptions({ ...options, inputDir, outputDir });
 
-// Inject doxygenIndex dependencies
-doxygenIndex.inject({ xsdString, descriptionType });
-
-// Initialize template generation
-templateInit();
-
 // Ensure that the output directory exists
 fs.mkdirSync(configuration.options.outputDir, { recursive: true });
 
-// Read & process Doxygen index file from input directory
-doxygenIndex
-  .read()
+// Read & process Doxygen files from input directory
+init()
   .then(generateFiles)
   .then(() => console.log('Done!'));
