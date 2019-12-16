@@ -99,5 +99,6 @@ export class JobQueueFactory {
 }
 
 /** Singleton instance */
-const instance: JobQueue = JobQueueFactory.create();
+// const instance: JobQueue = JobQueueFactory.create();
+const instance: JobQueue = JobQueueFactory.createPooled(4);
 export default instance;
