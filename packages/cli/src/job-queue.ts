@@ -1,5 +1,5 @@
 /** Job function */
-export type Job = () => Promise<any>;
+export type Job = (context?: any) => Promise<any>;
 
 /**
  * Job queue interface
@@ -17,12 +17,24 @@ export interface JobQueue {
  * Simple job queue implementation, simply run the jobs immediately
  */
 export class SimpleJobQueueAdapter implements JobQueue {
+  /** Queue context */
+  private context: any;
+
   constructor() {}
+
+  /**
+   * Initialize context for the job queue
+   *
+   * @param fn Context init function
+   */
+  initContext(fn: () => any) {
+    this.context = fn();
+  }
 
   enqueue(job: Job) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        job()
+        job(this.context)
           .then(resolve)
           .catch(reject);
       }, 0);
@@ -34,8 +46,15 @@ export class SimpleJobQueueAdapter implements JobQueue {
  * Pooled job queue implementation, limit the number of parallel jobs
  */
 export class PooledJobQueueAdapter implements JobQueue {
+  /** Queue context (one per pool entry) */
+  private context: any[] = [];
+
   /** Enqueued jobs */
-  private jobs: { job: Job; resolve: Function; reject: Function }[] = [];
+  private jobs: {
+    job: Job;
+    resolve: Function;
+    reject: Function;
+  }[] = [];
 
   /** Running jobs */
   private runningJobs: Job[] = [];
@@ -50,6 +69,18 @@ export class PooledJobQueueAdapter implements JobQueue {
    */
   constructor(public capacity: number) {
     this.runningJobs.length = capacity;
+    this.context.length = capacity;
+  }
+
+  /**
+   * Initialize context for each pool entry
+   *
+   * @param fn Context init function
+   */
+  initContext(fn: (index: number) => any) {
+    for (let i = 0; i < this.capacity; i++) {
+      this.context[i] = fn(i);
+    }
   }
 
   enqueue(job: Job): Promise<any> {
@@ -76,7 +107,7 @@ export class PooledJobQueueAdapter implements JobQueue {
     this.runningJobs[freePool] = job;
     this.nbRunningJobs++;
     setTimeout(() => {
-      job()
+      job(this.context[freePool])
         .then(resolve)
         .catch(reject)
         .finally(() => {
@@ -98,6 +129,6 @@ export class JobQueueFactory {
   }
 }
 
-/** Singleton instance */
+/** Default instance */
 const instance: JobQueue = JobQueueFactory.create();
 export default instance;

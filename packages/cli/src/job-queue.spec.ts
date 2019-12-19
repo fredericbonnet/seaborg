@@ -40,7 +40,7 @@ describe('JobQueue', () => {
 });
 
 describe('SimpleJobQueueAdapter', () => {
-  let jobQueue: JobQueue;
+  let jobQueue: SimpleJobQueueAdapter;
   beforeEach(() => {
     jobQueue = new SimpleJobQueueAdapter();
   });
@@ -50,7 +50,7 @@ describe('SimpleJobQueueAdapter', () => {
     const jobs = [
       jobQueue.enqueue(
         () =>
-          new Promise((resolve, reject) => {
+          new Promise(resolve => {
             sequence.push('a');
             setTimeout(() => {
               sequence.push('b');
@@ -67,6 +67,20 @@ describe('SimpleJobQueueAdapter', () => {
     expect(results).to.eql([1, 2]);
     expect(sequence).to.eql(['a', 'c', 'b']);
   });
+
+  it('has no context by default', async () => {
+    const job = jobQueue.enqueue(async context => {
+      expect(context).to.be.undefined;
+    });
+    await job;
+  });
+  it('passes context to jobs', async () => {
+    jobQueue.initContext(() => 'context');
+    const job = jobQueue.enqueue(async context => {
+      expect(context).to.eql('context');
+    });
+    await job;
+  });
 });
 
 describe('PooledJobQueueAdapter', () => {
@@ -76,7 +90,7 @@ describe('PooledJobQueueAdapter', () => {
     const jobs = [
       jobQueue.enqueue(
         () =>
-          new Promise((resolve, reject) => {
+          new Promise(resolve => {
             sequence.push('a');
             setTimeout(() => {
               sequence.push('b');
@@ -99,7 +113,7 @@ describe('PooledJobQueueAdapter', () => {
     const jobs = [
       jobQueue.enqueue(
         () =>
-          new Promise((resolve, reject) => {
+          new Promise(resolve => {
             sequence.push('a');
             setTimeout(() => {
               sequence.push('b');
@@ -109,7 +123,7 @@ describe('PooledJobQueueAdapter', () => {
       ),
       jobQueue.enqueue(
         () =>
-          new Promise((resolve, reject) => {
+          new Promise(resolve => {
             sequence.push('c');
             setTimeout(() => {
               sequence.push('d');
@@ -125,5 +139,29 @@ describe('PooledJobQueueAdapter', () => {
     const results = await Promise.all(jobs);
     expect(results).to.eql([1, 2, 3]);
     expect(sequence).to.eql(['a', 'c', 'b', 'd', 'e']);
+  });
+
+  it('has no context by default', async () => {
+    const jobQueue = new PooledJobQueueAdapter(1);
+    const job = jobQueue.enqueue(async context => {
+      expect(context).to.be.undefined;
+    });
+    await job;
+  });
+  it('passes context to jobs', async () => {
+    const jobQueue = new PooledJobQueueAdapter(2);
+    jobQueue.initContext(index => `context #${index}`);
+    const jobs = [
+      jobQueue.enqueue(async context => {
+        expect(context).to.eql('context #0');
+      }),
+      jobQueue.enqueue(async context => {
+        expect(context).to.eql('context #1');
+      }),
+      jobQueue.enqueue(async context => {
+        expect(context).to.eql('context #0');
+      }),
+    ];
+    await Promise.all(jobs);
   });
 });
