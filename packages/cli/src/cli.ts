@@ -23,6 +23,13 @@ configuration.setOptions({ ...options, inputDir, outputDir });
 fs.mkdirSync(configuration.options.outputDir, { recursive: true });
 
 // Read & process Doxygen files from input directory
+console.log('Reading Doxygen index');
 init()
-  .then(generateFiles)
-  .then(() => console.log('Done!'));
+  .then(async index => {
+    console.log('Generating files');
+    return generateFiles(index);
+  })
+  .then(() => {
+    console.log('Done!');
+    process.exit();
+  });

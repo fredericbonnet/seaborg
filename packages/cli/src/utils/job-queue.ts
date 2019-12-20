@@ -124,7 +124,7 @@ export class JobQueueFactory {
   static create(): JobQueue {
     return new SimpleJobQueueAdapter();
   }
-  static createPooled(capacity: number): JobQueue {
+  static createPooled(capacity: number): PooledJobQueueAdapter {
     return new PooledJobQueueAdapter(capacity);
   }
 }
