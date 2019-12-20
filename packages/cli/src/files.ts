@@ -4,21 +4,15 @@
 
 import path from 'path';
 
-import {
-  configuration,
-  file,
-  context,
-  RenderServiceRegistry,
-} from '@seaborg/core/lib/services';
+import { configuration, file } from '@seaborg/core/lib/services';
 import {
   DoxygenType,
   CompoundType,
   CompoundKind,
 } from '@seaborg/core/lib/models';
 
-import jobQueue from './job-queue';
-
-const render = RenderServiceRegistry.get('markdown');
+import jobQueue from './utils/job-queue';
+import fileGenerator from './services/file-generator.service';
 
 /** Generate all files from Doxygen index */
 export const generateFiles = (index: DoxygenType) =>
@@ -71,66 +65,24 @@ const generateIndexFiles = (index: DoxygenType) =>
  *
  * @param index Index model
  */
-const generateMainIndexFile = async (index: DoxygenType) => {
-  return jobQueue.enqueue(async () => {
-    const { mdExtension } = configuration.options;
-    const outputFile = `index${mdExtension}`;
-
-    console.log(`Generating [index](${outputFile})`);
-
-    context.setRoot({ filename: outputFile });
-    await file.write(
-      path.join(configuration.options.outputDir, outputFile),
-      render.mainPage(index)
-    );
-
-    console.log(`Done [index](${outputFile})`);
-  });
-};
+const generateMainIndexFile = (index: DoxygenType) =>
+  jobQueue.enqueue(async () => fileGenerator.generateMainIndexFile(index));
 
 /**
  * Generate global contents file from model
  *
  * @param index Index model
  */
-const generateGlobalContentsFile = async (index: DoxygenType) => {
-  return jobQueue.enqueue(async () => {
-    const { contentsSuffix, mdExtension } = configuration.options;
-    const outputFile = `global${contentsSuffix}${mdExtension}`;
-
-    console.log(`Generating [global contents](${outputFile})`);
-
-    context.setRoot({ filename: outputFile });
-    await file.write(
-      path.join(configuration.options.outputDir, outputFile),
-      render.globalContentsPage(index)
-    );
-
-    console.log(`Done [global contents](${outputFile})`);
-  });
-};
+const generateGlobalContentsFile = (index: DoxygenType) =>
+  jobQueue.enqueue(async () => fileGenerator.generateGlobalContentsFile(index));
 
 /**
  * Generate global index file from model
  *
  * @param index Index model
  */
-const generateGlobalIndexFile = async (index: DoxygenType) => {
-  return jobQueue.enqueue(async () => {
-    const { indexSuffix, mdExtension } = configuration.options;
-    const outputFile = `global${indexSuffix}${mdExtension}`;
-
-    console.log(`Generating [global index](${outputFile})`);
-
-    context.setRoot({ filename: outputFile });
-    await file.write(
-      path.join(configuration.options.outputDir, outputFile),
-      render.globalIndexPage(index)
-    );
-
-    console.log(`Done [global index](${outputFile})`);
-  });
-};
+const generateGlobalIndexFile = (index: DoxygenType) =>
+  jobQueue.enqueue(async () => fileGenerator.generateGlobalIndexFile(index));
 
 /**
  * Generate compound kind contents file from model
@@ -138,25 +90,13 @@ const generateGlobalIndexFile = async (index: DoxygenType) => {
  * @param kind Compound kind
  * @param compounds Compound models
  */
-const generateCompoundContentsFile = async (
+const generateCompoundContentsFile = (
   kind: CompoundKind,
   compounds: CompoundType[]
-) => {
-  return jobQueue.enqueue(async () => {
-    const { contentsSuffix, mdExtension } = configuration.options;
-    const outputFile = `${kind}${contentsSuffix}${mdExtension}`;
-
-    console.log(`Generating [${kind} contents](${outputFile})`);
-
-    context.setRoot({ filename: outputFile });
-    await file.write(
-      path.join(configuration.options.outputDir, outputFile),
-      render.compoundsContentsPage(kind, compounds)
-    );
-
-    console.log(`Done [${kind} contents](${outputFile})`);
-  });
-};
+) =>
+  jobQueue.enqueue(async () =>
+    fileGenerator.generateCompoundContentsFile(kind, compounds)
+  );
 
 /**
  * Generate compound kind index file from model
@@ -164,25 +104,13 @@ const generateCompoundContentsFile = async (
  * @param kind Compound kind
  * @param compounds Compound models
  */
-const generateCompoundIndexFile = async (
+const generateCompoundIndexFile = (
   kind: CompoundKind,
   compounds: CompoundType[]
-) => {
-  return jobQueue.enqueue(async () => {
-    const { indexSuffix, mdExtension } = configuration.options;
-    const outputFile = `${kind}${indexSuffix}${mdExtension}`;
-
-    console.log(`Generating [${kind} index](${outputFile})`);
-
-    context.setRoot({ filename: outputFile });
-    await file.write(
-      path.join(configuration.options.outputDir, outputFile),
-      render.compoundsIndexPage(kind, compounds)
-    );
-
-    console.log(`Done [${kind} index](${outputFile})`);
-  });
-};
+) =>
+  jobQueue.enqueue(async () =>
+    fileGenerator.generateCompoundIndexFile(kind, compounds)
+  );
 
 /**
  * Generate compound file from XML
@@ -191,31 +119,8 @@ const generateCompoundIndexFile = async (
  *
  * @return generated file name
  */
-const generateCompoundFile = async (compound: CompoundType) => {
-  return jobQueue.enqueue(async () => {
-    const { mdExtension } = configuration.options;
-    const inputFile = `${compound.refid}.xml`;
-    const outputFile = `${compound.refid}${mdExtension}`;
-
-    console.log(
-      `Generating ${compound.kind} [${compound.name}](${outputFile})`
-    );
-
-    const doxygen = await file.readXml(
-      path.join(configuration.options.inputDir, inputFile)
-    );
-
-    context.setRoot({ filename: outputFile });
-    await file.write(
-      path.join(configuration.options.outputDir, outputFile),
-      render.compoundPage(doxygen)
-    );
-
-    console.log(`Done ${compound.kind} [${compound.name}](${outputFile})`);
-
-    return outputFile;
-  });
-};
+const generateCompoundFile = (compound: CompoundType) =>
+  jobQueue.enqueue(async () => fileGenerator.generateCompoundFile(compound));
 
 /**
  * Generate compound list file as a IIFE Javascript file for browser consumption
