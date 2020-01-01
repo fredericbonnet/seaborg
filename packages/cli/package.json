@@ -27,6 +27,7 @@
   "dependencies": {
     "@seaborg/core": "^0.2.1",
     "@seaborg/markdown": "^0.2.1",
-    "comlink": "^4.2.0"
+    "comlink": "^4.2.0",
+    "commander": "^4.0.1"
   }
 }

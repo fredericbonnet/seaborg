@@ -3,21 +3,13 @@ import fs from 'fs';
 
 import { configuration } from '@seaborg/core/lib/services';
 
+import { parseArgs } from './args';
 import { init } from './init';
 import { generateFiles } from './files';
 
-// TODO better CLI argument parsing
-// Read input/output dirs from command line
-const [, , inputDir, outputDir] = process.argv;
-
-// Attempt to read options from file `seaborg-options.json`
-let options = {};
-try {
-  options = JSON.parse(fs.readFileSync('./seaborg-options.json').toString());
-} catch {
-  // Ignore
-}
-configuration.setOptions({ ...options, inputDir, outputDir });
+// Parse command line and set configuration
+const { usePool, useWorkers, options } = parseArgs();
+configuration.setOptions(options);
 
 // Ensure that the output directory exists
 fs.mkdirSync(configuration.options.outputDir, { recursive: true });
@@ -27,7 +19,7 @@ console.log('Reading Doxygen index');
 init()
   .then(async index => {
     console.log('Generating files');
-    return generateFiles(index);
+    return generateFiles(index, { usePool, useWorkers });
   })
   .then(() => {
     console.log('Done!');
