@@ -39,7 +39,7 @@ describe('refTextType', () => {
 
   specify('compound', () => {
     const xml = `<ref refid="compound_12345" kindref="compound">some text</ref>`;
-    const md = '[some text](compound_12345.md)';
+    const md = '[some text](compound_12345.md#compound_12345)';
     expect(render(xml)).to.equal(md);
   });
 

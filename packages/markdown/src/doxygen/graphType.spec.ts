@@ -41,13 +41,13 @@ graph LR
 \`\`\`mermaid
 graph LR
 1["first node"]
-click 1 "file_12345.md"
+click 1 "file_12345.md#file_12345"
 1 --> 1
 1 --> 2
 1 --> 3
 
 2["second node"]
-click 2 "file_67890.md"
+click 2 "file_67890.md#file_67890"
 2 --> 3
 
 \`\`\`

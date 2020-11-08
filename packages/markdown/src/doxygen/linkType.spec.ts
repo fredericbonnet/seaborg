@@ -15,7 +15,7 @@ describe('linkType', () => {
 
   specify('regular', () => {
     const xml = `<node id="1"><link refid="file_12345"></link></node>`;
-    const md = 'click 1 "file_12345.md"';
+    const md = 'click 1 "file_12345.md#file_12345"';
     expect(render(xml)).to.equal(md);
   });
 

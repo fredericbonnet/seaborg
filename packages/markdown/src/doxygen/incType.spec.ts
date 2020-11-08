@@ -27,7 +27,7 @@ describe('incType', () => {
 
   specify('local with refid', () => {
     const xml = `<includes local="yes" refid="file_12345">file.h</includes>`;
-    const md = '[file.h](file_12345.md)';
+    const md = '[file.h](file_12345.md#file_12345)';
     expect(render(xml)).to.equal(md);
   });
 });

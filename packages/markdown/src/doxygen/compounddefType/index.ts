@@ -134,13 +134,13 @@ export const mappers = (): Mappers => ({
   inheritancegraph: ignore, // TODO graphs
   collaborationgraph: ignore, // TODO graphs
   //TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
 });
 
 export const templateContext = (element: Element) => {
   const { attributes } = element;
-  const { kind, language } = attributes;
-  return { kind, language, attributes };
+  const { id, kind, language } = attributes;
+  return { id, kind, language, attributes };
 };
 
 export default (element: Element) => {

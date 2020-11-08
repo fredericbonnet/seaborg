@@ -25,7 +25,7 @@ describe('linkedTextType', () => {
   });
   specify('linked text', () => {
     const xml = `<initializer>= sizeof(<ref refid="sometype_12345" kindref="compound">SomeType</ref>)</initializer>`;
-    const md = '= sizeof([SomeType](sometype_12345.md))';
+    const md = '= sizeof([SomeType](sometype_12345.md#sometype_12345))';
     expect(render(xml)).to.equal(md);
   });
 });

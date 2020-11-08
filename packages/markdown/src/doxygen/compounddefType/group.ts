@@ -7,6 +7,7 @@ import { mappers as defaultMappers, templateContext } from '.';
 
 const template = Handlebars.compile(
   `
+<a id="{{id}}"></a>
 # {{title}}
 
 {{> compounddef-badges}}

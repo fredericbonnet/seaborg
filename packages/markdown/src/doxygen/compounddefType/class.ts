@@ -13,6 +13,7 @@ import { mappers as defaultMappers, templateContext } from '.';
 
 const template = Handlebars.compile(
   `
+<a id="{{id}}"></a>
 # {{compound-label kind}} {{md compoundname}}
 
 {{> compounddef-badges}}

@@ -25,7 +25,7 @@ describe('nodeType', () => {
   });
   specify('with link', () => {
     const xml = `<node id="1"><link refid="file_12345"></link></node>`;
-    const md = `1\nclick 1 "file_12345.md"\n`;
+    const md = `1\nclick 1 "file_12345.md#file_12345"\n`;
     expect(render(false)(xml)).to.equal(md);
   });
   specify('full example', () => {
@@ -37,7 +37,7 @@ describe('nodeType', () => {
           <childnode refid="3" relation="include"></childnode>
       </node>`;
     const md = `1["text"]
-click 1 "file_12345.md"
+click 1 "file_12345.md#file_12345"
 1 --> 1
 1 --> 2
 1 --> 3

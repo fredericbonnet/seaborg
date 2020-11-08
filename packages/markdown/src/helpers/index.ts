@@ -41,7 +41,7 @@ const linkHelper = (refid: string, kindref: string) => {
   const { mdExtension } = configuration.options;
   switch (kindref) {
     case 'compound':
-      return `${refid}${mdExtension}`;
+      return `${refid}${mdExtension}#${refid}`;
     case 'member': {
       const compound = doxygenIndex.compounds.find(hasMember(refid));
       if (compound) {
@@ -71,7 +71,7 @@ const numberedItemHelper = (text: string, index: number) =>
 /** Handlebars helper for TODO lists */
 const todoHelper = (list: string[]) => {
   return list && list.length
-    ? '**TODO**:\n' + list.map(e => `* ${e}`).join('\n')
+    ? '**TODO**:\n' + list.map((e) => `* ${e}`).join('\n')
     : undefined;
 };
 
