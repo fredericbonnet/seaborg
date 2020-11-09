@@ -7,21 +7,15 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren } from '../mappers';
 import { paramType } from '.';
 
-const template = Handlebars.compile(
+const template = ({ params }: any) =>
   `
 **Template parameters**:
 
-{{#each params}}
-* {{this}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+${params.map((e: string) => `* ${e}\n`).join('')}`;
 
 const mappers = (): Mappers => ({
   param: paramType,

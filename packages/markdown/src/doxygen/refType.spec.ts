@@ -13,13 +13,13 @@ describe('refType', () => {
     return refType(root as Element);
   };
 
-  specify('basic', async () => {
+  specify('basic', () => {
     const xml = `<innerclass refid="class_12345">ClassName</innerclass>`;
     const md = '[ClassName](class_12345.md#class_12345)';
     expect(render(xml)).to.equal(md);
   });
 
-  specify('special chars', async () => {
+  specify('special chars', () => {
     const xml = `<innerclass refid="class_12345">class_name&lt;T&gt;</innerclass>`;
     const md = '[class\\_name\\<T\\>](class_12345.md#class_12345)';
     expect(render(xml)).to.equal(md);

@@ -7,23 +7,19 @@
     <xsd:attribute name="id" type="xsd:string" /> 
   </xsd:complexType>
 */
+
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
 import { descriptionType } from '.';
 
-const template = Handlebars.compile(
+const template = ({ xreftitle, xrefdescription }: any) =>
   `
-**{{xreftitle}}**:
+**${xreftitle}**:
 
-{{xrefdescription}}
-`,
-  {
-    noEscape: true,
-  }
-);
+${xrefdescription}
+`;
 
 const mappers = (): Mappers => ({
   xreftitle: xsdString,

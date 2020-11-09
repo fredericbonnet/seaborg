@@ -1,5 +1,4 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import {
   Mappers,
@@ -8,16 +7,10 @@ import {
 } from '../../mappers';
 import { docParaType } from '..';
 
-const template = Handlebars.compile(
-  `
+const template = ({ para }: any) => `
 **See also**:
 
-{{#each para}}
-{{this}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+${para ? para.join('\n') + '\n' : ''}`;
 
 const mappers = (): Mappers => ({
   para: docParaType,
@@ -30,7 +23,5 @@ export default (element: Element) => {
 };
 
 export function inline(element: Element) {
-  return applyToChildren(mappers())(element)
-    .join('')
-    .trim();
+  return applyToChildren(mappers())(element).join('').trim();
 }

@@ -1,19 +1,13 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped } from '../../mappers';
 import { docParamListItem } from '..';
 
-const template = Handlebars.compile(
-  `
+const item = (e: string) => `* ${e}`;
+const template = ({ parameteritem }: any) => `
 **Exceptions**:
 
-{{#each parameteritem}}
-* {{this}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+${parameteritem ? parameteritem.map(item).join('\n') + '\n' : ''}`;
 
 const mappers = (): Mappers => ({
   parameteritem: docParamListItem,

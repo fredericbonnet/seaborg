@@ -9,15 +9,14 @@
 
 //TODO
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
+import { mdHelper, refHelper } from '../helpers';
 import { docTitleCmdGroup } from '.';
 
-const template = Handlebars.compile('{{ref refid kindref text}}', {
-  noEscape: true,
-});
+const template = ({ refid, kindref, text }: any) =>
+  refHelper(refid, kindref, mdHelper(text));
 
 const mappers = (): Mappers => ({
   ...docTitleCmdGroup(),

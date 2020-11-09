@@ -8,24 +8,19 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { currentContext } from '@seaborg/core/lib/services';
 
 import { Mappers, applyToChildren } from '../mappers';
+import { languageCodeHelper } from '../helpers';
 import { codelineType } from '.';
 
-// TODO language
-const template = Handlebars.compile(
+const template = ({ lines, language }: any) =>
   `
-\`\`\`{{language-code language}}
-{{#each lines}}
-{{this}}
-{{/each}}
+\`\`\`${language ? languageCodeHelper(language) : ''}
+${lines.join('\n')}
 \`\`\`
-`,
-  { noEscape: true }
-);
+`;
 
 const mappers = (): Mappers => ({
   codeline: codelineType,

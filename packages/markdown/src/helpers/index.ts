@@ -28,16 +28,16 @@ const escapedMdChars = /[_<>]/g;
 const escapeMd = (c: string) => '\\' + c;
 
 /** Handlebars helper for Markdown escape. Useful with identifiers. */
-const mdHelper = (text: string | string[]): any =>
+export const mdHelper = (text: string | string[]): any =>
   Handlebars.Utils.isArray(text)
     ? (text as string[]).map(mdHelper)
     : (text as string).replace(escapedMdChars, escapeMd);
 
 /** Handlebars helper for Markdown language code */
-const languageCodeHelper = (code: string) => codes[code];
+export const languageCodeHelper = (code: string) => codes[code];
 
 /** Handlebars helper for links */
-const linkHelper = (refid: string, kindref: string) => {
+export const linkHelper = (refid: string, kindref: string) => {
   const { mdExtension } = configuration.options;
   switch (kindref) {
     case 'compound':
@@ -54,22 +54,15 @@ const linkHelper = (refid: string, kindref: string) => {
 };
 
 /** Handlebars helper for ref links */
-const refHelper = (refid: string, kindref: string, text: string) => {
+export const refHelper = (refid: string, kindref: string, text: string) => {
   return `[${text}](${linkHelper(refid, kindref)})`;
 };
 
 /** Handlebars helper for indentation */
 const indentHelper = (level: number) => '  '.repeat(level);
 
-/** Handlebars helper for bullet list items */
-const bulletItemHelper = (text: string) => `* ${text}`;
-
-/** Handlebars helper for numbered list items */
-const numberedItemHelper = (text: string, index: number) =>
-  `${index + 1}. ${text}`;
-
 /** Handlebars helper for TODO lists */
-const todoHelper = (list: string[]) => {
+export const todoHelper = (list: string[]) => {
   return list && list.length
     ? '**TODO**:\n' + list.map((e) => `* ${e}`).join('\n')
     : undefined;
@@ -100,8 +93,6 @@ export function registerHelpers() {
   Handlebars.registerHelper('link', linkHelper);
   Handlebars.registerHelper('ref', refHelper);
   Handlebars.registerHelper('indent', indentHelper);
-  Handlebars.registerHelper('bullet-item', bulletItemHelper);
-  Handlebars.registerHelper('numbered-item', numberedItemHelper);
   Handlebars.registerHelper('compound-label', compoundLabelHelper);
   Handlebars.registerHelper('compound-plural', compoundPluralHelper);
   Handlebars.registerHelper('member-label', memberLabelHelper);

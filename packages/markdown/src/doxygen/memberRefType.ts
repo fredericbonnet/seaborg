@@ -12,14 +12,13 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
+import { mdHelper, refHelper } from '../helpers';
 
-const template = Handlebars.compile(`{{ref refid "member" (md name)}}`, {
-  noEscape: true,
-});
+const template = ({ refid, name }: any) =>
+  refHelper(refid, 'member', mdHelper(name));
 
 const mappers = (): Mappers => ({
   scope: xsdString,

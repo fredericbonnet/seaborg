@@ -7,22 +7,17 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren } from '../mappers';
 import nodeType from './nodeType';
 
-const template = Handlebars.compile(
+const template = ({ direction, nodes }: any) =>
   `
 \`\`\`mermaid
-graph {{direction}}
-{{#each nodes}}
-{{this}}
-{{/each}}
+graph ${direction}
+${nodes.join('\n')}
 \`\`\`
-`,
-  { noEscape: true }
-);
+`;
 
 const mappers = (reverse: boolean): Mappers => ({
   node: nodeType(reverse),

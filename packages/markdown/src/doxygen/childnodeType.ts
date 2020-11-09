@@ -9,11 +9,9 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
-const template = Handlebars.compile('{{source}} --> {{destination}}', {
-  noEscape: true,
-});
+const template = ({ source, destination }: any) =>
+  `${source} --> ${destination}`;
 
 export default (reverse: boolean) => (element: Element) => {
   const {

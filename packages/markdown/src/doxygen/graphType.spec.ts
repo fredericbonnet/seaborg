@@ -18,6 +18,7 @@ describe('graphType', () => {
     const md = `
 \`\`\`mermaid
 graph LR
+
 \`\`\`
 `;
     expect(render('LR', false)(xml)).to.equal(md);

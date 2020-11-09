@@ -7,27 +7,19 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren } from '../mappers';
 import { docTitleType } from '.';
 
-const template = Handlebars.compile(
-  `
-<b>{{text}}</b>:
-`,
-  {
-    noEscape: true,
-  }
-);
+const template = ({ text }: any) => `
+<b>${text}</b>:
+`;
 
 const mappers = (): Mappers => ({
   term: docTitleType,
 });
 
 export default (element: Element) => {
-  const text = applyToChildren(mappers())(element)
-    .join('')
-    .trim();
+  const text = applyToChildren(mappers())(element).join('').trim();
   return template({ text });
 };

@@ -10,22 +10,13 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
+import { refHelper } from '../helpers';
 
-const template = Handlebars.compile(
-  `
-{{~#if local}}{{#if refid}}{{ref refid "compound" text}}{{else}}{{text}}{{/if ~}}
-{{~else ~}}
-<{{text}}>
-{{~/if ~}}
-`,
-  {
-    noEscape: true,
-  }
-);
+const template = ({ refid, local, text }: any) =>
+  local ? (refid ? refHelper(refid, 'compound', text) : text) : `<${text}>`;
 
 const mappers = (): Mappers => ({
   [$text]: textNode,

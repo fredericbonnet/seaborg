@@ -14,26 +14,30 @@
 
 // TODO
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../mappers';
 import { xsdString } from '../generic';
+import { todoHelper } from '../helpers';
 import { linkedTextType, descriptionType } from '.';
 
-const template = Handlebars.compile(
-  `
-{{~#if defname}}{{defname}}{{/if ~}}
-{{~#if type}}
-{{~#if attributes}}_{{attributes}}_ {{/if ~}}
-{{~ type ~}}
-{{~#if declname}} **{{declname}}**{{/if ~}}
-{{~#if defval}} = {{defval}} {{/if ~}}
-{{~#if briefdescription}}: {{briefdescription}}{{/if ~}}
-{{/if ~}}
-{{~TODO TODO ~}}
-  `,
-  { noEscape: true }
-);
+const template = ({
+  defname,
+  type,
+  attributes,
+  declname,
+  defval,
+  briefdescription,
+  TODO,
+}: any) =>
+  (defname ? defname : '') +
+  (type
+    ? (attributes ? `_${attributes}_ ` : '') +
+      type +
+      (declname ? ` **${declname}**` : '') +
+      (defval ? ` = ${defval} ` : '') +
+      (briefdescription ? `: ${briefdescription}` : '')
+    : '') +
+  (TODO ? todoHelper(TODO) : '');
 
 const mappers = (): Mappers => ({
   attributes: xsdString, // Missing from compound.xsd!
@@ -43,7 +47,7 @@ const mappers = (): Mappers => ({
   defval: linkedTextType,
   briefdescription: descriptionType,
   //TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
 });
 
 export default (element: Element) => {

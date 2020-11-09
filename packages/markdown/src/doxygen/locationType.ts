@@ -10,18 +10,13 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
-const template = Handlebars.compile(
-  `
-{{~#if line ~}}
-**Definition**: \`{{md file}}\` (line {{line}})
-{{~else ~}}
-**Location**: \`{{md file}}\`
-{{~/if ~}}
-`,
-  { noEscape: true }
-);
+import { mdHelper } from '../helpers';
+
+const template = ({ file, line }: any) =>
+  line
+    ? `**Definition**: \`${mdHelper(file)}\` (line ${line})`
+    : `**Location**: \`${mdHelper(file)}\``;
 
 export default (element: Element) => {
   const {

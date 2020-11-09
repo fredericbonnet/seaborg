@@ -10,25 +10,15 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
 import { linkType, childnodeType } from '.';
 
-const template = Handlebars.compile(
-  `{{id}}{{#if label}}["{{label}}"]{{/if}}
-{{#if link}}
-{{./link}}
-{{/if ~}}
-{{#if childnode}}
-{{#each childnode}}
-{{this}}
-{{/each}}{{~/if ~}}`,
-  {
-    noEscape: true,
-  }
-);
+const template = ({ id, label, link, childnode }: any) =>
+  `${id}${label ? `["${label}"]` : ''}\n` +
+  (link ? `${link}\n` : '') +
+  (childnode ? childnode.join('\n') + '\n' : '');
 
 const mappers = (reverse: boolean): Mappers => ({
   label: xsdString,

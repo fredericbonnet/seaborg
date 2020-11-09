@@ -7,21 +7,14 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren } from '../mappers';
 import { memberRefType } from '.';
 
-const template = Handlebars.compile(
-  `
+const template = ({ members }: any) => `
 ## Members
 
-{{#each members}}
-* {{this}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+${members.map((e: string) => `* ${e}\n`).join('')}`;
 
 const mappers = (): Mappers => ({
   member: memberRefType,

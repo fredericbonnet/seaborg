@@ -12,23 +12,20 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
+import { mdHelper } from '../helpers';
 import { descriptionType, linkedTextType } from '.';
 
-const template = Handlebars.compile(
-  `
-<a id="{{id}}"></a>
-#### Enumerator {{md name}}
+const template = ({ id, name, briefdescription, detaileddescription }: any) => `
+<a id="${id}"></a>
+#### Enumerator ${mdHelper(name)}
 
-{{briefdescription}}
+${briefdescription || ''}
 
-{{detaileddescription}}
-`,
-  { noEscape: true }
-);
+${detaileddescription || ''}
+`;
 
 const mappers = (): Mappers => ({
   name: xsdString,
@@ -46,10 +43,8 @@ export default (element: Element) => {
   return template({ ...context, id });
 };
 
-const defTemplate = Handlebars.compile(
-  '{{name}}{{#if initializer}} {{initializer}}{{/if}}',
-  { noEscape: true }
-);
+const defTemplate = ({ name, initializer }: any) =>
+  `${name}${initializer ? ' ' + initializer : ''}`;
 
 const defMappers = (): Mappers => ({
   name: xsdString,

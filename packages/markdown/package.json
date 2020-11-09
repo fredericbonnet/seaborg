@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "@rgrove/parse-xml": "^2.0.1",
-    "@seaborg/core": "^0.3.0",
-    "handlebars": "^4.4.5"
+    "@seaborg/core": "^0.3.0"
   }
 }

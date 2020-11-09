@@ -7,28 +7,17 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren } from '../mappers';
 import { docListItemType } from '.';
 
-const itemizedTemplate = Handlebars.compile(
-  `
-{{#each items}}
-{{bullet-item this}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+const bulletItem = (text: string) => `* ${text}\n`;
+const itemizedTemplate = ({ items }: { items: string[] }) =>
+  `\n${items.map(bulletItem).join('')}`;
 
-const orderedTemplate = Handlebars.compile(
-  `
-{{#each items}}
-{{numbered-item this @index}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+const orderedItem = (text: string, index: number) => `${index + 1}. ${text}\n`;
+const orderedTemplate = ({ items }: { items: string[] }) =>
+  `\n${items.map(orderedItem).join('')}`;
 
 const mappers = (): Mappers => ({
   listitem: docListItemType,

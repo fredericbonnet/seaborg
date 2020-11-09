@@ -13,14 +13,13 @@
 
 //TODO
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
+import { mdHelper, refHelper } from '../helpers';
 
-const template = Handlebars.compile('{{ref refid kindref (md text)}}', {
-  noEscape: true,
-});
+const template = ({ refid, kindref, text }: any) =>
+  refHelper(refid, kindref, mdHelper(text));
 
 const mappers = (): Mappers => ({
   [$text]: textNode,

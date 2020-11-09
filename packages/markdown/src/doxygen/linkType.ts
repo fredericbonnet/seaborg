@@ -6,15 +6,12 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
+
+import { linkHelper } from '../helpers';
 
 // FIXME kindref
-const template = Handlebars.compile(
-  'click {{parentid}} "{{link refid "compound"}}"',
-  {
-    noEscape: true,
-  }
-);
+const template = ({ parentid, refid }: any) =>
+  `click ${parentid} "${linkHelper(refid, 'compound')}"`;
 
 export default (element: Element) => {
   const {

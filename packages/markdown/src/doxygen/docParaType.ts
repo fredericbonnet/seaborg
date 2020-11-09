@@ -5,7 +5,6 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { pipe, negate, filter, map } from '@seaborg/core/lib/operators';
 import { Mappers, $text, applyToNode } from '../mappers';
@@ -14,17 +13,8 @@ import { textNode } from '../generic';
 import { docCmdGroup } from '.';
 import { inline as seeInline } from './docSimpleSectType/see';
 
-const template = Handlebars.compile(
-  `
-{{~# each para}}
-{{this}}
-{{/each ~}}
-{{~#if see}}
-**See also**: {{#each see}}{{this}}{{#unless @last}}, {{/unless}}{{/each }}
-{{/if ~}}
-`,
-  { noEscape: true }
-);
+const seeTemplate = ({ see }: any) =>
+  see && see.length ? `**See also**: ${see.join(', ')}\n` : '';
 
 const mappers = (): Mappers => ({
   ...docCmdGroup(),
@@ -33,7 +23,7 @@ const mappers = (): Mappers => ({
 
 /** Filter for simplesect of a given kind */
 // @ts-ignore
-const simplesect = kind => e =>
+const simplesect = (kind) => (e) =>
   e.type === 'element' && e.name === 'simplesect' && e.attributes.kind === kind;
 
 export default (element: Element) => {
@@ -51,8 +41,8 @@ export default (element: Element) => {
     filter(nonEmpty)
   );
 
-  const para = paraMapper(element.children);
+  const para = paraMapper(element.children).join('') + '\n';
   const see = seeMapper(element.children);
 
-  return template({ para, see });
+  return para + seeTemplate({ see });
 };
