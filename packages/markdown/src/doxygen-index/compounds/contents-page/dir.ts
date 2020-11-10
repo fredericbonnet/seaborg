@@ -1,4 +1,3 @@
-import Handlebars from 'handlebars';
 import { isString, isUndefined } from 'util';
 
 import { CompoundType, CompoundKind } from '@seaborg/core/lib/models';
@@ -11,16 +10,14 @@ import {
   map,
 } from '@seaborg/core/lib/operators';
 
-import { IndentedItem } from '..';
+import { compoundPluralHelper } from '../../../helpers';
+import { compoundTree, IndentedItem } from '..';
 
-const template = Handlebars.compile(
-  `
-# {{compound-plural kind}}
+const template = (kind: CompoundKind, compounds: IndentedItem[]) => `
+# ${compoundPluralHelper(kind)}
 
-{{> compound-tree items=compounds}}
-`,
-  { noEscape: true }
-);
+${compoundTree(compounds)}
+`;
 
 export default (kind: CompoundKind, compounds: CompoundType[]) => {
   // Build dir tree
@@ -33,7 +30,7 @@ export default (kind: CompoundKind, compounds: CompoundType[]) => {
 
   // - Toplevel dirs are those not belonging to global innerdir list
   const toplevelDirs = compounds.filter(
-    compound => !innerdirs.includes(compound.refid)
+    (compound) => !innerdirs.includes(compound.refid)
   );
 
   // - Build tree as flattened list with level
@@ -54,5 +51,5 @@ export default (kind: CompoundKind, compounds: CompoundType[]) => {
   };
   const tree = toplevelDirs.flatMap(flatten(0));
 
-  return template({ kind, compounds: tree });
+  return template(kind, tree);
 };

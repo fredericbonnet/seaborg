@@ -1,22 +1,39 @@
-import Handlebars from 'handlebars';
+import {
+  CompoundType,
+  DoxygenType,
+  MemberType,
+} from '@seaborg/core/lib/models';
+import {
+  mdHelper,
+  refHelper,
+  memberLabelHelper,
+  compoundLabelHelper,
+} from '../../helpers';
 
-import { DoxygenType } from '@seaborg/core/lib/models';
+/** Template for member item */
+const memberItem = ({ name, refid, kind }: MemberType) =>
+  `
+  * ${refHelper(refid, 'member', mdHelper(name || ''))} ${memberLabelHelper(
+    kind
+  )}`;
 
-const template = Handlebars.compile(
+/** Template for compound item */
+const compoundItem = ({ name, members, refid, kind, title }: CompoundType) =>
+  `* ${refHelper(
+    refid,
+    'compound',
+    mdHelper(title || name)
+  )} ${compoundLabelHelper(kind)} ${members.map(memberItem)}`;
+
+/** Main template */
+const template = (compounds: CompoundType[]) =>
   `
 # Contents
 
-{{#each compounds}}
-* {{#if title}}{{ref refid "compound" title}}{{else}}{{ref refid "compound" (md name)}}{{/if}} {{compound-label kind}}
-    {{#each members}}
-    * {{ref refid "member" (md name)}} {{member-label kind}}
-    {{/each}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+${compounds.map(compoundItem).join('\n')}
+`;
 
 export default (index: DoxygenType) => {
   const { compounds } = index;
-  return template({ compounds });
+  return template(compounds);
 };

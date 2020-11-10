@@ -20,6 +20,7 @@ import {
 } from '../doxygen/DoxMemberKind';
 
 import { registerHelpers as registerBadges } from './badges';
+import { MemberKind } from '@seaborg/core';
 
 /** Escaped Markdown char sequences */
 const escapedMdChars = /[_<>]/g;
@@ -59,7 +60,7 @@ export const refHelper = (refid: string, kindref: string, text: string) => {
 };
 
 /** Handlebars helper for indentation */
-const indentHelper = (level: number) => '  '.repeat(level);
+export const indentHelper = (level: number) => '  '.repeat(level);
 
 /** Handlebars helper for TODO lists */
 export const todoHelper = (list: string[]) => {
@@ -69,13 +70,16 @@ export const todoHelper = (list: string[]) => {
 };
 
 /** Handlebars helper for compound label */
-const compoundLabelHelper = (kind: DoxCompoundKind) => compoundLabels[kind];
+export const compoundLabelHelper = (kind: DoxCompoundKind) =>
+  compoundLabels[kind];
 
 /** Handlebars helper for compound plural */
-const compoundPluralHelper = (kind: DoxCompoundKind) => compoundPlurals[kind];
+export const compoundPluralHelper = (kind: DoxCompoundKind) =>
+  compoundPlurals[kind];
 
 /** Handlebars helper for member label */
-const memberLabelHelper = (kind: DoxMemberKind) => memberLabels[kind];
+export const memberLabelHelper = (kind: DoxMemberKind | MemberKind) =>
+  memberLabels[kind];
 
 /** Handlebars helper for member plural */
 const memberPluralHelper = (kind: DoxMemberKind) => memberPlurals[kind];

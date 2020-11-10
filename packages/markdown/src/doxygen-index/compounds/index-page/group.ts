@@ -1,29 +1,20 @@
-import Handlebars from 'handlebars';
-
 import { CompoundType, CompoundKind } from '@seaborg/core/lib/models';
 import { pipe } from '@seaborg/core/lib/operators';
 
-import { compoundName } from '.';
 import { initial, groupBy } from '../../../operators';
+import { compoundPluralHelper } from '../../../helpers';
+import { CompoundIndex, compoundIndex, compoundName } from '.';
 
-const template = Handlebars.compile(
-  `
-# Index of {{compound-plural kind}}
+const template = (kind: CompoundKind, index: CompoundIndex) => `
+# Index of ${compoundPluralHelper(kind)}
 
-{{> compound-index}}
-`,
-  { noEscape: true }
-);
+${compoundIndex(index)}
+`;
 
-const buildIndex = groupBy(
-  pipe(
-    compoundName,
-    initial
-  )
-);
+const buildIndex = groupBy(pipe(compoundName, initial));
 
 export default (kind: CompoundKind, compounds: CompoundType[]) => {
   const index = buildIndex(compounds);
 
-  return template({ kind, index });
+  return template(kind, index);
 };

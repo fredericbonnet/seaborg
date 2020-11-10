@@ -1,5 +1,3 @@
-import Handlebars from 'handlebars';
-
 import { configuration } from '@seaborg/core/lib/services';
 import {
   DoxygenType,
@@ -8,25 +6,37 @@ import {
 } from '@seaborg/core/lib/models';
 import { map, pipe, reduce, ReduceFunc } from '@seaborg/core/lib/operators';
 import { unique } from '../operators';
+import { compoundPluralHelper } from '../helpers';
+import { DoxCompoundKind } from '../doxygen/DoxCompoundKind';
 
-const template = Handlebars.compile(
+/** Template for link item */
+const linkItem = (label: string, link: string) => `* [${label}](${link})`;
+
+/** Template map function for kind item */
+const kindItem = (suffix: string) => (kind: DoxCompoundKind) =>
+  linkItem(compoundPluralHelper(kind), kind + suffix);
+
+/** Template for Contents page list */
+const contentsTemplate = ({ contentsSuffix, mdExtension, kinds }: any) =>
   `
 # Contents pages
 
-* [Global contents](global{{contentsSuffix}}{{mdExtension}})
-{{#each kinds}}
-* [{{compound-plural this}}]({{this}}{{../contentsSuffix}}{{../mdExtension}})
-{{/each}}
+${linkItem('Global contents', 'global' + contentsSuffix + mdExtension)}
+${kinds.map(kindItem(contentsSuffix + mdExtension)).join('\n')}
+`;
 
+/** Template for Index page list */
+const indexTemplate = ({ indexSuffix, mdExtension, kinds }: any) =>
+  `
 # Index pages
 
-* [Global index](global{{indexSuffix}}{{mdExtension}})
-{{#each kinds}}
-* [{{compound-plural this}}]({{this}}{{../indexSuffix}}{{../mdExtension}})
-{{/each}}
-`,
-  { noEscape: true }
-);
+${linkItem('Global index', 'global' + indexSuffix + mdExtension)}
+${kinds.map(kindItem(indexSuffix + mdExtension)).join('\n')}
+`;
+
+/** Main template */
+const template = (context: any) =>
+  contentsTemplate(context) + indexTemplate(context);
 
 /** Map compound to its kind */
 const toKind = (compound: CompoundType) => compound.kind;
@@ -36,10 +46,7 @@ const uniqueKinds = unique as ReduceFunc<CompoundKind, CompoundKind[]>;
 
 export default (index: DoxygenType) => {
   const { contentsSuffix, indexSuffix, mdExtension } = configuration.options;
-  const kinds = pipe(
-    map(toKind),
-    reduce(uniqueKinds, [])
-  )(index.compounds);
+  const kinds = pipe(map(toKind), reduce(uniqueKinds, []))(index.compounds);
 
   return template({ kinds, contentsSuffix, indexSuffix, mdExtension });
 };

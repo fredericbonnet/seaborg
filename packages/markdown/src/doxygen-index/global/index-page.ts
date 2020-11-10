@@ -1,5 +1,3 @@
-import Handlebars from 'handlebars';
-
 import { pipe, reduce, configuration } from '@seaborg/core';
 import {
   DoxygenType,
@@ -11,22 +9,27 @@ import { DoxRefKind } from '../../doxygen';
 import { labels as compoundLabels } from '../../doxygen/DoxCompoundKind';
 import { labels as memberLabels } from '../../doxygen/DoxMemberKind';
 import { uniqueBy, sortBy, groupBy, initial } from '../../operators';
+import { mdHelper, refHelper } from '../../helpers';
 
-const template = Handlebars.compile(
+/** Template for reference item */
+const referenceItem = ({ kind, refid, name, label }: Reference) =>
+  `* ${refHelper(refid, kind, mdHelper(name))} ${label}`;
+
+/** Template map function for entry item */
+const entryItem = ([key, references]: [string, Reference[]]) =>
+  `
+## ${key}
+
+${references.map(referenceItem).join('\n')}
+`;
+
+/** Main template */
+const template = (index: { [key: string]: Reference[] }) =>
   `
 # Index
 
-{{#each index}}
-## {{@key}}
-
-{{#each this}}
-* {{ref refid kind (md name)}} {{label}}
-{{/each}}
-
-{{/each}}
-`,
-  { noEscape: true }
-);
+${Object.entries(index).map(entryItem).join('\n')}
+`;
 
 /** Reference type */
 type Reference = {
@@ -67,11 +70,7 @@ const stripPrefix = (name: string) =>
   name.replace(configuration.getIgnoredPrefixRE(), '');
 
 /** Get reference key */
-const referenceKey = pipe(
-  referenceName,
-  stripPrefix,
-  initial
-);
+const referenceKey = pipe(referenceName, stripPrefix, initial);
 
 /** Build index from references */
 const buildIndex = pipe(
@@ -84,8 +83,8 @@ export default (index: DoxygenType) => {
   const { compounds } = index;
   const idx = buildIndex([
     ...compounds.map(compoundReference),
-    ...compounds.flatMap(compound => compound.members).map(memberReference),
+    ...compounds.flatMap((compound) => compound.members).map(memberReference),
   ]);
 
-  return template({ index: idx });
+  return template(idx);
 };

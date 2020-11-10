@@ -1,6 +1,5 @@
-import Handlebars from 'handlebars';
-
 import { CompoundType } from '@seaborg/core/lib/models';
+import { indentHelper, mdHelper, refHelper } from '../../helpers';
 
 export { default as contentsPage } from './contents-page';
 export { default as indexPage } from './index-page';
@@ -8,43 +7,24 @@ export { default as indexPage } from './index-page';
 /** Indented compound item */
 export type IndentedItem = { compound: CompoundType; level: number };
 
-/**
- * Compound list template
- *
- * @param {CompoundType[]} items compounds
- */
-Handlebars.registerPartial(
-  'compound-list',
-  `
-{{#each items}}
-* {{> compound-item this}}
-{{/each}}
-`
-);
+/** Compound list template */
+export const compoundList = (items: CompoundType[]) =>
+  items.map((item) => `* ${compoundItem(item)}`).join('\n');
 
-/**
- * Compound tree template
- *
- * @param {IndentedItem[]} items compound items
- */
-Handlebars.registerPartial(
-  'compound-tree',
-  `
-{{#each items}}
-{{indent level}}* {{> compound-item compound}}
-{{/each}}
-`
-);
+/** Compound tree template */
+export const compoundTree = (items: IndentedItem[]) =>
+  items
+    .map(
+      (item) => `${indentHelper(item.level)}* ${compoundItem(item.compound)}`
+    )
+    .join('\n');
 
 /** Compound item template */
-Handlebars.registerPartial(
-  'compound-item',
-  `
-{{~#if title ~}}
-{{ref refid "compound" title}}
-{{~ else ~}}
-{{ref refid "compound" (md name)}}
-{{~/if ~}}
-{{~#if briefdescription}}: {{briefdescription}}{{/if ~}}
-`
-);
+export const compoundItem = ({
+  refid,
+  title,
+  name,
+  briefdescription,
+}: CompoundType) =>
+  refHelper(refid, 'compound', title || mdHelper(name)) +
+  (briefdescription ? `: ${briefdescription}` : '');

@@ -1,23 +1,15 @@
-import Handlebars from 'handlebars';
-
 import { CompoundKind, CompoundType } from '@seaborg/core/lib/models';
+import { compoundList } from '..';
 
-/**
- * Compound index template
- *
- * @param {CompoundIndex} index compound index
- */
-Handlebars.registerPartial(
-  'compound-index',
-  `
-{{#each index}}
-## {{@key}}
+/** Index entry template */
+const indexEntry = ([key, items]: [string, CompoundType[]]) => `## ${key}
 
-{{> compound-list items=this}}
+${compoundList(items)}
+`;
 
-{{/each}}
-`
-);
+/** Compound index template */
+export const compoundIndex = (index: CompoundIndex) =>
+  Object.entries(index).map(indexEntry).join('\n');
 
 /** Compound index type */
 export type CompoundIndex = { [initial: string]: CompoundType[] };
