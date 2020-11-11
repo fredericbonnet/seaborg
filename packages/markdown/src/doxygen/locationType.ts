@@ -11,12 +11,12 @@
 
 import { Element } from '@rgrove/parse-xml';
 
-import { mdHelper } from '../helpers';
+import { md } from '../helpers';
 
 const template = ({ file, line }: any) =>
   line
-    ? `**Definition**: \`${mdHelper(file)}\` (line ${line})`
-    : `**Location**: \`${mdHelper(file)}\``;
+    ? `**Definition**: \`${md(file)}\` (line ${line})`
+    : `**Location**: \`${md(file)}\``;
 
 export default (element: Element) => {
   const {

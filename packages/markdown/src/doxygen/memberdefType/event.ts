@@ -2,12 +2,7 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
-import {
-  languageCodeHelper,
-  mdHelper,
-  memberLabelHelper,
-  todoHelper,
-} from '../../helpers';
+import { languageCode, md, memberLabel, todo } from '../../helpers';
 import { linkedTextType } from '..';
 
 import {
@@ -32,13 +27,13 @@ const template = ({
 }: any) =>
   `
 <a id="${id}"></a>
-### ${memberLabelHelper(kind)} ${mdHelper(name)}
+### ${memberLabel(kind)} ${md(name)}
 
 ${memberdefBadges(context)}
 
 ${location}
 
-\`\`\`${languageCodeHelper(language)}
+\`\`\`${languageCode(language)}
 ${definition}${argsstring}
 \`\`\`
 
@@ -48,7 +43,7 @@ ${type ? `**Type**: ${type}` : ''}
 
 ${memberdefReferences(context)}
 
-${TODO ? todoHelper(TODO) : ''}
+${TODO ? todo(TODO) : ''}
 `;
 
 const mappers = (): Mappers => ({

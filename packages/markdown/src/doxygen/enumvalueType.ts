@@ -15,12 +15,12 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
-import { mdHelper } from '../helpers';
+import { md } from '../helpers';
 import { descriptionType, linkedTextType } from '.';
 
 const template = ({ id, name, briefdescription, detaileddescription }: any) => `
 <a id="${id}"></a>
-#### Enumerator ${mdHelper(name)}
+#### Enumerator ${md(name)}
 
 ${briefdescription || ''}
 

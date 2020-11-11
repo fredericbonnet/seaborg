@@ -13,10 +13,10 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
-import { refHelper } from '../helpers';
+import { ref } from '../helpers';
 
 const template = ({ refid, local, text }: any) =>
-  local ? (refid ? refHelper(refid, 'compound', text) : text) : `<${text}>`;
+  local ? (refid ? ref(refid, 'compound', text) : text) : `<${text}>`;
 
 const mappers = (): Mappers => ({
   [$text]: textNode,

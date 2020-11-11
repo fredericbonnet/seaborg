@@ -3,27 +3,18 @@ import {
   DoxygenType,
   MemberType,
 } from '@seaborg/core/lib/models';
-import {
-  mdHelper,
-  refHelper,
-  memberLabelHelper,
-  compoundLabelHelper,
-} from '../../helpers';
+import { md, ref, memberLabel, compoundLabel } from '../../helpers';
 
 /** Template for member item */
 const memberItem = ({ name, refid, kind }: MemberType) =>
   `
-  * ${refHelper(refid, 'member', mdHelper(name || ''))} ${memberLabelHelper(
-    kind
-  )}`;
+  * ${ref(refid, 'member', md(name || ''))} ${memberLabel(kind)}`;
 
 /** Template for compound item */
 const compoundItem = ({ name, members, refid, kind, title }: CompoundType) =>
-  `* ${refHelper(
-    refid,
-    'compound',
-    mdHelper(title || name)
-  )} ${compoundLabelHelper(kind)} ${members.map(memberItem)}`;
+  `* ${ref(refid, 'compound', md(title || name))} ${compoundLabel(
+    kind
+  )} ${members.map(memberItem)}`;
 
 /** Main template */
 const template = (compounds: CompoundType[]) =>

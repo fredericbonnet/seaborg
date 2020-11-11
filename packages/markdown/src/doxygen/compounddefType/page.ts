@@ -1,7 +1,7 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { todoHelper } from '../../helpers';
+import { todo } from '../../helpers';
 
 import {
   compounddefBadges,
@@ -25,7 +25,7 @@ ${compounddefInnercompounds(context)}
 
 ${compounddefSections(context)}
 
-${TODO ? todoHelper(TODO) : ''}
+${TODO ? todo(TODO) : ''}
 `;
 
 const mappers = (): Mappers => ({

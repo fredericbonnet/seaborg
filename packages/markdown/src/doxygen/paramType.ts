@@ -17,7 +17,7 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../mappers';
 import { xsdString } from '../generic';
-import { todoHelper } from '../helpers';
+import { todo } from '../helpers';
 import { linkedTextType, descriptionType } from '.';
 
 const template = ({
@@ -37,7 +37,7 @@ const template = ({
       (defval ? ` = ${defval} ` : '') +
       (briefdescription ? `: ${briefdescription}` : '')
     : '') +
-  (TODO ? todoHelper(TODO) : '');
+  (TODO ? todo(TODO) : '');
 
 const mappers = (): Mappers => ({
   attributes: xsdString, // Missing from compound.xsd!

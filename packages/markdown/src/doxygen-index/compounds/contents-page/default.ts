@@ -1,9 +1,9 @@
 import { CompoundType, CompoundKind } from '@seaborg/core/lib/models';
-import { compoundPluralHelper } from '../../../helpers';
+import { compoundPlural } from '../../../helpers';
 import { compoundList } from '..';
 
 const template = (kind: CompoundKind, compounds: CompoundType[]) => `
-# ${compoundPluralHelper(kind)}
+# ${compoundPlural(kind)}
 
 ${compoundList(compounds)}
 `;

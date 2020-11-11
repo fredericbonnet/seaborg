@@ -44,10 +44,7 @@ import { context } from '@seaborg/core/lib/services';
 import { Mappers, $default } from '../../mappers';
 import { ignore } from '../../operators';
 import { xsdString } from '../../generic';
-import {
-  languageBadgeHelper,
-  protectionBadgeHelper,
-} from '../../helpers/badges';
+import { languageBadge, protectionBadge } from '../../helpers/badges';
 import { descriptionType, sectiondefType, refType, listingType } from '..';
 import { incdepgraph, invincdepgraph } from '../graphType';
 
@@ -112,8 +109,8 @@ ${programlisting}
 
 // TODO other attributes?
 export const compounddefBadges = ({ language, attributes }: any) => `
-${language ? languageBadgeHelper(language) : ''}
-${attributes.prot ? protectionBadgeHelper(attributes.prot) : ''}
+${language ? languageBadge(language) : ''}
+${attributes.prot ? protectionBadge(attributes.prot) : ''}
 `;
 
 export const mappers = (): Mappers => ({

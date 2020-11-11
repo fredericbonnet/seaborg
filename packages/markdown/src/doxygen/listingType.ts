@@ -12,12 +12,12 @@ import { Element } from '@rgrove/parse-xml';
 import { currentContext } from '@seaborg/core/lib/services';
 
 import { Mappers, applyToChildren } from '../mappers';
-import { languageCodeHelper } from '../helpers';
+import { languageCode } from '../helpers';
 import { codelineType } from '.';
 
 const template = ({ lines, language }: any) =>
   `
-\`\`\`${language ? languageCodeHelper(language) : ''}
+\`\`\`${language ? languageCode(language) : ''}
 ${lines.join('\n')}
 \`\`\`
 `;

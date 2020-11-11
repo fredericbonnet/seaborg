@@ -14,10 +14,9 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
-import { mdHelper, refHelper } from '../helpers';
+import { md, ref } from '../helpers';
 
-const template = ({ refid, text }: any) =>
-  refHelper(refid, 'compound', mdHelper(text));
+const template = ({ refid, text }: any) => ref(refid, 'compound', md(text));
 
 const mappers = (): Mappers => ({
   [$text]: textNode,

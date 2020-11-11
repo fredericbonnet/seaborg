@@ -10,11 +10,11 @@ import {
   map,
 } from '@seaborg/core/lib/operators';
 
-import { compoundPluralHelper } from '../../../helpers';
+import { compoundPlural } from '../../../helpers';
 import { compoundTree, IndentedItem } from '..';
 
 const template = (kind: CompoundKind, compounds: IndentedItem[]) => `
-# ${compoundPluralHelper(kind)}
+# ${compoundPlural(kind)}
 
 ${compoundTree(compounds)}
 `;

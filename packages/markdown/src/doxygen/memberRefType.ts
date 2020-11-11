@@ -15,10 +15,9 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
-import { mdHelper, refHelper } from '../helpers';
+import { md, ref } from '../helpers';
 
-const template = ({ refid, name }: any) =>
-  refHelper(refid, 'member', mdHelper(name));
+const template = ({ refid, name }: any) => ref(refid, 'member', md(name));
 
 const mappers = (): Mappers => ({
   scope: xsdString,

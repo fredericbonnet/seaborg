@@ -9,11 +9,11 @@ import { DoxRefKind } from '../../doxygen';
 import { labels as compoundLabels } from '../../doxygen/DoxCompoundKind';
 import { labels as memberLabels } from '../../doxygen/DoxMemberKind';
 import { uniqueBy, sortBy, groupBy, initial } from '../../operators';
-import { mdHelper, refHelper } from '../../helpers';
+import { md, ref } from '../../helpers';
 
 /** Template for reference item */
 const referenceItem = ({ kind, refid, name, label }: Reference) =>
-  `* ${refHelper(refid, kind, mdHelper(name))} ${label}`;
+  `* ${ref(refid, kind, md(name))} ${label}`;
 
 /** Template map function for entry item */
 const entryItem = ([key, references]: [string, Reference[]]) =>

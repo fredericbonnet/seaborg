@@ -1,7 +1,7 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { compoundLabelHelper, mdHelper, todoHelper } from '../../helpers';
+import { compoundLabel, md, todo } from '../../helpers';
 import { locationType, listofallmembersType } from '..';
 
 import {
@@ -25,7 +25,7 @@ const template = ({
 }: any) =>
   `
 <a id="${id}"></a>
-# ${compoundLabelHelper(kind)} ${mdHelper(compoundname)} ${title}
+# ${compoundLabel(kind)} ${md(compoundname)} ${title}
 
 ${compounddefBadges(context)}
 
@@ -39,7 +39,7 @@ ${listofallmembers || ''}
 
 ${compounddefSections(context)}
 
-${TODO ? todoHelper(TODO) : ''}
+${TODO ? todo(TODO) : ''}
 `;
 
 const mappers = (): Mappers => ({

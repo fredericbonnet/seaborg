@@ -1,5 +1,5 @@
 import { CompoundType } from '@seaborg/core/lib/models';
-import { indentHelper, mdHelper, refHelper } from '../../helpers';
+import { indent, md, ref } from '../../helpers';
 
 export { default as contentsPage } from './contents-page';
 export { default as indexPage } from './index-page';
@@ -14,9 +14,7 @@ export const compoundList = (items: CompoundType[]) =>
 /** Compound tree template */
 export const compoundTree = (items: IndentedItem[]) =>
   items
-    .map(
-      (item) => `${indentHelper(item.level)}* ${compoundItem(item.compound)}`
-    )
+    .map((item) => `${indent(item.level)}* ${compoundItem(item.compound)}`)
     .join('\n');
 
 /** Compound item template */
@@ -26,5 +24,5 @@ export const compoundItem = ({
   name,
   briefdescription,
 }: CompoundType) =>
-  refHelper(refid, 'compound', title || mdHelper(name)) +
+  ref(refid, 'compound', title || md(name)) +
   (briefdescription ? `: ${briefdescription}` : '');

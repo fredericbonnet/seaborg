@@ -10,14 +10,14 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
-import { referencesHelper } from '../helpers';
+import { references } from '../helpers';
 import { compounddefType } from '.';
 
 const template = (children: string[]) =>
   `
 ${children.join('\n\n')}
 
-${referencesHelper()}
+${references()}
 `;
 
 const mappers = (): Mappers => ({

@@ -6,7 +6,7 @@ import {
 } from '@seaborg/core/lib/models';
 import { map, pipe, reduce, ReduceFunc } from '@seaborg/core/lib/operators';
 import { unique } from '../operators';
-import { compoundPluralHelper } from '../helpers';
+import { compoundPlural } from '../helpers';
 import { DoxCompoundKind } from '../doxygen/DoxCompoundKind';
 
 /** Template for link item */
@@ -14,7 +14,7 @@ const linkItem = (label: string, link: string) => `* [${label}](${link})`;
 
 /** Template map function for kind item */
 const kindItem = (suffix: string) => (kind: DoxCompoundKind) =>
-  linkItem(compoundPluralHelper(kind), kind + suffix);
+  linkItem(compoundPlural(kind), kind + suffix);
 
 /** Template for Contents page list */
 const contentsTemplate = ({ contentsSuffix, mdExtension, kinds }: any) =>

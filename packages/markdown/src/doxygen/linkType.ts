@@ -7,11 +7,11 @@
 
 import { Element } from '@rgrove/parse-xml';
 
-import { linkHelper } from '../helpers';
+import { refLink } from '../helpers';
 
 // FIXME kindref
 const template = ({ parentid, refid }: any) =>
-  `click ${parentid} "${linkHelper(refid, 'compound')}"`;
+  `click ${parentid} "${refLink(refid, 'compound')}"`;
 
 export default (element: Element) => {
   const {

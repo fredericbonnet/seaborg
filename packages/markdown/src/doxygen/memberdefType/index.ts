@@ -83,9 +83,9 @@ import {
 import { Mappers, $default } from '../../mappers';
 import { xsdString } from '../../generic';
 import {
-  boolBadgeHelper,
-  languageBadgeHelper,
-  protectionBadgeHelper,
+  boolBadge,
+  languageBadge,
+  protectionBadge,
 } from '../../helpers/badges';
 import { descriptionType, locationType, referenceType } from '..';
 
@@ -132,18 +132,10 @@ ${referencedby.map((e) => `* ${e}`).join('\n')}}
 
 // TODO other attributes?
 export const memberdefBadges = ({ language, attributes }: any) => `
-${language ? languageBadgeHelper(language) : ''}
-${attributes.prot ? protectionBadgeHelper(attributes.prot) : ''}
-${
-  attributes.static
-    ? boolBadgeHelper('static', 'lightgrey', attributes.static)
-    : ''
-}
-${
-  attributes.const
-    ? boolBadgeHelper('const', 'lightblue', attributes.const)
-    : ''
-}
+${language ? languageBadge(language) : ''}
+${attributes.prot ? protectionBadge(attributes.prot) : ''}
+${attributes.static ? boolBadge('static', 'lightgrey', attributes.static) : ''}
+${attributes.const ? boolBadge('const', 'lightblue', attributes.const) : ''}
 `;
 
 export const mappers = (): Mappers => ({

@@ -7,12 +7,7 @@ import {
   $default,
 } from '../../mappers';
 import { xsdString } from '../../generic';
-import {
-  languageCodeHelper,
-  mdHelper,
-  memberLabelHelper,
-  todoHelper,
-} from '../../helpers';
+import { languageCode, md, memberLabel, todo } from '../../helpers';
 import { linkedTextType, enumvalueType } from '..';
 import { def as enumvalueDef } from '../enumvalueType';
 
@@ -37,13 +32,13 @@ const template = ({
 }: any) =>
   `
 <a id="${id}"></a>
-### ${memberLabelHelper(kind)} ${mdHelper(name)}
+### ${memberLabel(kind)} ${md(name)}
 
 ${memberdefBadges(context)}
 
 ${location}
 
-\`\`\`${languageCodeHelper(language)}
+\`\`\`${languageCode(language)}
 enum ${name} {
 ${valuelist.map((e: string) => `  ${e}`).join(',\n')}
 }
@@ -55,7 +50,7 @@ ${memberdefReferences(context)}
 
 ${enumvalue ? enumvalue.join('\n') : ''}
 
-${TODO ? todoHelper(TODO) : ''}
+${TODO ? todo(TODO) : ''}
 `;
 
 const mappers = (): Mappers => ({

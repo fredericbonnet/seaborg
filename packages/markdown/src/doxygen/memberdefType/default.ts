@@ -1,7 +1,7 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { applyToChildrenGrouped, $default } from '../../mappers';
-import { mdHelper, memberLabelHelper, todoHelper } from '../../helpers';
+import { md, memberLabel, todo } from '../../helpers';
 
 import {
   mappers,
@@ -14,7 +14,7 @@ import {
 const template = ({ id, kind, name, location, TODO, ...context }: any) =>
   `
 <a id="${id}"></a>
-### ${memberLabelHelper(kind)} ${mdHelper(name)}
+### ${memberLabel(kind)} ${md(name)}
 
 ${memberdefBadges(context)}
 
@@ -24,7 +24,7 @@ ${memberdefDescription(context)}
 
 ${memberdefReferences(context)}
 
-${TODO ? todoHelper(TODO) : ''}
+${TODO ? todo(TODO) : ''}
 `;
 
 export default (element: Element) => {

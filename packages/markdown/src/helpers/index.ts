@@ -1,5 +1,3 @@
-import { isArray } from 'util';
-
 import {
   configuration,
   doxygenIndex,
@@ -28,16 +26,16 @@ const escapedMdChars = /[_<>]/g;
 const escapeMd = (c: string) => '\\' + c;
 
 /** Helper for Markdown escape. Useful with identifiers. */
-export const mdHelper = (text: string | string[]): any =>
-  isArray(text)
-    ? (text as string[]).map(mdHelper)
+export const md = (text: string | string[]): any =>
+  Array.isArray(text)
+    ? (text as string[]).map(md)
     : (text as string).replace(escapedMdChars, escapeMd);
 
 /** Helper for Markdown language code */
-export const languageCodeHelper = (code: string) => codes[code];
+export const languageCode = (code: string) => codes[code];
 
 /** Helper for links */
-export const linkHelper = (refid: string, kindref: string) => {
+export const refLink = (refid: string, kindref: string) => {
   const { mdExtension } = configuration.options;
   switch (kindref) {
     case 'compound':
@@ -54,37 +52,35 @@ export const linkHelper = (refid: string, kindref: string) => {
 };
 
 /** Helper for ref links */
-export const refHelper = (refid: string, kindref: string, text: string) => {
-  return `[${text}](${linkHelper(refid, kindref)})`;
+export const ref = (refid: string, kindref: string, text: string) => {
+  return `[${text}](${refLink(refid, kindref)})`;
 };
 
 /** Helper for indentation */
-export const indentHelper = (level: number) => '  '.repeat(level);
+export const indent = (level: number) => '  '.repeat(level);
 
 /** Helper for TODO lists */
-export const todoHelper = (list: string[]) => {
+export const todo = (list: string[]) => {
   return list && list.length
     ? '**TODO**:\n' + list.map((e) => `* ${e}`).join('\n')
     : undefined;
 };
 
 /** Helper for compound label */
-export const compoundLabelHelper = (kind: DoxCompoundKind) =>
-  compoundLabels[kind];
+export const compoundLabel = (kind: DoxCompoundKind) => compoundLabels[kind];
 
 /** Helper for compound plural */
-export const compoundPluralHelper = (kind: DoxCompoundKind) =>
-  compoundPlurals[kind];
+export const compoundPlural = (kind: DoxCompoundKind) => compoundPlurals[kind];
 
 /** Helper for member label */
-export const memberLabelHelper = (kind: DoxMemberKind | MemberKind) =>
+export const memberLabel = (kind: DoxMemberKind | MemberKind) =>
   memberLabels[kind];
 
 /** Helper for member plural */
-export const memberPluralHelper = (kind: DoxMemberKind) => memberPlurals[kind];
+export const memberPlural = (kind: DoxMemberKind) => memberPlurals[kind];
 
 /** Helper for reference list */
-export const referencesHelper = () =>
+export const references = () =>
   Object.entries(currentContext().references)
     .map(([label, { url, title }]) => `[${label}]: ${url} (${title})`)
     .join('\n');
