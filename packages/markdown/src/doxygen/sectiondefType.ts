@@ -10,25 +10,20 @@
 */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
 import { descriptionType, memberdefType } from '.';
 import { labels } from './DoxSectionKind';
 
-const template = Handlebars.compile(
+const template = ({ header, description, memberdef }: any) =>
   `
-## {{header}}
+## ${header}
 
-{{description}}
+${description}
 
-{{#each memberdef}}
-{{this}}
-{{/each}}
-`,
-  { noEscape: true }
-);
+${memberdef.join('\n')}
+`;
 
 const mappers = (): Mappers => ({
   header: xsdString,

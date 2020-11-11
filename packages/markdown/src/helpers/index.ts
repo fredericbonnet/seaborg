@@ -85,7 +85,7 @@ export const memberLabelHelper = (kind: DoxMemberKind | MemberKind) =>
 const memberPluralHelper = (kind: DoxMemberKind) => memberPlurals[kind];
 
 /** Handlebars helper for reference list */
-const referencesHelper = () =>
+export const referencesHelper = () =>
   Object.entries(currentContext().references)
     .map(([label, { url, title }]) => `[${label}]: ${url} (${title})`)
     .join('\n');

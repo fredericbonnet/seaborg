@@ -8,22 +8,17 @@
  */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildren } from '../mappers';
+import { referencesHelper } from '../helpers';
 import { compounddefType } from '.';
 
-const template = Handlebars.compile(
+const template = (children: string[]) =>
   `
-{{#each children}}
-{{this}}
+${children.join('\n\n')}
 
-{{/each}}
-
-{{references}}
-`,
-  { noEscape: true }
-);
+${referencesHelper()}
+`;
 
 const mappers = (): Mappers => ({
   compounddef: compounddefType,
@@ -31,5 +26,5 @@ const mappers = (): Mappers => ({
 
 export default (element: Element) => {
   const children = applyToChildren(mappers())(element);
-  return template({ children });
+  return template(children);
 };
