@@ -35,85 +35,86 @@
     <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
   </xsd:complexType>
 */
+/* TODO tests */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { context } from '@seaborg/core/lib/services';
 
 import { Mappers, $default } from '../../mappers';
 import { ignore } from '../../operators';
 import { xsdString } from '../../generic';
+import {
+  languageBadgeHelper,
+  protectionBadgeHelper,
+} from '../../helpers/badges';
 import { descriptionType, sectiondefType, refType, listingType } from '..';
 import { incdepgraph, invincdepgraph } from '../graphType';
 
-Handlebars.registerPartial(
-  'compounddef-description',
+export const compounddefDescription = ({
+  briefdescription,
+  detaileddescription,
+}: any) =>
   `
-{{briefdescription}}
+${briefdescription || ''}
 
-{{detaileddescription}}
+${detaileddescription || ''}
+`;
+
+export const compounddefList = ({
+  list,
+  label,
+}: {
+  list: string[];
+  label: string;
+}) =>
+  list
+    ? `
+## ${label}
+
+${list.map((e) => `* ${e}`).join('\n')}
 `
-);
+    : '';
 
-Handlebars.registerPartial(
-  'compounddef-list',
+export const compounddefInnercompounds = ({
+  innerdir,
+  innerfile,
+  innerclass,
+  innernamespace,
+  innerpage,
+  innergroup,
+}: any) =>
   `
-{{#if list}}
-## {{label}}
+${compounddefList({ list: innerdir, label: 'Directories' })}
 
-{{#each list}}
-* {{this}}
-{{/each}}
-{{/if}}
-`
-);
+${compounddefList({ list: innerfile, label: 'Files' })}
 
-Handlebars.registerPartial(
-  'compounddef-innercompounds',
-  `
-{{>compounddef-list list=innerdir label="Directories"}}
+${compounddefList({ list: innerclass, label: 'Classes' })}
 
-{{>compounddef-list list=innerfile label="Files"}}
+${compounddefList({ list: innernamespace, label: 'Namespaces' })}
 
-{{>compounddef-list list=innerclass label="Classes"}}
+${compounddefList({ list: innerpage, label: 'Pages' })}
 
-{{>compounddef-list list=innernamespace label="Namespaces"}}
+${compounddefList({ list: innergroup, label: 'Modules' })}
+`;
 
-{{>compounddef-list list=innerpage label="Pages"}}
+export const compounddefSections = ({ sectiondef }: { sectiondef: string[] }) =>
+  sectiondef ? sectiondef.join('\n') : '';
 
-{{>compounddef-list list=innergroup label="Modules"}}
-`
-);
-
-Handlebars.registerPartial(
-  'compounddef-sections',
-  `
-{{#each sectiondef}}
-{{this}}
-{{/each}}
-`
-);
-
-Handlebars.registerPartial(
-  'compounddef-source',
-  `
-{{#if programlisting}}
+export const compounddefSource = ({ programlisting }: any) =>
+  programlisting
+    ? `
 ## Source
 
-{{programlisting}}
-{{/if}}
+${programlisting}
 `
-);
+    : '';
 
 // TODO other attributes?
-Handlebars.registerPartial(
-  'compounddef-badges',
-  `
-{{language-badge language}}
-{{protection-badge attributes.prot}}
-`
-);
+export const compounddefBadges = ({ language, attributes }: any) => `
+${language ? languageBadgeHelper(language) : ''}
+${attributes.prot ? protectionBadgeHelper(attributes.prot) : ''}
+`;
 
 export const mappers = (): Mappers => ({
   compoundname: xsdString,

@@ -3,13 +3,14 @@
  *
  * https://shields.io
  */
+/* TODO tests */
 
 import Handlebars from 'handlebars';
 import { context } from '@seaborg/core';
 import { DoxLanguage, DoxBool, DoxProtectionKind } from '../doxygen';
 
 /** Handlebars helper for Shields.io badges */
-const badgeHelper = (
+export const badgeHelper = (
   key: string,
   label: string,
   message: string,
@@ -23,11 +24,11 @@ const badgeHelper = (
 };
 
 /** Handlebars helper for language badges */
-const languageBadgeHelper = (code: DoxLanguage) =>
+export const languageBadgeHelper = (code: DoxLanguage) =>
   code ? badgeHelper(code, 'language', code, 'blue') : '';
 
 /** Handlebars helper for protection badges */
-const protectionBadgeHelper = (code: DoxProtectionKind) => {
+export const protectionBadgeHelper = (code: DoxProtectionKind) => {
   switch (code) {
     case 'public':
       return badgeHelper('public', '', 'public', 'brightgreen');
@@ -41,7 +42,7 @@ const protectionBadgeHelper = (code: DoxProtectionKind) => {
 };
 
 /** Handlebars helper for boolean badges */
-const boolBadgeHelper = (label: string, color: string, value: DoxBool) =>
+export const boolBadgeHelper = (label: string, color: string, value: DoxBool) =>
   value === 'yes' ? badgeHelper(label, '', label, color) : '';
 
 export function registerHelpers() {

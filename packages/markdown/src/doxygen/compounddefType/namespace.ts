@@ -1,34 +1,49 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
+import { compoundLabelHelper, mdHelper, todoHelper } from '../../helpers';
 import { locationType } from '..';
 
-import { mappers as defaultMappers, templateContext } from '.';
+import {
+  compounddefBadges,
+  compounddefDescription,
+  compounddefList,
+  compounddefSections,
+  compounddefSource,
+  mappers as defaultMappers,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
+const template = ({
+  id,
+  kind,
+  compoundname,
+  location,
+  innernamespace,
+  innerclass,
+  TODO,
+  ...context
+}: any) =>
   `
-<a id="{{id}}"></a>
-# {{compound-label kind}} {{md compoundname}}
+<a id="${id}"></a>
+# ${compoundLabelHelper(kind)} ${mdHelper(compoundname)}
 
-{{> compounddef-badges}}
+${compounddefBadges(context)}
 
-{{location}}
+${location}
 
-{{> compounddef-description}}
+${compounddefDescription(context)}
 
-{{> compounddef-list list=innernamespace label="Child namespaces"}}
+${compounddefList({ list: innernamespace, label: 'Child namespaces' })}
 
-{{> compounddef-list list=innerclass label="Classes"}}
+${compounddefList({ list: innerclass, label: 'Classes' })}
 
-{{> compounddef-sections}}
+${compounddefSections(context)}
 
-{{> compounddef-source}}
+${compounddefSource(context)}
 
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? todoHelper(TODO) : ''}
+`;
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

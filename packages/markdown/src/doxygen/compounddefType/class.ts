@@ -1,7 +1,7 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
+import { compoundLabelHelper, mdHelper } from '../../helpers';
 import {
   locationType,
   listofallmembersType,
@@ -9,49 +9,71 @@ import {
   templateparamlistType,
 } from '..';
 
-import { mappers as defaultMappers, templateContext } from '.';
+import {
+  compounddefBadges,
+  compounddefDescription,
+  compounddefList,
+  compounddefSections,
+  compounddefSource,
+  mappers as defaultMappers,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
+const template = ({
+  id,
+  kind,
+  compoundname,
+  location,
+  templateparamlist,
+  basecompoundref,
+  derivedcompoundref,
+  innerclass,
+  listofallmembers,
+  TODO,
+  ...context
+}: any) =>
   `
-<a id="{{id}}"></a>
-# {{compound-label kind}} {{md compoundname}}
+<a id="${id}"></a>
+# ${compoundLabelHelper(kind)} ${mdHelper(compoundname)}
 
-{{> compounddef-badges}}
+${compounddefBadges(context)}
 
-{{location}}
+${location}
 
-{{> compounddef-description}}
+${compounddefDescription(context)}
 
-{{templateparamlist}}
+${templateparamlist || ''}
 
-{{#if basecompoundref}}
+${
+  basecompoundref
+    ? `
 **Inherits from**:
 
-{{#each basecompoundref}}
-* {{this}}
-{{/each}}
-{{/if}}
+${basecompoundref.map((e: string) => `* $e`).join('\n')}
+`
+    : ''
+}
 
-{{#if derivedcompoundref}}
+${
+  derivedcompoundref
+    ? `
 **Inherited by**:
 
-{{#each derivedcompoundref}}
-* {{this}}
-{{/each}}
-{{/if}}
+${derivedcompoundref.map((e: string) => `* $e`).join('\n')}
+`
+    : ''
+}
 
-{{> compounddef-list list=innerclass label="Inner classes"}}
+${compounddefList({ list: innerclass, label: 'Inner classes' })}
 
-{{listofallmembers}}
+${listofallmembers}
 
-{{> compounddef-sections}}
+${compounddefSections(context)}
 
-{{> compounddef-source}}
+${compounddefSource(context)}
 
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? mdHelper(TODO) : ''}
+`;
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

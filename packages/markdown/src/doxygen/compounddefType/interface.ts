@@ -1,7 +1,7 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
+import { compoundLabelHelper, mdHelper, todoHelper } from '../../helpers';
 import {
   locationType,
   listofallmembersType,
@@ -9,47 +9,67 @@ import {
   templateparamlistType,
 } from '..';
 
-import { mappers as defaultMappers, templateContext } from '.';
+import {
+  compounddefBadges,
+  compounddefDescription,
+  compounddefSections,
+  compounddefSource,
+  mappers as defaultMappers,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
+const template = ({
+  id,
+  kind,
+  compoundname,
+  location,
+  templateparamlist,
+  basecompoundref,
+  derivedcompoundref,
+  listofallmembers,
+  TODO,
+  ...context
+}: any) =>
   `
-<a id="{{id}}"></a>
-# {{compound-label kind}} {{md compoundname}}
+<a id="${id}"></a>
+# ${compoundLabelHelper(kind)} ${mdHelper(compoundname)}
 
-{{> compounddef-badges}}
+${compounddefBadges(context)}
 
-{{location}}
+${location}
 
-{{> compounddef-description}}
+${compounddefDescription(context)}
 
-{{templateparamlist}}
+${templateparamlist || ''}
 
-{{#if basecompoundref}}
+${
+  basecompoundref
+    ? `
 **Inherits from**:
 
-{{#each basecompoundref}}
-* {{this}}
-{{/each}}
-{{/if}}
+${basecompoundref.map((e: string) => `* $e`).join('\n')}
+`
+    : ''
+}
 
-{{#if derivedcompoundref}}
+${
+  derivedcompoundref
+    ? `
 **Inherited by**:
 
-{{#each derivedcompoundref}}
-* {{this}}
-{{/each}}
-{{/if}}
+${derivedcompoundref.map((e: string) => `* $e`).join('\n')}
+`
+    : ''
+}
 
-{{listofallmembers}}
+${listofallmembers}
 
-{{> compounddef-sections}}
+${compounddefSections(context)}
 
-{{> compounddef-source}}
+${compounddefSource(context)}
 
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? todoHelper(TODO) : ''}
+`;
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),
