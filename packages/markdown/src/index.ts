@@ -3,8 +3,6 @@ import {
   RenderServiceRegistry,
 } from '@seaborg/core/lib/services';
 
-import { registerHelpers } from './helpers';
-
 import {
   mainPage,
   globalContentsPage,
@@ -18,7 +16,7 @@ export * from './helpers';
 export * from './operators';
 
 export function init() {
-  registerHelpers();
+  // Nothing to do
 }
 
 /**

@@ -5,11 +5,10 @@
  */
 /* TODO tests */
 
-import Handlebars from 'handlebars';
 import { context } from '@seaborg/core';
 import { DoxLanguage, DoxBool, DoxProtectionKind } from '../doxygen';
 
-/** Handlebars helper for Shields.io badges */
+/** Helper for Shields.io badges */
 export const badgeHelper = (
   key: string,
   label: string,
@@ -23,11 +22,11 @@ export const badgeHelper = (
   return `![][${key}]`;
 };
 
-/** Handlebars helper for language badges */
+/** Helper for language badges */
 export const languageBadgeHelper = (code: DoxLanguage) =>
   code ? badgeHelper(code, 'language', code, 'blue') : '';
 
-/** Handlebars helper for protection badges */
+/** Helper for protection badges */
 export const protectionBadgeHelper = (code: DoxProtectionKind) => {
   switch (code) {
     case 'public':
@@ -41,13 +40,6 @@ export const protectionBadgeHelper = (code: DoxProtectionKind) => {
   }
 };
 
-/** Handlebars helper for boolean badges */
+/** Helper for boolean badges */
 export const boolBadgeHelper = (label: string, color: string, value: DoxBool) =>
   value === 'yes' ? badgeHelper(label, '', label, color) : '';
-
-export function registerHelpers() {
-  Handlebars.registerHelper('badge', badgeHelper);
-  Handlebars.registerHelper('language-badge', languageBadgeHelper);
-  Handlebars.registerHelper('protection-badge', protectionBadgeHelper);
-  Handlebars.registerHelper('bool-badge', boolBadgeHelper);
-}
