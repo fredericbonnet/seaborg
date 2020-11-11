@@ -69,9 +69,9 @@
 
   </xsd:complexType>
 */
+/* TODO tests */
 
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import {
   doxygenIndex,
@@ -82,50 +82,69 @@ import {
 
 import { Mappers, $default } from '../../mappers';
 import { xsdString } from '../../generic';
+import {
+  boolBadgeHelper,
+  languageBadgeHelper,
+  protectionBadgeHelper,
+} from '../../helpers/badges';
 import { descriptionType, locationType, referenceType } from '..';
 
-Handlebars.registerPartial(
-  'memberdef-description',
+export const memberdefDescription = ({
+  briefdescription,
+  detaileddescription,
+  inbodydescription,
+}: any) => `
+${briefdescription || ''}
+
+${detaileddescription || ''}
+
+${inbodydescription || ''}
+`;
+
+export const memberdefReferences = ({
+  references,
+  referencedby,
+}: {
+  references: string[];
+  referencedby: string[];
+}) =>
   `
-{{briefdescription}}
-
-{{detaileddescription}}
-
-{{inbodydescription}}
-`
-);
-
-Handlebars.registerPartial(
-  'memberdef-references',
-  `
-{{#if references}}
+${
+  references
+    ? `
 **References**: 
 
-{{#each references}}
-* {{this}}
-{{/each}}
-{{/if}}
+${references.map((e) => `* ${e}`).join('\n')}}
+`
+    : ''
+}
 
-{{#if referencedby}}
-**Referenced by**:
+${
+  referencedby
+    ? `
+**Referenced by**: 
 
-{{#each referencedby}}
-* {{this}}
-{{/each}}
-{{/if}}
-  `
-);
+${referencedby.map((e) => `* ${e}`).join('\n')}}
+`
+    : ''
+}
+`;
 
 // TODO other attributes?
-Handlebars.registerPartial(
-  'memberdef-badges',
-  `
-{{language-badge language}}
-{{protection-badge attributes.prot}}
-{{bool-badge "static" "lightgrey" attributes.static}}
-{{bool-badge "const" "lightblue" attributes.const}}
-`
-);
+export const memberdefBadges = ({ language, attributes }: any) => `
+${language ? languageBadgeHelper(language) : ''}
+${attributes.prot ? protectionBadgeHelper(attributes.prot) : ''}
+${
+  attributes.static
+    ? boolBadgeHelper('static', 'lightgrey', attributes.static)
+    : ''
+}
+${
+  attributes.const
+    ? boolBadgeHelper('const', 'lightblue', attributes.const)
+    : ''
+}
+`;
 
 export const mappers = (): Mappers => ({
   name: xsdString,
@@ -136,7 +155,7 @@ export const mappers = (): Mappers => ({
   references: referenceType,
   referencedby: referenceType,
   //TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
 });
 
 export const templateContext = (element: Element) => {
@@ -152,8 +171,8 @@ export default (element: Element) => {
   } = element;
   const language = doxygenIndex.compounds
     .filter(hasMember(id))
-    .map(compound => compound.language)
-    .find(language => !!language);
+    .map((compound) => compound.language)
+    .find((language) => !!language);
   context.pushState({ language });
   let template;
   try {

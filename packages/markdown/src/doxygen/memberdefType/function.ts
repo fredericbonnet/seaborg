@@ -1,54 +1,78 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
+import {
+  languageCodeHelper,
+  mdHelper,
+  memberLabelHelper,
+  todoHelper,
+} from '../../helpers';
 import { linkedTextType, paramType, reimplementType } from '..';
 
-import { mappers as defaultMappers, templateContext } from '.';
+import {
+  mappers as defaultMappers,
+  memberdefBadges,
+  memberdefDescription,
+  memberdefReferences,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
-  `
-<a id="{{id}}"></a>
-### {{member-label kind}} {{md name}}
+const template = ({
+  id,
+  kind,
+  name,
+  location,
+  language,
+  definition,
+  argsstring,
+  param,
+  type,
+  reimplements,
+  reimplementedby,
+  TODO,
+  ...context
+}: any) => `
+<a id="${id}"></a>
+### ${memberLabelHelper(kind)} ${mdHelper(name)}
 
-{{> memberdef-badges}}
+${memberdefBadges(context)}
 
-{{location}}
+${location}
 
-\`\`\`{{language-code language}}
-{{definition}}{{argsstring}}
+\`\`\`${languageCodeHelper(language)}
+${definition}${argsstring}
 \`\`\`
 
-{{> memberdef-description}}
+${memberdefDescription(context)}
 
-{{#if param}}
+${
+  param
+    ? `
 **Parameters**:
 
-{{#each param}}
-* {{this}}
-{{/each}}
-{{/if}}
+${param.map((e: string) => `* ${e}`).join('\n')}
+`
+    : ''
+}
 
-{{#if type}}**Return type**: {{type}}{{/if}}
+${type ? `**Return type**: ${type}` : ''}
 
-{{#if reimplements}}**Reimplements**: {{reimplements}}{{/if}}
+${reimplements ? `**Reimplements**: ${reimplements}` : ''}
 
-{{#if reimplementedby}}
-**Reimplemented by**: 
+${
+  reimplementedby
+    ? `**Reimplemented by**: 
 
-{{#each reimplementedby}}
-* {{this}}
-{{/each}}
-{{/if}}
+${reimplementedby.map((e: string) => `* ${e}`).join('\n')}
+`
+    : ''
+}
 
+${memberdefReferences(context)}
 
-{{> memberdef-references}}
-
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? todoHelper(TODO) : ''}
+`;
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

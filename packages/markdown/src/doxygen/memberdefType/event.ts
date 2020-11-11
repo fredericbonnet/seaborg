@@ -1,35 +1,55 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
+import {
+  languageCodeHelper,
+  mdHelper,
+  memberLabelHelper,
+  todoHelper,
+} from '../../helpers';
 import { linkedTextType } from '..';
 
-import { mappers as defaultMappers, templateContext } from '.';
+import {
+  mappers as defaultMappers,
+  memberdefBadges,
+  memberdefDescription,
+  memberdefReferences,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
+const template = ({
+  id,
+  kind,
+  name,
+  location,
+  language,
+  definition,
+  argsstring,
+  type,
+  TODO,
+  ...context
+}: any) =>
   `
-<a id="{{id}}"></a>
-### {{member-label kind}} {{md name}}
+<a id="${id}"></a>
+### ${memberLabelHelper(kind)} ${mdHelper(name)}
 
-{{> memberdef-badges}}
+${memberdefBadges(context)}
 
-{{location}}
+${location}
 
-\`\`\`{{language-code language}}
-{{definition}}{{argsstring}}
+\`\`\`${languageCodeHelper(language)}
+${definition}${argsstring}
 \`\`\`
 
-{{> memberdef-description}}
+${memberdefDescription(context)}
 
-{{#if type}}**Type**: {{type}}{{/if}}
+${type ? `**Type**: ${type}` : ''}
 
-{{> memberdef-references}}
+${memberdefReferences(context)}
 
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? todoHelper(TODO) : ''}
+`;
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

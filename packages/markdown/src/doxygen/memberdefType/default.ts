@@ -1,27 +1,31 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { applyToChildrenGrouped, $default } from '../../mappers';
+import { mdHelper, memberLabelHelper, todoHelper } from '../../helpers';
 
-import { mappers, templateContext } from '.';
+import {
+  mappers,
+  memberdefBadges,
+  memberdefDescription,
+  memberdefReferences,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
+const template = ({ id, kind, name, location, TODO, ...context }: any) =>
   `
-<a id="{{id}}"></a>
-### {{member-label kind}} {{md name}}
+<a id="${id}"></a>
+### ${memberLabelHelper(kind)} ${mdHelper(name)}
 
-{{> memberdef-badges}}
+${memberdefBadges(context)}
 
-{{location}}
+${location}
 
-{{> memberdef-description}}
+${memberdefDescription(context)}
 
-{{> memberdef-references}}
+${memberdefReferences(context)}
 
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? todoHelper(TODO) : ''}
+`;
 
 export default (element: Element) => {
   const context = applyToChildrenGrouped(mappers())(element);

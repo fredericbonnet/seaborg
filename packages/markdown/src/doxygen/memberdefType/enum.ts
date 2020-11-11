@@ -1,5 +1,4 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import {
   Mappers,
@@ -8,42 +7,56 @@ import {
   $default,
 } from '../../mappers';
 import { xsdString } from '../../generic';
+import {
+  languageCodeHelper,
+  mdHelper,
+  memberLabelHelper,
+  todoHelper,
+} from '../../helpers';
 import { linkedTextType, enumvalueType } from '..';
 import { def as enumvalueDef } from '../enumvalueType';
 
-import { mappers as defaultMappers, templateContext } from '.';
+import {
+  mappers as defaultMappers,
+  memberdefBadges,
+  memberdefDescription,
+  memberdefReferences,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
+const template = ({
+  id,
+  kind,
+  name,
+  location,
+  language,
+  valuelist,
+  enumvalue,
+  TODO,
+  ...context
+}: any) =>
   `
-<a id="{{id}}"></a>
-### {{member-label kind}} {{md name}}
+<a id="${id}"></a>
+### ${memberLabelHelper(kind)} ${mdHelper(name)}
 
-{{> memberdef-badges}}
+${memberdefBadges(context)}
 
-{{location}}
+${location}
 
-\`\`\`{{language-code language}}
-enum {{name}} {
-  {{#each valuelist}}
-  {{this}}{{#unless @last}},{{/unless}}
-  {{/each}}
+\`\`\`${languageCodeHelper(language)}
+enum ${name} {
+${valuelist.map((e: string) => `  ${e}`).join(',\n')}
 }
 \`\`\`
 
-{{> memberdef-description}}
+${memberdefDescription(context)}
 
-{{> memberdef-references}}
+${memberdefReferences(context)}
 
-{{#if enumvalue}}
-{{#each enumvalue}}
-{{this}}
-{{/each}}
-{{/if}}
+${enumvalue ? enumvalue.join('\n') : ''}
 
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? todoHelper(TODO) : ''}
+`;
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

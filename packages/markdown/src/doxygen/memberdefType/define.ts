@@ -1,38 +1,58 @@
 import { Element } from '@rgrove/parse-xml';
-import Handlebars from 'handlebars';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
+import {
+  languageCodeHelper,
+  mdHelper,
+  memberLabelHelper,
+  todoHelper,
+} from '../../helpers';
 import { linkedTextType, paramType } from '..';
 
-import { mappers as defaultMappers, templateContext } from '.';
+import {
+  mappers as defaultMappers,
+  memberdefBadges,
+  memberdefDescription,
+  memberdefReferences,
+  templateContext,
+} from '.';
 
-const template = Handlebars.compile(
+const template = ({
+  id,
+  kind,
+  name,
+  location,
+  language,
+  argsstring,
+  initializer,
+  param,
+  type,
+  TODO,
+  ...context
+}: any) =>
   `
-<a id="{{id}}"></a>
-### {{member-label kind}} {{md name}}
+<a id="${id}"></a>
+### ${memberLabelHelper(kind)} ${mdHelper(name)}
 
-{{> memberdef-badges}}
+${memberdefBadges(context)}
 
-{{location}}
+${location}
 
-\`\`\`{{language-code language}}
-#define {{name}}{{argsstring}}{{#if initializer}} {{initializer}}{{/if}}
-{{~#if param ~}}
-( {{#each param}}{{this}}{{#unless @last}}, {{/unless}}{{/each }} )
-{{/if}}
+\`\`\`${languageCodeHelper(language)}
+#define ${name}${argsstring || ''}${initializer ? ` ${initializer}` : ''}${
+    param ? `( ${param.join(' ,')} )` : ''
+  }
 \`\`\`
 
-{{> memberdef-description}}
+${memberdefDescription(context)}
 
-{{#if type}}**Return type**: {{type}}{{/if}}
+${type ? `**Return type**: ${type}` : ''}
 
-{{> memberdef-references}}
+${memberdefReferences(context)}
 
-{{TODO TODO}}
-`,
-  { noEscape: true }
-);
+${TODO ? todoHelper(TODO) : ''}
+`;
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),
