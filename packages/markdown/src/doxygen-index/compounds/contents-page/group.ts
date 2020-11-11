@@ -10,14 +10,11 @@ import {
   map,
 } from '@seaborg/core/lib/operators';
 
-import { compoundPlural } from '../../../helpers';
+import { compoundPlural, joinParagraphs } from '../../../helpers';
 import { compoundTree, IndentedItem } from '..';
 
-const template = (kind: CompoundKind, compounds: IndentedItem[]) => `
-# ${compoundPlural(kind)}
-
-${compoundTree(compounds)}
-`;
+const template = (kind: CompoundKind, compounds: IndentedItem[]) =>
+  joinParagraphs([`# ${compoundPlural(kind)}`, compoundTree(compounds)]);
 
 export default (kind: CompoundKind, compounds: CompoundType[]) => {
   // Build group tree

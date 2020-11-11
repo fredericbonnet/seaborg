@@ -13,13 +13,10 @@ import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
 import { descriptionType } from '.';
+import { joinParagraphs } from '../helpers';
 
 const template = ({ xreftitle, xrefdescription }: any) =>
-  `
-**${xreftitle}**:
-
-${xrefdescription}
-`;
+  joinParagraphs([`**${xreftitle}**:`, xrefdescription]);
 
 const mappers = (): Mappers => ({
   xreftitle: xsdString,

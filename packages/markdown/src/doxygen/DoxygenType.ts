@@ -10,15 +10,8 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
-import { references } from '../helpers';
+import { joinParagraphs, references } from '../helpers';
 import { compounddefType } from '.';
-
-const template = (children: string[]) =>
-  `
-${children.join('\n\n')}
-
-${references()}
-`;
 
 const mappers = (): Mappers => ({
   compounddef: compounddefType,
@@ -26,5 +19,5 @@ const mappers = (): Mappers => ({
 
 export default (element: Element) => {
   const children = applyToChildren(mappers())(element);
-  return template(children);
+  return joinParagraphs([...children, references()]);
 };

@@ -11,6 +11,7 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
+import { joinStrings } from '../helpers';
 import { refTextType } from '.';
 
 const mappers = (): Mappers => ({
@@ -20,4 +21,4 @@ const mappers = (): Mappers => ({
 
 // TODO direction attribute
 export default (element: Element) =>
-  applyToChildren(mappers())(element).join('');
+  joinStrings(applyToChildren(mappers())(element));

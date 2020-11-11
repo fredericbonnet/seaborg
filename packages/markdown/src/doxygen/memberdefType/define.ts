@@ -2,7 +2,13 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
-import { languageCode, md, memberLabel, todo } from '../../helpers';
+import {
+  joinParagraphs,
+  languageCode,
+  md,
+  memberLabel,
+  todo,
+} from '../../helpers';
 import { linkedTextType, paramType } from '..';
 
 import {
@@ -10,6 +16,7 @@ import {
   memberdefBadges,
   memberdefDescription,
   memberdefReferences,
+  memberdefTitle,
   templateContext,
 } from '.';
 
@@ -26,28 +33,20 @@ const template = ({
   TODO,
   ...context
 }: any) =>
-  `
-<a id="${id}"></a>
-### ${memberLabel(kind)} ${md(name)}
-
-${memberdefBadges(context)}
-
-${location}
-
-\`\`\`${languageCode(language)}
+  joinParagraphs([
+    memberdefTitle(id, `${memberLabel(kind)} ${md(name)}`),
+    memberdefBadges(context),
+    location,
+    `\`\`\`${languageCode(language)}
 #define ${name}${argsstring || ''}${initializer ? ` ${initializer}` : ''}${
-    param ? `( ${param.join(' ,')} )` : ''
-  }
-\`\`\`
-
-${memberdefDescription(context)}
-
-${type ? `**Return type**: ${type}` : ''}
-
-${memberdefReferences(context)}
-
-${TODO ? todo(TODO) : ''}
-`;
+      param ? `( ${param.join(' ,')} )` : ''
+    }
+\`\`\``,
+    memberdefDescription(context),
+    type ? `**Return type**: ${type}` : '',
+    memberdefReferences(context),
+    todo(TODO),
+  ]);
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

@@ -15,10 +15,7 @@ describe('param', () => {
 
   specify('empty', () => {
     const xml = `<parameterlist kind="param"></parameterlist>`;
-    const md = `
-**Parameters**:
-
-`;
+    const md = '';
     expect(render(xml)).to.equal(md);
   });
   specify('one value', () => {
@@ -32,11 +29,9 @@ describe('param', () => {
               </parameterdescription>
           </parameteritem>
       </parameterlist>`;
-    const md = `
-**Parameters**:
+    const md = `**Parameters**:
 
-* **param1**: Description of the parameter.
-`;
+* **param1**: Description of the parameter.`;
     expect(render(xml)).to.equal(md);
   });
   specify('several values', () => {
@@ -55,12 +50,10 @@ describe('param', () => {
               </parameterdescription>
           </parameteritem>
       </parameterlist>`;
-    const md = `
-**Parameters**:
+    const md = `**Parameters**:
 
 * **param1**
-* **param2**: Description of the parameter.
-`;
+* **param2**: Description of the parameter.`;
     expect(render(xml)).to.equal(md);
   });
 });

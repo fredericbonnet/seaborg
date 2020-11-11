@@ -9,6 +9,7 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
+import { joinParagraphs } from '../helpers';
 import { docParaType } from '.';
 
 const mappers = (): Mappers => ({
@@ -16,4 +17,4 @@ const mappers = (): Mappers => ({
 });
 
 export default (element: Element) =>
-  applyToChildren(mappers())(element).join('\n\n');
+  joinParagraphs(applyToChildren(mappers())(element));

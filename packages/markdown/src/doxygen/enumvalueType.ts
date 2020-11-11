@@ -15,17 +15,17 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
-import { md } from '../helpers';
+import { joinParagraphs, joinStrings, md } from '../helpers';
 import { descriptionType, linkedTextType } from '.';
+import { initial } from '../operators';
 
-const template = ({ id, name, briefdescription, detaileddescription }: any) => `
-<a id="${id}"></a>
-#### Enumerator ${md(name)}
-
-${briefdescription || ''}
-
-${detaileddescription || ''}
-`;
+const template = ({ id, name, briefdescription, detaileddescription }: any) =>
+  joinParagraphs([
+    `<a id="${id}"></a>
+#### Enumerator ${md(name)}`,
+    briefdescription,
+    detaileddescription,
+  ]);
 
 const mappers = (): Mappers => ({
   name: xsdString,
@@ -44,7 +44,7 @@ export default (element: Element) => {
 };
 
 const defTemplate = ({ name, initializer }: any) =>
-  `${name}${initializer ? ' ' + initializer : ''}`;
+  joinStrings([name, initializer], ' ');
 
 const defMappers = (): Mappers => ({
   name: xsdString,

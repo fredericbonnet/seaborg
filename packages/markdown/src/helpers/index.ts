@@ -60,11 +60,10 @@ export const ref = (refid: string, kindref: string, text: string) => {
 export const indent = (level: number) => '  '.repeat(level);
 
 /** Helper for TODO lists */
-export const todo = (list: string[]) => {
-  return list && list.length
-    ? '**TODO**:\n' + list.map((e) => `* ${e}`).join('\n')
-    : undefined;
-};
+export const todo = (list: string[]) =>
+  list
+    ? joinParagraphs(['**TODO**:', joinLines(list.map((e) => `* ${e}`))])
+    : '';
 
 /** Helper for compound label */
 export const compoundLabel = (kind: DoxCompoundKind) => compoundLabels[kind];
@@ -81,6 +80,19 @@ export const memberPlural = (kind: DoxMemberKind) => memberPlurals[kind];
 
 /** Helper for reference list */
 export const references = () =>
-  Object.entries(currentContext().references)
-    .map(([label, { url, title }]) => `[${label}]: ${url} (${title})`)
-    .join('\n');
+  joinLines(
+    Object.entries(currentContext().references).map(
+      ([label, { url, title }]) => `[${label}]: ${url} (${title})`
+    )
+  );
+
+/** Join non-empty strings */
+export const joinStrings = (strings: any[], sep: string = '') =>
+  strings ? strings.filter((v) => !!v).join(sep) : '';
+
+/** Join non-empty lines */
+export const joinLines = (lines: any[]) => joinStrings(lines, '\n');
+
+/** Join non-empty paragraphs */
+export const joinParagraphs = (paragraphs: any[]) =>
+  joinStrings(paragraphs, '\n\n');

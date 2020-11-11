@@ -11,14 +11,6 @@ import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildren } from '../mappers';
 import nodeType from './nodeType';
 
-const template = ({ direction, nodes }: any) =>
-  `
-\`\`\`mermaid
-graph ${direction}
-${nodes.join('\n')}
-\`\`\`
-`;
-
 const mappers = (reverse: boolean): Mappers => ({
   node: nodeType(reverse),
 });
@@ -28,7 +20,12 @@ const graphType = (direction: string, reverse: boolean) => (
 ) => {
   const nodes = applyToChildren(mappers(reverse))(element);
 
-  return template({ direction, nodes });
+  return `
+\`\`\`mermaid
+graph ${direction}
+${nodes.join('\n')}
+\`\`\`
+`;
 };
 export default graphType;
 

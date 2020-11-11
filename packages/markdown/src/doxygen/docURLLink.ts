@@ -9,6 +9,7 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
+import { joinStrings } from '../helpers';
 import { docTitleCmdGroup } from '.';
 
 const mappers = (): Mappers => ({
@@ -20,7 +21,7 @@ export default (element: Element) => {
   const {
     attributes: { url },
   } = element;
-  const text = applyToChildren(mappers())(element).join('');
+  const text = joinStrings(applyToChildren(mappers())(element));
 
   return `[${text}](${url})`;
 };

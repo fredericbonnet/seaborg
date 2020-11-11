@@ -7,7 +7,14 @@ import {
   $default,
 } from '../../mappers';
 import { xsdString } from '../../generic';
-import { languageCode, md, memberLabel, todo } from '../../helpers';
+import {
+  joinLines,
+  joinParagraphs,
+  languageCode,
+  md,
+  memberLabel,
+  todo,
+} from '../../helpers';
 import { linkedTextType, enumvalueType } from '..';
 import { def as enumvalueDef } from '../enumvalueType';
 
@@ -16,6 +23,7 @@ import {
   memberdefBadges,
   memberdefDescription,
   memberdefReferences,
+  memberdefTitle,
   templateContext,
 } from '.';
 
@@ -30,28 +38,20 @@ const template = ({
   TODO,
   ...context
 }: any) =>
-  `
-<a id="${id}"></a>
-### ${memberLabel(kind)} ${md(name)}
-
-${memberdefBadges(context)}
-
-${location}
-
-\`\`\`${languageCode(language)}
+  joinParagraphs([
+    memberdefTitle(id, `${memberLabel(kind)} ${md(name)}`),
+    memberdefBadges(context),
+    location,
+    `\`\`\`${languageCode(language)}
 enum ${name} {
 ${valuelist.map((e: string) => `  ${e}`).join(',\n')}
 }
-\`\`\`
-
-${memberdefDescription(context)}
-
-${memberdefReferences(context)}
-
-${enumvalue ? enumvalue.join('\n') : ''}
-
-${TODO ? todo(TODO) : ''}
-`;
+\`\`\``,
+    memberdefDescription(context),
+    memberdefReferences(context),
+    ...enumvalue,
+    todo(TODO),
+  ]);
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

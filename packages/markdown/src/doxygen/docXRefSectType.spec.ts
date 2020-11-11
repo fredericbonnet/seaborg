@@ -18,7 +18,7 @@ describe('docXRefSectType', () => {
           <xreftitle>Title</xreftitle>
           <xrefdescription><para>Description</para></xrefdescription>
       </xrefsect>`;
-    const md = '\n**Title**:\n\nDescription\n';
+    const md = '**Title**:\n\nDescription';
     expect(render(xml)).to.equal(md);
   });
 });

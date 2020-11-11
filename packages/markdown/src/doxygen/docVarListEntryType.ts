@@ -9,17 +9,14 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
+import { joinStrings } from '../helpers';
 import { docTitleType } from '.';
-
-const template = ({ text }: any) => `
-<b>${text}</b>:
-`;
 
 const mappers = (): Mappers => ({
   term: docTitleType,
 });
 
 export default (element: Element) => {
-  const text = applyToChildren(mappers())(element).join('').trim();
-  return template({ text });
+  const text = joinStrings(applyToChildren(mappers())(element)).trim();
+  return `<b>${text}</b>:`;
 };

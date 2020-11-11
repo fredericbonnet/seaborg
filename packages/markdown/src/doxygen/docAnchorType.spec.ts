@@ -15,7 +15,7 @@ describe('docAnchorType', () => {
 
   specify('regular', () => {
     const xml = `<anchor id="member_12345"/>`;
-    const md = '<a id="member_12345"></a>';
+    const md = '<a id="member_12345"></a>\n';
     expect(render(xml)).to.equal(md);
   });
 });

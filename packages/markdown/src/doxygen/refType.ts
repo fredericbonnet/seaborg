@@ -13,9 +13,7 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
-import { md, ref } from '../helpers';
-
-const template = ({ refid, text }: any) => ref(refid, 'compound', md(text));
+import { joinStrings, md, ref } from '../helpers';
 
 const mappers = (): Mappers => ({
   [$text]: textNode,
@@ -26,6 +24,6 @@ export default (element: Element) => {
   const {
     attributes: { refid },
   } = element;
-  const text = applyToChildren(mappers())(element).join('');
-  return template({ refid, text });
+  const text = joinStrings(applyToChildren(mappers())(element));
+  return ref(refid, 'compound', md(text));
 };

@@ -17,14 +17,8 @@ describe('enumValueType', () => {
     const xml = `<enumvalue id="member_12345">
           <name>EnumName</name>
       </enumvalue>`;
-    const md = `
-<a id="member_12345"></a>
-#### Enumerator EnumName
-
-
-
-
-`;
+    const md = `<a id="member_12345"></a>
+#### Enumerator EnumName`;
     expect(render(xml)).to.equal(md);
   });
 
@@ -34,14 +28,12 @@ describe('enumValueType', () => {
           <briefdescription>Brief description</briefdescription>
           <detaileddescription>Detailed description</detaileddescription>
       </enumvalue>`;
-    const md = `
-<a id="member_12345"></a>
+    const md = `<a id="member_12345"></a>
 #### Enumerator EnumName
 
 Brief description
 
-Detailed description
-`;
+Detailed description`;
     expect(render(xml)).to.equal(md);
   });
 

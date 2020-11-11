@@ -1,15 +1,14 @@
 import { CompoundKind, CompoundType } from '@seaborg/core/lib/models';
+import { joinParagraphs } from '../../../helpers';
 import { compoundList } from '..';
 
 /** Index entry template */
-const indexEntry = ([key, items]: [string, CompoundType[]]) => `## ${key}
-
-${compoundList(items)}
-`;
+const indexEntry = ([key, items]: [string, CompoundType[]]) =>
+  joinParagraphs([`## ${key}`, compoundList(items)]);
 
 /** Compound index template */
 export const compoundIndex = (index: CompoundIndex) =>
-  Object.entries(index).map(indexEntry).join('\n');
+  joinParagraphs(Object.entries(index).map(indexEntry));
 
 /** Compound index type */
 export type CompoundIndex = { [initial: string]: CompoundType[] };

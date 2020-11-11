@@ -17,8 +17,6 @@ import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
 import { md, ref } from '../helpers';
 
-const template = ({ refid, name }: any) => ref(refid, 'member', md(name));
-
 const mappers = (): Mappers => ({
   scope: xsdString,
   name: xsdString,
@@ -29,7 +27,7 @@ export default (element: Element) => {
   const {
     attributes: { refid },
   } = element;
-  const context = applyToChildrenGrouped(mappers())(element);
+  const { name } = applyToChildrenGrouped(mappers())(element);
 
-  return template({ ...context, refid });
+  return ref(refid, 'member', md(name));
 };

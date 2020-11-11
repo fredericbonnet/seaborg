@@ -10,5 +10,5 @@ export default (element: Element) => {
   const {
     attributes: { id },
   } = element;
-  return `<a id="${id}"></a>`;
+  return `<a id="${id}"></a>\n`;
 };

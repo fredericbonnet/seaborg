@@ -40,10 +40,7 @@ describe('listofallmembersType', () => {
 
   specify('empty', () => {
     const xml = `<listofallmembers></listofallmembers>`;
-    const md = `
-## Members
-
-`;
+    const md = `## Members`;
     expect(render(xml)).to.equal(md);
   });
 
@@ -51,11 +48,9 @@ describe('listofallmembersType', () => {
     const xml = `<listofallmembers>
           <member refid="member_67890"><scope>SomeType</scope><name>memberName</name></member>
       </listofallmembers>`;
-    const md = `
-## Members
+    const md = `## Members
 
-* [memberName](compound_12345.md#member_67890)
-`;
+* [memberName](compound_12345.md#member_67890)`;
     expect(render(xml)).to.equal(md);
   });
 
@@ -64,12 +59,10 @@ describe('listofallmembersType', () => {
           <member refid="member_67890"><scope>SomeType</scope><name>memberName1</name></member>
           <member refid="member_98765"><scope>SomeType</scope><name>memberName2</name></member>
       </listofallmembers>`;
-    const md = `
-## Members
+    const md = `## Members
 
 * [memberName1](compound_12345.md#member_67890)
-* [memberName2](compound_12345.md#member_98765)
-`;
+* [memberName2](compound_12345.md#member_98765)`;
     expect(render(xml)).to.equal(md);
   });
 });

@@ -15,10 +15,7 @@ describe('retval', () => {
 
   specify('empty', () => {
     const xml = `<parameterlist kind="retval"></parameterlist>`;
-    const md = `
-**Return values**:
-
-`;
+    const md = '';
     expect(render(xml)).to.equal(md);
   });
   specify('one value', () => {
@@ -32,11 +29,9 @@ describe('retval', () => {
               </parameterdescription>
           </parameteritem>
       </parameterlist>`;
-    const md = `
-**Return values**:
+    const md = `**Return values**:
 
-* **value1**: Description of the value.
-`;
+* **value1**: Description of the value.`;
     expect(render(xml)).to.equal(md);
   });
   specify('several values', () => {
@@ -55,12 +50,10 @@ describe('retval', () => {
               </parameterdescription>
           </parameteritem>
       </parameterlist>`;
-    const md = `
-**Return values**:
+    const md = `**Return values**:
 
 * **value1**
-* **value2**: Description of the value.
-`;
+* **value2**: Description of the value.`;
     expect(render(xml)).to.equal(md);
   });
 });

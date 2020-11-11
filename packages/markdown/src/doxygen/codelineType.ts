@@ -13,6 +13,7 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
+import { joinStrings } from '../helpers';
 import { highlightType } from '.';
 
 const mappers = (): Mappers => ({
@@ -21,4 +22,4 @@ const mappers = (): Mappers => ({
 
 // TODO attributes
 export default (element: Element) =>
-  applyToChildren(mappers())(element).join('');
+  joinStrings(applyToChildren(mappers())(element));

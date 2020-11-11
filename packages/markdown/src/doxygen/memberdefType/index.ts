@@ -88,18 +88,17 @@ import {
   protectionBadge,
 } from '../../helpers/badges';
 import { descriptionType, locationType, referenceType } from '..';
+import { joinLines, joinParagraphs } from '../../helpers';
+
+export const memberdefTitle = (id: string, title: string) =>
+  `<a id="${id}"></a>\n### ${title}`;
 
 export const memberdefDescription = ({
   briefdescription,
   detaileddescription,
   inbodydescription,
-}: any) => `
-${briefdescription || ''}
-
-${detaileddescription || ''}
-
-${inbodydescription || ''}
-`;
+}: any) =>
+  joinParagraphs([briefdescription, detaileddescription, inbodydescription]);
 
 export const memberdefReferences = ({
   references,
@@ -108,35 +107,29 @@ export const memberdefReferences = ({
   references: string[];
   referencedby: string[];
 }) =>
-  `
-${
-  references
-    ? `
-**References**: 
-
-${references.map((e) => `* ${e}`).join('\n')}}
-`
-    : ''
-}
-
-${
-  referencedby
-    ? `
-**Referenced by**: 
-
-${referencedby.map((e) => `* ${e}`).join('\n')}}
-`
-    : ''
-}
-`;
+  joinParagraphs([
+    references
+      ? joinParagraphs([
+          '**References**:',
+          joinLines(references.map((e: string) => `* ${e}`)),
+        ])
+      : '',
+    referencedby
+      ? joinParagraphs([
+          '**Referenced by**:',
+          joinLines(referencedby.map((e: string) => `* ${e}`)),
+        ])
+      : '',
+  ]);
 
 // TODO other attributes?
-export const memberdefBadges = ({ language, attributes }: any) => `
-${language ? languageBadge(language) : ''}
-${attributes.prot ? protectionBadge(attributes.prot) : ''}
-${attributes.static ? boolBadge('static', 'lightgrey', attributes.static) : ''}
-${attributes.const ? boolBadge('const', 'lightblue', attributes.const) : ''}
-`;
+export const memberdefBadges = ({ language, attributes }: any) =>
+  joinLines([
+    languageBadge(language),
+    protectionBadge(attributes.prot),
+    boolBadge('static', 'lightgrey', attributes.static),
+    boolBadge('const', 'lightblue', attributes.const),
+  ]);
 
 export const mappers = (): Mappers => ({
   name: xsdString,

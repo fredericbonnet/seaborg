@@ -10,9 +10,6 @@
 
 import { Element } from '@rgrove/parse-xml';
 
-const template = ({ source, destination }: any) =>
-  `${source} --> ${destination}`;
-
 export default (reverse: boolean) => (element: Element) => {
   const {
     attributes: { id: parentid },
@@ -21,8 +18,5 @@ export default (reverse: boolean) => (element: Element) => {
     attributes: { refid },
   } = element;
 
-  return template({
-    source: reverse ? refid : parentid,
-    destination: reverse ? parentid : refid,
-  });
+  return reverse ? `${refid} --> ${parentid}` : `${parentid} --> ${refid}`;
 };

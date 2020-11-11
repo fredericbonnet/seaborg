@@ -15,13 +15,6 @@ import { Mappers, applyToChildren } from '../mappers';
 import { languageCode } from '../helpers';
 import { codelineType } from '.';
 
-const template = ({ lines, language }: any) =>
-  `
-\`\`\`${language ? languageCode(language) : ''}
-${lines.join('\n')}
-\`\`\`
-`;
-
 const mappers = (): Mappers => ({
   codeline: codelineType,
 });
@@ -30,5 +23,9 @@ export default (element: Element) => {
   const { language } = currentContext();
   const lines = applyToChildren(mappers())(element);
 
-  return template({ lines, language });
+  return `
+\`\`\`${language ? languageCode(language) : ''}
+${lines.join('\n')}
+\`\`\`
+`;
 };

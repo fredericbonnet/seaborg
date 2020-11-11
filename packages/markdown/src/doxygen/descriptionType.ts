@@ -13,16 +13,15 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { xsdString, textNode } from '../generic';
+import { joinParagraphs } from '../helpers';
 import { docParaType } from '.';
 
 // TODO
 const mappers = (): Mappers => ({
-  title: title => `### ${xsdString(title)}`,
+  title: (title) => `### ${xsdString(title)}`,
   para: docParaType,
   [$text]: textNode,
 });
 
 export default (element: Element) =>
-  applyToChildren(mappers())(element)
-    .join('\n\n')
-    .trim();
+  joinParagraphs(applyToChildren(mappers())(element)).trim();

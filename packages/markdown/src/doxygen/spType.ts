@@ -8,6 +8,7 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren, $text } from '../mappers';
 import { textNode } from '../generic';
+import { joinStrings } from '../helpers';
 
 const mappers = (): Mappers => ({
   [$text]: textNode,
@@ -15,4 +16,4 @@ const mappers = (): Mappers => ({
 
 // TODO value attribute
 export default (element: Element) =>
-  ' ' + applyToChildren(mappers())(element).join('');
+  ' ' + joinStrings(applyToChildren(mappers())(element));

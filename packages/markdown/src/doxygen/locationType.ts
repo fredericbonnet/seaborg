@@ -13,14 +13,11 @@ import { Element } from '@rgrove/parse-xml';
 
 import { md } from '../helpers';
 
-const template = ({ file, line }: any) =>
-  line
-    ? `**Definition**: \`${md(file)}\` (line ${line})`
-    : `**Location**: \`${md(file)}\``;
-
 export default (element: Element) => {
   const {
     attributes: { file, line },
   } = element;
-  return template({ file, line });
+  return line
+    ? `**Definition**: \`${md(file)}\` (line ${line})`
+    : `**Location**: \`${md(file)}\``;
 };

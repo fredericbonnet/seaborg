@@ -19,11 +19,9 @@ describe('templateparamlistType', () => {
               <type>T</type>
           </param>
       </templateparamlist>`;
-    const md = `
-**Template parameters**:
+    const md = `**Template parameters**:
 
-* T
-`;
+* T`;
     expect(render(xml)).to.equal(md);
   });
 
@@ -34,11 +32,9 @@ describe('templateparamlistType', () => {
               <briefdescription><para>This is a description.</para></briefdescription>
           </param>
       </templateparamlist>`;
-    const md = `
-**Template parameters**:
+    const md = `**Template parameters**:
 
-* T: This is a description.
-`;
+* T: This is a description.`;
     expect(render(xml)).to.equal(md);
   });
 
@@ -52,12 +48,10 @@ describe('templateparamlistType', () => {
               <briefdescription><para>This is a description.</para></briefdescription>
           </param>
       </templateparamlist>`;
-    const md = `
-**Template parameters**:
+    const md = `**Template parameters**:
 
 * T
-* U: This is a description.
-`;
+* U: This is a description.`;
     expect(render(xml)).to.equal(md);
   });
 });

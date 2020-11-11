@@ -9,7 +9,7 @@ import { DoxRefKind } from '../../doxygen';
 import { labels as compoundLabels } from '../../doxygen/DoxCompoundKind';
 import { labels as memberLabels } from '../../doxygen/DoxMemberKind';
 import { uniqueBy, sortBy, groupBy, initial } from '../../operators';
-import { md, ref } from '../../helpers';
+import { joinLines, joinParagraphs, md, ref } from '../../helpers';
 
 /** Template for reference item */
 const referenceItem = ({ kind, refid, name, label }: Reference) =>
@@ -17,19 +17,11 @@ const referenceItem = ({ kind, refid, name, label }: Reference) =>
 
 /** Template map function for entry item */
 const entryItem = ([key, references]: [string, Reference[]]) =>
-  `
-## ${key}
-
-${references.map(referenceItem).join('\n')}
-`;
+  joinParagraphs([`## ${key}`, joinLines(references.map(referenceItem))]);
 
 /** Main template */
 const template = (index: { [key: string]: Reference[] }) =>
-  `
-# Index
-
-${Object.entries(index).map(entryItem).join('\n')}
-`;
+  joinParagraphs(['# Index', ...Object.entries(index).map(entryItem)]);
 
 /** Reference type */
 type Reference = {

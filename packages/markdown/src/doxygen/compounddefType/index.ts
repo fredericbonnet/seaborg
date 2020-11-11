@@ -47,16 +47,15 @@ import { xsdString } from '../../generic';
 import { languageBadge, protectionBadge } from '../../helpers/badges';
 import { descriptionType, sectiondefType, refType, listingType } from '..';
 import { incdepgraph, invincdepgraph } from '../graphType';
+import { joinLines, joinParagraphs } from '../../helpers';
+
+export const compounddefTitle = (id: string, title: string) =>
+  `<a id="${id}"></a>\n# ${title}`;
 
 export const compounddefDescription = ({
   briefdescription,
   detaileddescription,
-}: any) =>
-  `
-${briefdescription || ''}
-
-${detaileddescription || ''}
-`;
+}: any) => joinParagraphs([briefdescription, detaileddescription]);
 
 export const compounddefList = ({
   list,
@@ -66,11 +65,7 @@ export const compounddefList = ({
   label: string;
 }) =>
   list
-    ? `
-## ${label}
-
-${list.map((e) => `* ${e}`).join('\n')}
-`
+    ? joinParagraphs([`## ${label}`, joinLines(list.map((e) => `* ${e}`))])
     : '';
 
 export const compounddefInnercompounds = ({
@@ -81,37 +76,24 @@ export const compounddefInnercompounds = ({
   innerpage,
   innergroup,
 }: any) =>
-  `
-${compounddefList({ list: innerdir, label: 'Directories' })}
-
-${compounddefList({ list: innerfile, label: 'Files' })}
-
-${compounddefList({ list: innerclass, label: 'Classes' })}
-
-${compounddefList({ list: innernamespace, label: 'Namespaces' })}
-
-${compounddefList({ list: innerpage, label: 'Pages' })}
-
-${compounddefList({ list: innergroup, label: 'Modules' })}
-`;
+  joinParagraphs([
+    compounddefList({ list: innerdir, label: 'Directories' }),
+    compounddefList({ list: innerfile, label: 'Files' }),
+    compounddefList({ list: innerclass, label: 'Classes' }),
+    compounddefList({ list: innernamespace, label: 'Namespaces' }),
+    compounddefList({ list: innerpage, label: 'Pages' }),
+    compounddefList({ list: innergroup, label: 'Modules' }),
+  ]);
 
 export const compounddefSections = ({ sectiondef }: { sectiondef: string[] }) =>
-  sectiondef ? sectiondef.join('\n') : '';
+  sectiondef ? joinLines(sectiondef) : '';
 
 export const compounddefSource = ({ programlisting }: any) =>
-  programlisting
-    ? `
-## Source
-
-${programlisting}
-`
-    : '';
+  programlisting ? joinParagraphs(['## Source', programlisting]) : '';
 
 // TODO other attributes?
-export const compounddefBadges = ({ language, attributes }: any) => `
-${language ? languageBadge(language) : ''}
-${attributes.prot ? protectionBadge(attributes.prot) : ''}
-`;
+export const compounddefBadges = ({ language, attributes }: any) =>
+  joinLines([languageBadge(language), protectionBadge(attributes.prot)]);
 
 export const mappers = (): Mappers => ({
   compoundname: xsdString,

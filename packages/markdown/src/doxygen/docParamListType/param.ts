@@ -1,13 +1,14 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped } from '../../mappers';
+import { joinLines, joinParagraphs } from '../../helpers';
 import { docParamListItem } from '..';
 
 const item = (e: string) => `* ${e}`;
-const template = ({ parameteritem }: any) => `
-**Parameters**:
-
-${parameteritem ? parameteritem.map(item).join('\n') + '\n' : ''}`;
+const template = ({ parameteritem }: any) =>
+  parameteritem
+    ? joinParagraphs(['**Parameters**:', joinLines(parameteritem.map(item))])
+    : '';
 
 const mappers = (): Mappers => ({
   parameteritem: docParamListItem,

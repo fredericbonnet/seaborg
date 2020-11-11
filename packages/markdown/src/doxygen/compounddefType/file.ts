@@ -1,7 +1,7 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { compoundLabel, md, todo } from '../../helpers';
+import { compoundLabel, joinParagraphs, md, todo } from '../../helpers';
 import { locationType, incType } from '..';
 
 import {
@@ -11,6 +11,7 @@ import {
   compounddefList,
   compounddefSections,
   compounddefSource,
+  compounddefTitle,
   mappers as defaultMappers,
   templateContext,
 } from '.';
@@ -27,32 +28,20 @@ const template = ({
   TODO,
   ...context
 }: any) =>
-  `
-<a id="${id}"></a>
-# ${compoundLabel(kind)} ${md(compoundname)}
-
-${compounddefBadges(context)}
-
-${location}
-
-${compounddefDescription(context)}
-
-${compounddefInnercompounds(context)}
-
-${compounddefList({ list: includes, label: 'Includes' })}
-
-${incdepgraph}
-
-${compounddefList({ list: includedby, label: 'Included by' })}
-
-${invincdepgraph}
-
-${compounddefSections(context)}
-
-${compounddefSource(context)}
-
-${TODO ? todo(TODO) : ''}
-`;
+  joinParagraphs([
+    compounddefTitle(id, `${compoundLabel(kind)} ${md(compoundname)}`),
+    compounddefBadges(context),
+    location,
+    compounddefDescription(context),
+    compounddefInnercompounds(context),
+    compounddefList({ list: includes, label: 'Includes' }),
+    incdepgraph,
+    compounddefList({ list: includedby, label: 'Included by' }),
+    invincdepgraph,
+    compounddefSections(context),
+    compounddefSource(context),
+    todo(TODO),
+  ]);
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

@@ -10,12 +10,7 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
 import { paramType } from '.';
-
-const template = ({ params }: any) =>
-  `
-**Template parameters**:
-
-${params.map((e: string) => `* ${e}\n`).join('')}`;
+import { joinLines, joinParagraphs } from '../helpers';
 
 const mappers = (): Mappers => ({
   param: paramType,
@@ -24,5 +19,8 @@ const mappers = (): Mappers => ({
 export default (element: Element) => {
   const params = applyToChildren(mappers())(element);
 
-  return template({ params });
+  return joinParagraphs([
+    `**Template parameters**:`,
+    joinLines(params.map((e) => `* ${e}`)),
+  ]);
 };

@@ -15,10 +15,7 @@ describe('exception', () => {
 
   specify('empty', () => {
     const xml = `<parameterlist kind="exception"></parameterlist>`;
-    const md = `
-**Exceptions**:
-
-`;
+    const md = '';
     expect(render(xml)).to.equal(md);
   });
   specify('one value', () => {
@@ -32,11 +29,9 @@ describe('exception', () => {
               </parameterdescription>
           </parameteritem>
       </parameterlist>`;
-    const md = `
-**Exceptions**:
+    const md = `**Exceptions**:
 
-* **Exception1**: Description of the exception.
-`;
+* **Exception1**: Description of the exception.`;
     expect(render(xml)).to.equal(md);
   });
   specify('several values', () => {
@@ -55,12 +50,10 @@ describe('exception', () => {
               </parameterdescription>
           </parameteritem>
       </parameterlist>`;
-    const md = `
-**Exceptions**:
+    const md = `**Exceptions**:
 
 * **Exception1**
-* **Exception2**: Description of the exception.
-`;
+* **Exception2**: Description of the exception.`;
     expect(render(xml)).to.equal(md);
   });
 });

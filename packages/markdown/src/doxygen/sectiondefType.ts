@@ -13,17 +13,12 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
+import { joinParagraphs } from '../helpers';
 import { descriptionType, memberdefType } from '.';
 import { labels } from './DoxSectionKind';
 
 const template = ({ header, description, memberdef }: any) =>
-  `
-## ${header}
-
-${description}
-
-${memberdef.join('\n')}
-`;
+  joinParagraphs([`## ${header}`, description, ...memberdef]);
 
 const mappers = (): Mappers => ({
   header: xsdString,

@@ -6,7 +6,7 @@ import {
 } from '@seaborg/core/lib/models';
 import { map, pipe, reduce, ReduceFunc } from '@seaborg/core/lib/operators';
 import { unique } from '../operators';
-import { compoundPlural } from '../helpers';
+import { compoundPlural, joinLines, joinParagraphs } from '../helpers';
 import { DoxCompoundKind } from '../doxygen/DoxCompoundKind';
 
 /** Template for link item */
@@ -18,25 +18,27 @@ const kindItem = (suffix: string) => (kind: DoxCompoundKind) =>
 
 /** Template for Contents page list */
 const contentsTemplate = ({ contentsSuffix, mdExtension, kinds }: any) =>
-  `
-# Contents pages
-
-${linkItem('Global contents', 'global' + contentsSuffix + mdExtension)}
-${kinds.map(kindItem(contentsSuffix + mdExtension)).join('\n')}
-`;
+  joinParagraphs([
+    '# Contents pages',
+    joinLines([
+      linkItem('Global contents', 'global' + contentsSuffix + mdExtension),
+      ...kinds.map(kindItem(contentsSuffix + mdExtension)),
+    ]),
+  ]);
 
 /** Template for Index page list */
 const indexTemplate = ({ indexSuffix, mdExtension, kinds }: any) =>
-  `
-# Index pages
-
-${linkItem('Global index', 'global' + indexSuffix + mdExtension)}
-${kinds.map(kindItem(indexSuffix + mdExtension)).join('\n')}
-`;
+  joinParagraphs([
+    '# Index pages',
+    joinLines([
+      linkItem('Global index', 'global' + indexSuffix + mdExtension),
+      ...kinds.map(kindItem(indexSuffix + mdExtension)),
+    ]),
+  ]);
 
 /** Main template */
 const template = (context: any) =>
-  contentsTemplate(context) + indexTemplate(context);
+  joinParagraphs([contentsTemplate(context), indexTemplate(context)]);
 
 /** Map compound to its kind */
 const toKind = (compound: CompoundType) => compound.kind;

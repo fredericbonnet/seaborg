@@ -1,32 +1,27 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { todo } from '../../helpers';
+import { joinParagraphs, todo } from '../../helpers';
 
 import {
   compounddefBadges,
   compounddefDescription,
   compounddefList,
   compounddefSections,
+  compounddefTitle,
   mappers as defaultMappers,
   templateContext,
 } from '.';
 
 const template = ({ id, title, innergroup, TODO, ...context }: any) =>
-  `
-<a id="${id}"></a>
-# ${title}
-
-${compounddefBadges(context)}
-
-${compounddefDescription(context)}
-
-${compounddefList({ list: innergroup, label: 'Submodules' })}
-
-${compounddefSections(context)}
-
-${TODO ? todo(TODO) : ''}
-`;
+  joinParagraphs([
+    compounddefTitle(id, title),
+    compounddefBadges(context),
+    compounddefDescription(context),
+    compounddefList({ list: innergroup, label: 'Submodules' }),
+    compounddefSections(context),
+    todo(TODO),
+  ]);
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

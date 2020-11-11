@@ -1,7 +1,13 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
-import { compoundLabel, md, todo } from '../../helpers';
+import {
+  compoundLabel,
+  joinLines,
+  joinParagraphs,
+  md,
+  todo,
+} from '../../helpers';
 import {
   locationType,
   listofallmembersType,
@@ -14,6 +20,7 @@ import {
   compounddefDescription,
   compounddefSections,
   compounddefSource,
+  compounddefTitle,
   mappers as defaultMappers,
   templateContext,
 } from '.';
@@ -30,46 +37,29 @@ const template = ({
   TODO,
   ...context
 }: any) =>
-  `
-<a id="${id}"></a>
-# ${compoundLabel(kind)} ${md(compoundname)}
-
-${compounddefBadges(context)}
-
-${location}
-
-${compounddefDescription(context)}
-
-${templateparamlist || ''}
-
-${
-  basecompoundref
-    ? `
-**Inherits from**:
-
-${basecompoundref.map((e: string) => `* $e`).join('\n')}
-`
-    : ''
-}
-
-${
-  derivedcompoundref
-    ? `
-**Inherited by**:
-
-${derivedcompoundref.map((e: string) => `* $e`).join('\n')}
-`
-    : ''
-}
-
-${listofallmembers}
-
-${compounddefSections(context)}
-
-${compounddefSource(context)}
-
-${TODO ? todo(TODO) : ''}
-`;
+  joinParagraphs([
+    compounddefTitle(id, `${compoundLabel(kind)} ${md(compoundname)}`),
+    compounddefBadges(context),
+    location,
+    compounddefDescription(context),
+    templateparamlist,
+    basecompoundref
+      ? joinParagraphs([
+          '**Inherits from**',
+          joinLines(basecompoundref.map((e: string) => `* ${e}`)),
+        ])
+      : '',
+    derivedcompoundref
+      ? joinParagraphs([
+          '**Inherited by**',
+          joinLines(derivedcompoundref.map((e: string) => `* ${e}`)),
+        ])
+      : '',
+    listofallmembers,
+    compounddefSections(context),
+    compounddefSource(context),
+    todo(TODO),
+  ]);
 
 const mappers = (): Mappers => ({
   ...defaultMappers(),

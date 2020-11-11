@@ -10,9 +10,6 @@ import { Element } from '@rgrove/parse-xml';
 import { refLink } from '../helpers';
 
 // FIXME kindref
-const template = ({ parentid, refid }: any) =>
-  `click ${parentid} "${refLink(refid, 'compound')}"`;
-
 export default (element: Element) => {
   const {
     attributes: { id: parentid },
@@ -22,5 +19,5 @@ export default (element: Element) => {
   } = element;
   // TODO external
 
-  return template({ parentid, refid });
+  return `click ${parentid} "${refLink(refid, 'compound')}"`;
 };

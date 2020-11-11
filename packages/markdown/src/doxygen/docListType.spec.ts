@@ -16,7 +16,7 @@ describe('docListType', () => {
 
     specify('empty', () => {
       const xml = `<itemizedlist></itemizedlist>`;
-      const md = '\n';
+      const md = '';
       expect(render(xml)).to.equal(md);
     });
     specify('non-empty', () => {
@@ -24,11 +24,9 @@ describe('docListType', () => {
             <listitem><para>First</para></listitem>
             <listitem><para>Second</para></listitem>
         </itemizedlist>`;
-      const md = `
-* First
+      const md = `* First
 
 * Second
-
 `;
       expect(render(xml)).to.equal(md);
     });
@@ -44,7 +42,7 @@ describe('docListType', () => {
 
     specify('empty', () => {
       const xml = `<orderedlist></orderedlist>`;
-      const md = '\n';
+      const md = '';
       expect(render(xml)).to.equal(md);
     });
     specify('non-empty', () => {
@@ -52,11 +50,9 @@ describe('docListType', () => {
             <listitem><para>First</para></listitem>
             <listitem><para>Second</para></listitem>
         </itemizedlist>`;
-      const md = `
-1. First
+      const md = `1. First
 
 2. Second
-
 `;
       expect(render(xml)).to.equal(md);
     });

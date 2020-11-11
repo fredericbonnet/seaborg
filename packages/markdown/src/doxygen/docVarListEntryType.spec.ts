@@ -15,12 +15,12 @@ describe('docVarListEntryType', () => {
 
   specify('basic', () => {
     const xml = `<varlistentry><term>Some text</term></varlistentry>`;
-    const md = '\n<b>Some text</b>:\n';
+    const md = '<b>Some text</b>:';
     expect(render(xml)).to.equal(md);
   });
   specify('markup', () => {
     const xml = `<varlistentry><term>Some <emphasis>text</emphasis></term></varlistentry>`;
-    const md = '\n<b>Some _text_</b>:\n';
+    const md = '<b>Some _text_</b>:';
     expect(render(xml)).to.equal(md);
   });
   // TODO
