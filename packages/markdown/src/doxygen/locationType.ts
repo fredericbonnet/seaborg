@@ -11,13 +11,13 @@
 
 import { Element } from '@rgrove/parse-xml';
 
-import { md } from '../helpers';
+import { md, section } from '../helpers';
 
 export default (element: Element) => {
   const {
     attributes: { file, line },
   } = element;
   return line
-    ? `**Definition**: \`${md(file)}\` (line ${line})`
-    : `**Location**: \`${md(file)}\``;
+    ? section('Definition', `\`${md(file)}\` (line ${line})`)
+    : section('Location', `\`${md(file)}\``);
 };

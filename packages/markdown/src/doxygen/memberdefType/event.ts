@@ -7,6 +7,7 @@ import {
   languageCode,
   md,
   memberLabel,
+  section,
   todo,
 } from '../../helpers';
 import { linkedTextType } from '..';
@@ -40,7 +41,7 @@ const template = ({
 ${definition}${argsstring}
 \`\`\``,
     memberdefDescription(context),
-    type ? `**Type**: ${type}` : '',
+    section('Type', type),
     memberdefReferences(context),
     todo(TODO),
   ]);

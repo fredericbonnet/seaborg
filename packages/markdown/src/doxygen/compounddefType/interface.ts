@@ -2,11 +2,10 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import {
-  bulletItem,
   compoundLabel,
-  joinLines,
   joinParagraphs,
   md,
+  sectionList,
   todo,
 } from '../../helpers';
 import {
@@ -44,18 +43,8 @@ const template = ({
     location,
     compounddefDescription(context),
     templateparamlist,
-    basecompoundref
-      ? joinParagraphs([
-          '**Inherits from**',
-          joinLines(basecompoundref.map(bulletItem)),
-        ])
-      : '',
-    derivedcompoundref
-      ? joinParagraphs([
-          '**Inherited by**',
-          joinLines(derivedcompoundref.map(bulletItem)),
-        ])
-      : '',
+    sectionList('Inherits from', basecompoundref),
+    sectionList('Inherited by', derivedcompoundref),
     listofallmembers,
     compounddefSections(context),
     compounddefSource(context),

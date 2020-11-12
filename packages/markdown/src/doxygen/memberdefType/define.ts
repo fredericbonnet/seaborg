@@ -7,6 +7,7 @@ import {
   languageCode,
   md,
   memberLabel,
+  section,
   todo,
 } from '../../helpers';
 import { linkedTextType, paramType } from '..';
@@ -43,7 +44,7 @@ const template = ({
     }
 \`\`\``,
     memberdefDescription(context),
-    type ? `**Return type**: ${type}` : '',
+    section('Return type', type),
     memberdefReferences(context),
     todo(TODO),
   ]);

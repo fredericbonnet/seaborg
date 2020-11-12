@@ -87,7 +87,7 @@ import {
   languageBadge,
   protectionBadge,
 } from '../../helpers/badges';
-import { bulletItem, joinLines, joinParagraphs } from '../../helpers';
+import { joinLines, joinParagraphs, sectionList } from '../../helpers';
 import { descriptionType, locationType, referenceType } from '..';
 
 export const memberdefTitle = (id: string, title: string) =>
@@ -108,18 +108,8 @@ export const memberdefReferences = ({
   referencedby: string[];
 }) =>
   joinParagraphs([
-    references
-      ? joinParagraphs([
-          '**References**:',
-          joinLines(references.map(bulletItem)),
-        ])
-      : '',
-    referencedby
-      ? joinParagraphs([
-          '**Referenced by**:',
-          joinLines(referencedby.map(bulletItem)),
-        ])
-      : '',
+    sectionList('References', references),
+    sectionList('Referenced by', referencedby),
   ]);
 
 // TODO other attributes?

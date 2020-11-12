@@ -1,16 +1,11 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped } from '../../mappers';
-import { bulletItem, joinLines, joinParagraphs } from '../../helpers';
+import { sectionList } from '../../helpers';
 import { docParamListItem } from '..';
 
 const template = ({ parameteritem }: any) =>
-  parameteritem
-    ? joinParagraphs([
-        '**Exceptions**:',
-        joinLines(parameteritem.map(bulletItem)),
-      ])
-    : '';
+  sectionList('Exceptions', parameteritem);
 
 const mappers = (): Mappers => ({
   parameteritem: docParamListItem,

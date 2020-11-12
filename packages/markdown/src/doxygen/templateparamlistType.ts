@@ -9,8 +9,8 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
+import { sectionList } from '../helpers';
 import { paramType } from '.';
-import { bulletItem, joinLines, joinParagraphs } from '../helpers';
 
 const mappers = (): Mappers => ({
   param: paramType,
@@ -19,8 +19,5 @@ const mappers = (): Mappers => ({
 export default (element: Element) => {
   const params = applyToChildren(mappers())(element);
 
-  return joinParagraphs([
-    `**Template parameters**:`,
-    joinLines(params.map(bulletItem)),
-  ]);
+  return sectionList('Template parameters', params);
 };

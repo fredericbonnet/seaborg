@@ -12,8 +12,8 @@ import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildrenGrouped } from '../mappers';
 import { xsdString } from '../generic';
-import { descriptionType } from '.';
 import { joinParagraphs } from '../helpers';
+import { descriptionType } from '.';
 
 const template = ({ xreftitle, xrefdescription }: any) =>
   joinParagraphs([`**${xreftitle}**:`, xrefdescription]);

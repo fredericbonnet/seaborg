@@ -12,10 +12,10 @@ import { nonEmpty } from '../operators';
 import { textNode } from '../generic';
 import { docCmdGroup } from '.';
 import { inline as seeInline } from './docSimpleSectType/see';
-import { joinStrings } from '../helpers';
+import { joinStrings, section } from '../helpers';
 
 const seeTemplate = ({ see }: any) =>
-  see && see.length ? `**See also**: ${see.join(', ')}\n` : '';
+  see && see.length ? section('See also', see.join(', ')) + '\n' : '';
 
 const mappers = (): Mappers => ({
   ...docCmdGroup(),

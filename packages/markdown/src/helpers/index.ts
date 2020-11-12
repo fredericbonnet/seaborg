@@ -66,9 +66,22 @@ export const bulletItem = (text: string) => '* ' + text;
 export const orderedItem = (text: string, index: number) =>
   `${index + 1}. ${text}`;
 
+/** Helper for simple section */
+export const section = (title: string, text: any) =>
+  text ? `**${title}**: ${text}` : '';
+
+/** Helper for simple section lists */
+export const sectionList = (
+  title: string,
+  items: any[],
+  mapItem = bulletItem
+) =>
+  items && items.length
+    ? joinParagraphs([`**${title}**:`, joinLines(items.map(mapItem))])
+    : '';
+
 /** Helper for TODO lists */
-export const todo = (list: string[]) =>
-  list ? joinParagraphs(['**TODO**:', joinLines(list.map(bulletItem))]) : '';
+export const todo = (items: string[]) => sectionList('TODO', items);
 
 /** Helper for compound label */
 export const compoundLabel = (kind: DoxCompoundKind) => compoundLabels[kind];

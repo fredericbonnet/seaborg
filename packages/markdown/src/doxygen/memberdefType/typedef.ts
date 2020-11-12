@@ -3,12 +3,12 @@ import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
 import {
-  bulletItem,
-  joinLines,
   joinParagraphs,
   languageCode,
   md,
   memberLabel,
+  section,
+  sectionList,
   todo,
 } from '../../helpers';
 import { linkedTextType, paramType } from '..';
@@ -43,10 +43,8 @@ const template = ({
 ${definition}
 \`\`\``,
     memberdefDescription(context),
-    param
-      ? joinParagraphs(['**Parameters**:', joinLines(param.map(bulletItem))])
-      : '',
-    type ? `**Return type**: ${type}` : '',
+    sectionList('Parameters', param),
+    section('Return type', type),
     memberdefReferences(context),
     todo(TODO),
   ]);

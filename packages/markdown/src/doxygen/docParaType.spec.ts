@@ -43,17 +43,14 @@ describe('docParaType', () => {
 Text 1
 
 
-
 **Section 2**:
 
 Text 2
 
 
-
 **Returns**:
 
 Returned value
-
 
 
 
