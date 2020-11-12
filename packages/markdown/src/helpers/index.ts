@@ -32,7 +32,7 @@ export const md = (text: string | string[]): any =>
     : (text as string).replace(escapedMdChars, escapeMd);
 
 /** Helper for Markdown language code */
-export const languageCode = (code: string) => codes[code];
+export const languageCode = (code?: string) => (code ? codes[code] : undefined);
 
 /** Helper for links */
 export const refLink = (refid: string, kindref: string) => {
@@ -103,6 +103,12 @@ export const references = () =>
       ([label, { url, title }]) => `[${label}]: ${url} (${title || label})`
     )
   );
+
+/** Helper for code blocks */
+export const codeBlock = (language: string | undefined, code: string) =>
+  `\`\`\`${language || ''}
+${code}
+\`\`\``;
 
 /** Join non-empty strings */
 export const joinStrings = (strings: any[], sep: string = '') =>

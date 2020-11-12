@@ -8,6 +8,7 @@ import {
 } from '../../mappers';
 import { xsdString } from '../../generic';
 import {
+  codeBlock,
   joinParagraphs,
   languageCode,
   md,
@@ -41,11 +42,12 @@ const template = ({
     memberdefTitle(id, `${memberLabel(kind)} ${md(name)}`),
     memberdefBadges(context),
     location,
-    `\`\`\`${languageCode(language)}
-enum ${name} {
+    codeBlock(
+      languageCode(language),
+      `enum ${name} {
 ${valuelist.map((e: string) => `  ${e}`).join(',\n')}
-}
-\`\`\``,
+}`
+    ),
     memberdefDescription(context),
     memberdefReferences(context),
     ...enumvalue,

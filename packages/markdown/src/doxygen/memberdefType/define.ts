@@ -3,6 +3,7 @@ import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
 import {
+  codeBlock,
   joinParagraphs,
   languageCode,
   md,
@@ -37,12 +38,12 @@ const template = ({
   joinParagraphs([
     memberdefTitle(id, `${memberLabel(kind)} ${md(name)}`),
     memberdefBadges(context),
-    location,
-    `\`\`\`${languageCode(language)}
-#define ${name}${argsstring || ''}${initializer ? ` ${initializer}` : ''}${
-      param ? `( ${param.join(' ,')} )` : ''
-    }
-\`\`\``,
+    codeBlock(
+      languageCode(language),
+      `#define ${name}${argsstring || ''}${
+        initializer ? ` ${initializer}` : ''
+      }${param ? `( ${param.join(' ,')} )` : ''}`
+    ),
     memberdefDescription(context),
     section('Return type', type),
     memberdefReferences(context),

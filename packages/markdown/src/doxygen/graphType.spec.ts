@@ -15,12 +15,10 @@ describe('graphType', () => {
 
   specify('empty', () => {
     const xml = `<incdepgraph></incdepgraph>`;
-    const md = `
-\`\`\`mermaid
+    const md = `\`\`\`mermaid
 graph LR
 
-\`\`\`
-`;
+\`\`\``;
     expect(render('LR', false)(xml)).to.equal(md);
   });
   specify('full example', () => {
@@ -38,8 +36,7 @@ graph LR
                 <childnode refid="3" relation="include"></childnode>
             </node>
         </incdepgraph>`;
-    const md = `
-\`\`\`mermaid
+    const md = `\`\`\`mermaid
 graph LR
 1["first node"]
 click 1 "file_12345.md#file_12345"
@@ -51,8 +48,7 @@ click 1 "file_12345.md#file_12345"
 click 2 "file_67890.md#file_67890"
 2 --> 3
 
-\`\`\`
-`;
+\`\`\``;
     expect(render('LR', false)(xml)).to.equal(md);
   });
 });

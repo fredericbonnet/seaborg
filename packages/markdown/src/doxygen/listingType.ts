@@ -12,7 +12,7 @@ import { Element } from '@rgrove/parse-xml';
 import { currentContext } from '@seaborg/core/lib/services';
 
 import { Mappers, applyToChildren } from '../mappers';
-import { languageCode } from '../helpers';
+import { codeBlock, languageCode } from '../helpers';
 import { codelineType } from '.';
 
 const mappers = (): Mappers => ({
@@ -23,9 +23,5 @@ export default (element: Element) => {
   const { language } = currentContext();
   const lines = applyToChildren(mappers())(element);
 
-  return `
-\`\`\`${language ? languageCode(language) : ''}
-${lines.join('\n')}
-\`\`\`
-`;
+  return codeBlock(languageCode(language), lines.join('\n'));
 };
