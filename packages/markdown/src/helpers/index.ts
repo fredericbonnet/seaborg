@@ -100,7 +100,7 @@ export const memberPlural = (kind: DoxMemberKind) => memberPlurals[kind];
 export const references = () =>
   joinLines(
     Object.entries(currentContext().references).map(
-      ([label, { url, title }]) => `[${label}]: ${url} (${title})`
+      ([label, { url, title }]) => `[${label}]: ${url} (${title || label})`
     )
   );
 
