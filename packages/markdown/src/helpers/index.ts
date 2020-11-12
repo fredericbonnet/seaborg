@@ -101,3 +101,6 @@ export const joinLines = (lines: any[]) => joinStrings(lines, '\n');
 /** Join non-empty paragraphs */
 export const joinParagraphs = (paragraphs: any[]) =>
   joinStrings(paragraphs, '\n\n');
+
+/** Pad single paragraph */
+export const padParagraph = (s: string) => '\n' + s.trim() + '\n';

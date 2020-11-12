@@ -30,7 +30,10 @@
   </xsd:group>
 */
 
+import { pipe } from '@seaborg/core/lib/operators';
+
 import { Mappers, $default } from '../mappers';
+import { padParagraph } from '../helpers';
 import {
   listingType,
   docTitleCmdGroup,
@@ -49,15 +52,15 @@ export default (): Mappers => ({
   linebreak: () => '\n',
   hruler: () => '---\n',
   programlisting: listingType,
-  orderedlist: orderedlist,
-  itemizedlist: itemizedlist,
-  simplesect: docSimpleSectType,
+  orderedlist: pipe(orderedlist, padParagraph),
+  itemizedlist: pipe(itemizedlist, padParagraph),
+  simplesect: pipe(docSimpleSectType, padParagraph),
   title: docTitleType,
-  variablelist: docVariableListType,
+  variablelist: pipe(docVariableListType, padParagraph),
   heading: docHeadingType,
-  parameterlist: docParamListType,
-  xrefsect: docXRefSectType,
+  parameterlist: pipe(docParamListType, padParagraph),
+  xrefsect: pipe(docXRefSectType, padParagraph),
   parblock: docParBlockType,
   // TODO
-  [$default]: element => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
 });
