@@ -9,14 +9,12 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
-import { joinLines } from '../helpers';
+import { bulletItem, joinLines, orderedItem } from '../helpers';
 import { docListItemType } from '.';
 
-const bulletItem = (text: string) => `* ${text}`;
 const itemizedTemplate = ({ items }: { items: string[] }) =>
   joinLines(items.map(bulletItem));
 
-const orderedItem = (text: string, index: number) => `${index + 1}. ${text}`;
 const orderedTemplate = ({ items }: { items: string[] }) =>
   joinLines(items.map(orderedItem));
 

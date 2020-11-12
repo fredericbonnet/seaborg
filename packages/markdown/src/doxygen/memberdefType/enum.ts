@@ -8,7 +8,6 @@ import {
 } from '../../mappers';
 import { xsdString } from '../../generic';
 import {
-  joinLines,
   joinParagraphs,
   languageCode,
   md,

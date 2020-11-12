@@ -3,6 +3,7 @@ import { Element } from '@rgrove/parse-xml';
 import { Mappers, applyToChildrenGrouped, $default } from '../../mappers';
 import { xsdString } from '../../generic';
 import {
+  bulletItem,
   joinLines,
   joinParagraphs,
   languageCode,
@@ -45,17 +46,14 @@ ${definition}${argsstring}
 \`\`\``,
     memberdefDescription(context),
     param
-      ? joinParagraphs([
-          '**Parameters**:',
-          joinLines(param.map((e: string) => `* ${e}`)),
-        ])
+      ? joinParagraphs(['**Parameters**:', joinLines(param.map(bulletItem))])
       : '',
     type ? `**Return type**: ${type}` : '',
     reimplements ? `**Reimplements**: ${reimplements}` : '',
     reimplementedby
       ? joinParagraphs([
           '**Reimplemented by**:',
-          joinLines(reimplementedby.map((e: string) => `* ${e}`)),
+          joinLines(reimplementedby.map(bulletItem)),
         ])
       : '',
     memberdefReferences(context),

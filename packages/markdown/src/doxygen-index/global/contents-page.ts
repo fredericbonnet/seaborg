@@ -10,17 +10,26 @@ import {
   compoundLabel,
   joinParagraphs,
   joinLines,
+  bulletItem,
 } from '../../helpers';
 
+/** Template for member title */
+const memberTitle = ({ name, refid, kind }: MemberType) =>
+  `${ref(refid, 'member', md(name || ''))} ${memberLabel(kind)}`;
+
 /** Template for member item */
-const memberItem = ({ name, refid, kind }: MemberType) =>
-  `  * ${ref(refid, 'member', md(name || ''))} ${memberLabel(kind)}`;
+const memberItem = (member: MemberType) =>
+  '  ' + bulletItem(memberTitle(member));
+
+/** Template for compound title */
+const compoundTitle = ({ name, refid, kind, title }: CompoundType) =>
+  `${ref(refid, 'compound', md(title || name))} ${compoundLabel(kind)}`;
 
 /** Template for compound item */
-const compoundItem = ({ name, members, refid, kind, title }: CompoundType) =>
+const compoundItem = (compound: CompoundType) =>
   joinLines([
-    `* ${ref(refid, 'compound', md(title || name))} ${compoundLabel(kind)}`,
-    ...members.map(memberItem),
+    bulletItem(compoundTitle(compound)),
+    ...compound.members.map(memberItem),
   ]);
 
 /** Main template */

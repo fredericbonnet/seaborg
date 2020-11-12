@@ -87,8 +87,8 @@ import {
   languageBadge,
   protectionBadge,
 } from '../../helpers/badges';
+import { bulletItem, joinLines, joinParagraphs } from '../../helpers';
 import { descriptionType, locationType, referenceType } from '..';
-import { joinLines, joinParagraphs } from '../../helpers';
 
 export const memberdefTitle = (id: string, title: string) =>
   `<a id="${id}"></a>\n### ${title}`;
@@ -111,13 +111,13 @@ export const memberdefReferences = ({
     references
       ? joinParagraphs([
           '**References**:',
-          joinLines(references.map((e: string) => `* ${e}`)),
+          joinLines(references.map(bulletItem)),
         ])
       : '',
     referencedby
       ? joinParagraphs([
           '**Referenced by**:',
-          joinLines(referencedby.map((e: string) => `* ${e}`)),
+          joinLines(referencedby.map(bulletItem)),
         ])
       : '',
   ]);

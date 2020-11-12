@@ -59,11 +59,16 @@ export const ref = (refid: string, kindref: string, text: string) => {
 /** Helper for indentation */
 export const indent = (level: number) => '  '.repeat(level);
 
+/** Helper for bullet list items */
+export const bulletItem = (text: string) => '* ' + text;
+
+/** Helper for ordered list items */
+export const orderedItem = (text: string, index: number) =>
+  `${index + 1}. ${text}`;
+
 /** Helper for TODO lists */
 export const todo = (list: string[]) =>
-  list
-    ? joinParagraphs(['**TODO**:', joinLines(list.map((e) => `* ${e}`))])
-    : '';
+  list ? joinParagraphs(['**TODO**:', joinLines(list.map(bulletItem))]) : '';
 
 /** Helper for compound label */
 export const compoundLabel = (kind: DoxCompoundKind) => compoundLabels[kind];

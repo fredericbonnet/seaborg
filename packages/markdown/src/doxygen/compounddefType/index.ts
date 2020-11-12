@@ -47,7 +47,7 @@ import { xsdString } from '../../generic';
 import { languageBadge, protectionBadge } from '../../helpers/badges';
 import { descriptionType, sectiondefType, refType, listingType } from '..';
 import { incdepgraph, invincdepgraph } from '../graphType';
-import { joinLines, joinParagraphs } from '../../helpers';
+import { bulletItem, joinLines, joinParagraphs } from '../../helpers';
 
 export const compounddefTitle = (id: string, title: string) =>
   `<a id="${id}"></a>\n# ${title}`;
@@ -64,9 +64,7 @@ export const compounddefList = ({
   list: string[];
   label: string;
 }) =>
-  list
-    ? joinParagraphs([`## ${label}`, joinLines(list.map((e) => `* ${e}`))])
-    : '';
+  list ? joinParagraphs([`## ${label}`, joinLines(list.map(bulletItem))]) : '';
 
 export const compounddefInnercompounds = ({
   innerdir,
@@ -86,7 +84,7 @@ export const compounddefInnercompounds = ({
   ]);
 
 export const compounddefSections = ({ sectiondef }: { sectiondef: string[] }) =>
-  sectiondef ? joinLines(sectiondef) : '';
+  sectiondef ? joinParagraphs(sectiondef) : '';
 
 export const compounddefSource = ({ programlisting }: any) =>
   programlisting ? joinParagraphs(['## Source', programlisting]) : '';

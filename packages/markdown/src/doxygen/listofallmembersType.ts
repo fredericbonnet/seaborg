@@ -9,7 +9,7 @@
 import { Element } from '@rgrove/parse-xml';
 
 import { Mappers, applyToChildren } from '../mappers';
-import { joinLines, joinParagraphs } from '../helpers';
+import { bulletItem, joinLines, joinParagraphs } from '../helpers';
 import { memberRefType } from '.';
 
 const mappers = (): Mappers => ({
@@ -19,8 +19,5 @@ const mappers = (): Mappers => ({
 export default (element: Element) => {
   const members = applyToChildren(mappers())(element);
 
-  return joinParagraphs([
-    '## Members',
-    joinLines(members.map((e: string) => `* ${e}`)),
-  ]);
+  return joinParagraphs(['## Members', joinLines(members.map(bulletItem))]);
 };
