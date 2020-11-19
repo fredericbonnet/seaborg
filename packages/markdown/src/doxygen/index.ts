@@ -134,15 +134,15 @@ export { default as highlightType } from './highlightType';
 export { default as spType } from './spType';
 export { default as referenceType } from './referenceType';
 export { default as locationType } from './locationType';
-// export {default as docSect1Type} from './docSect1Type'
-// export {default as docSect2Type} from './docSect2Type'
-// export {default as docSect3Type} from './docSect3Type'
-// export {default as docSect4Type} from './docSect4Type'
-// export {default as docInternalType} from './docInternalType'
-// export {default as docInternalS1Type} from './docInternalS1Type'
-// export {default as docInternalS2Type} from './docInternalS2Type'
-// export {default as docInternalS3Type} from './docInternalS3Type'
-// export {default as docInternalS4Type} from './docInternalS4Type'
+export { default as docSect1Type } from './docSect1Type';
+export { default as docSect2Type } from './docSect2Type';
+export { default as docSect3Type } from './docSect3Type';
+export { default as docSect4Type } from './docSect4Type';
+export { default as docInternalType } from './docInternalType';
+export { default as docInternalS1Type } from './docInternalS1Type';
+export { default as docInternalS2Type } from './docInternalS2Type';
+export { default as docInternalS3Type } from './docInternalS3Type';
+export { default as docInternalS4Type } from './docInternalS4Type';
 export { default as docTitleCmdGroup } from './docTitleCmdGroup';
 export { default as docTitleType } from './docTitleType';
 export { default as docCmdGroup } from './docCmdGroup';

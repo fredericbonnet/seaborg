@@ -11,15 +11,16 @@
 
 import { Element } from '@rgrove/parse-xml';
 
-import { Mappers, applyToChildren, $text } from '../mappers';
+import { Mappers, applyToChildren, $text, $default } from '../mappers';
 import { xsdString, textNode } from '../generic';
 import { joinParagraphs } from '../helpers';
-import { docParaType } from '.';
+import { docInternalType, docParaType, docSect1Type } from '.';
 
-// TODO
 const mappers = (): Mappers => ({
   title: (title) => `### ${xsdString(title)}`,
   para: docParaType,
+  internal: docInternalType,
+  sect1: docSect1Type,
   [$text]: textNode,
 });
 
