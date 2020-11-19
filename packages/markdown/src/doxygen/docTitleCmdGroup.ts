@@ -3,6 +3,7 @@
     <xsd:choice>
       <xsd:element name="ulink" type="docURLLink" />
       <xsd:element name="bold" type="docMarkupType" />
+      <xsd:element name="s" type="docMarkupType" />
       <xsd:element name="strike" type="docMarkupType" />
       <xsd:element name="underline" type="docMarkupType" />
       <xsd:element name="emphasis" type="docMarkupType" />
@@ -11,17 +12,23 @@
       <xsd:element name="superscript" type="docMarkupType" />
       <xsd:element name="center" type="docMarkupType" />
       <xsd:element name="small" type="docMarkupType" />
-      <xsd:element name="htmlonly" type="xsd:string" />
+      <xsd:element name="del" type="docMarkupType" />
+      <xsd:element name="ins" type="docMarkupType" />
+      <xsd:element name="htmlonly" type="docHtmlOnlyType" />
       <xsd:element name="manonly" type="xsd:string" />
       <xsd:element name="xmlonly" type="xsd:string" />
       <xsd:element name="rtfonly" type="xsd:string" />
       <xsd:element name="latexonly" type="xsd:string" />
-      <xsd:element name="dot" type="xsd:string" />
-      <xsd:element name="plantuml" type="xsd:string" />
+      <xsd:element name="docbookonly" type="xsd:string" />
+      <xsd:element name="image" type="docImageType" />
+      <xsd:element name="dot" type="docImageType" />
+      <xsd:element name="msc" type="docImageType" />
+      <xsd:element name="plantuml" type="docImageType" />
       <xsd:element name="anchor" type="docAnchorType" />
       <xsd:element name="formula" type="docFormulaType" />
       <xsd:element name="ref" type="docRefTextType" />
       <xsd:element name="emoji" type="docEmojiType" />
+      <xsd:element name="linebreak" type="docEmptyType" />
       <xsd:element name="nonbreakablespace" type="docEmptyType" />
       <xsd:element name="iexcl" type="docEmptyType" />
       <xsd:element name="cent" type="docEmptyType" />
@@ -288,26 +295,33 @@ import {
 
 export default (): Mappers => ({
   ulink: docURLLink,
-  bold: s => `**${docMarkupType(s)}**`,
-  strike: s => `~~${docMarkupType(s)}~~`,
-  underline: docMarkupType,
-  emphasis: s => `_${docMarkupType(s)}_`,
-  computeroutput: s => `<code>${docMarkupType(s)}</code>`,
-  subscript: s => `<sub>${docMarkupType(s)}</sub>`,
-  superscript: s => `<sup>${docMarkupType(s)}</sup>`,
+  bold: (s) => `**${docMarkupType(s)}**`,
+  s: (s) => `~~${docMarkupType(s)}~~`,
+  strike: (s) => `~~${docMarkupType(s)}~~`,
+  underline: (s) => `<u>${docMarkupType(s)}</u>`,
+  emphasis: (s) => `_${docMarkupType(s)}_`,
+  computeroutput: (s) => `<code>${docMarkupType(s)}</code>`,
+  subscript: (s) => `<sub>${docMarkupType(s)}</sub>`,
+  superscript: (s) => `<sup>${docMarkupType(s)}</sup>`,
   center: docMarkupType,
-  small: s => `<small>${docMarkupType(s)}</small>`,
-  htmlonly: xsdString,
+  small: (s) => `<small>${docMarkupType(s)}</small>`,
+  del: (s) => `<del>${docMarkupType(s)}</del>`,
+  ins: (s) => `<ins>${docMarkupType(s)}</ins>`,
+  htmlonly: xsdString /* TODO docHtmlOnlyType */,
   manonly: xsdString,
   xmlonly: xsdString,
   rtfonly: xsdString,
   latexonly: xsdString,
-  dot: xsdString,
-  plantuml: xsdString,
+  docbookonly: xsdString,
+  image: xsdString /* TODO docImageType */,
+  dot: xsdString /* TODO docImageType */,
+  msc: xsdString /* TODO docImageType */,
+  plantuml: xsdString /* TODO docImageType */,
   anchor: docAnchorType,
   formula: docFormulaType,
   ref: docRefTextType,
   emoji: docEmojiType,
+  linebreak: () => '<br/>',
   nonbreakablespace: () => '&nbsp', // no-break space = non-breaking space:
   iexcl: () => '&iexcl', // inverted exclamation mark: ¡
   cent: () => '&cent', // cent sign: ¢

@@ -31,6 +31,7 @@
     <xsd:attribute name="language" type="DoxLanguage" use="optional"/>
     <xsd:attribute name="prot" type="DoxProtectionKind" />
     <xsd:attribute name="final" type="DoxBool" use="optional"/>
+    <xsd:attribute name="inline" type="DoxBool" use="optional"/>
     <xsd:attribute name="sealed" type="DoxBool" use="optional"/>
     <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
   </xsd:complexType>

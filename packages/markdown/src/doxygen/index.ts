@@ -7,6 +7,7 @@ Definitions from compound.xsd:
   <xsd:complexType name="compounddefType">
   <xsd:complexType name="listofallmembersType">
   <xsd:complexType name="memberRefType">
+  <xsd:complexType name="docHtmlOnlyType">
   <xsd:complexType name="compoundRefType">
   <xsd:complexType name="reimplementType">
   <xsd:complexType name="incType">
@@ -98,6 +99,7 @@ Definitions from compound.xsd:
   <xsd:simpleType name="DoxCharRange">
   <xsd:simpleType name="DoxParamDir">
   <xsd:simpleType name="DoxAccessor">
+  <xsd:simpleType name="DoxAlign">
 */
 
 // Root element
@@ -109,6 +111,7 @@ export { default as DoxygenType } from './DoxygenType';
 export { default as compounddefType } from './compounddefType';
 export { default as listofallmembersType } from './listofallmembersType';
 export { default as memberRefType } from './memberRefType';
+// export { default as docHtmlOnlyType } from './docHtmlOnlyType';
 export { default as compoundRefType } from './compoundRefType';
 export { default as reimplementType } from './reimplementType';
 export { default as incType } from './incType';
@@ -199,3 +202,4 @@ export { DoxParamListKind } from './DoxParamListKind';
 export { DoxCharRange } from './DoxCharRange';
 export { DoxParamDir } from './DoxParamDir';
 export { DoxAccessor } from './DoxAccessor';
+export { DoxAlign } from './DoxAlign';

@@ -9,7 +9,7 @@
       <xsd:enumeration value="PHP" />
       <xsd:enumeration value="Objective-C" />
       <xsd:enumeration value="C++" />
-      <xsd:enumeration value="Javascript" />
+      <xsd:enumeration value="JavaScript" />
       <xsd:enumeration value="Python" />
       <xsd:enumeration value="Fortran" />
       <xsd:enumeration value="VHDL" />
@@ -31,6 +31,7 @@ export type DoxLanguage =
   | 'Objective-C'
   | 'C++'
   | 'Javascript'
+  | 'JavaScript'
   | 'Python'
   | 'Fortran'
   | 'VHDL'
@@ -50,6 +51,7 @@ export const codes: { [key: string]: string } = {
   'Objective-C': 'objectivec',
   'C++': 'cpp',
   Javascript: 'javascript',
+  JavaScript: 'javascript',
   Python: 'python',
   Fortran: 'fortran',
   VHDL: 'vhdl',

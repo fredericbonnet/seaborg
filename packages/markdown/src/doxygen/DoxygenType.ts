@@ -4,6 +4,7 @@
       <xsd:element name="compounddef" type="compounddefType" minOccurs="0" />
     </xsd:sequence>
     <xsd:attribute name="version" type="DoxVersionNumber" use="required" />
+    <xsd:attribute ref="xml:lang" use="required"/>
   </xsd:complexType>
  */
 

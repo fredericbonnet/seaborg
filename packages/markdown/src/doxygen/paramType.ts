@@ -1,6 +1,7 @@
 /*
   <xsd:complexType name="paramType">
     <xsd:sequence>
+      <xsd:element name="attributes" minOccurs="0" />
       <xsd:element name="type" type="linkedTextType" minOccurs="0" />
       <xsd:element name="declname" minOccurs="0" />
       <xsd:element name="defname" minOccurs="0" />
@@ -38,11 +39,11 @@ const template = ({
         (defval ? ` = ${defval} ` : '') +
         (briefdescription ? `: ${briefdescription}` : '')
       : '',
-    TODO,
+    todo(TODO),
   ]);
 
 const mappers = (): Mappers => ({
-  attributes: xsdString, // Missing from compound.xsd!
+  attributes: xsdString,
   type: linkedTextType,
   declname: xsdString,
   defname: xsdString,

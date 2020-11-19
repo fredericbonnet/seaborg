@@ -10,6 +10,7 @@
       <xsd:element name="compound" type="CompoundType" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="version" type="xsd:string" use="required"/>
+    <xsd:attribute ref="xml:lang" use="required"/>
   </xsd:complexType>
 */
 
@@ -84,19 +85,20 @@ export interface MemberType {
 
   <xsd:simpleType name="CompoundKind">
     <xsd:restriction base="xsd:string">
-      |"class"
-      |"struct"
-      |"union"
-      |"interface"
-      |"protocol"
-      |"category"
-      |"exception"
-      |"file"
-      |"namespace"
-      |"group"
-      |"page"
-      |"example"
-      |"dir"
+      <xsd:enumeration value="class"/>
+      <xsd:enumeration value="struct"/>
+      <xsd:enumeration value="union"/>
+      <xsd:enumeration value="interface"/>
+      <xsd:enumeration value="protocol"/>
+      <xsd:enumeration value="category"/>
+      <xsd:enumeration value="exception"/>
+      <xsd:enumeration value="file"/>
+      <xsd:enumeration value="namespace"/>
+      <xsd:enumeration value="group"/>
+      <xsd:enumeration value="page"/>
+      <xsd:enumeration value="example"/>
+      <xsd:enumeration value="dir"/>
+      <xsd:enumeration value="type"/>
     </xsd:restriction>
   </xsd:simpleType>
 */
@@ -114,26 +116,27 @@ export type CompoundKind =
   | 'group'
   | 'page'
   | 'example'
-  | 'dir';
+  | 'dir'
+  | 'type';
 
 /*
   index.xsd:
 
   <xsd:simpleType name="MemberKind">
     <xsd:restriction base="xsd:string">
-      |"define"
-      |"property"
-      |"event"
-      |"variable"
-      |"typedef"
-      |"enum"
-      |"enumvalue"
-      |"function"
-      |"signal"
-      |"prototype"
-      |"friend"
-      |"dcop"
-      |"slot"
+      <xsd:enumeration value="define"/>
+      <xsd:enumeration value="property"/>
+      <xsd:enumeration value="event"/>
+      <xsd:enumeration value="variable"/>
+      <xsd:enumeration value="typedef"/>
+      <xsd:enumeration value="enum"/>
+      <xsd:enumeration value="enumvalue"/>
+      <xsd:enumeration value="function"/>
+      <xsd:enumeration value="signal"/>
+      <xsd:enumeration value="prototype"/>
+      <xsd:enumeration value="friend"/>
+      <xsd:enumeration value="dcop"/>
+      <xsd:enumeration value="slot"/>
     </xsd:restriction>  
   </xsd:simpleType>  
 */

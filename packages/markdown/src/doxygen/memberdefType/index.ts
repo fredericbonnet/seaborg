@@ -34,6 +34,8 @@
     <xsd:attribute name="virt" type="DoxVirtualKind" use="optional"/>
     <xsd:attribute name="volatile" type="DoxBool" use="optional"/>
     <xsd:attribute name="mutable" type="DoxBool" use="optional"/>
+    <xsd:attribute name="noexcept" type="DoxBool" use="optional"/>
+    <xsd:attribute name="constexpr" type="DoxBool" use="optional"/>
     <!-- Qt property -->
     <xsd:attribute name="readable" type="DoxBool" use="optional"/>
     <xsd:attribute name="writable" type="DoxBool" use="optional"/>
@@ -41,7 +43,11 @@
     <xsd:attribute name="initonly" type="DoxBool" use="optional"/>
     <!-- C++/CLI and C# property -->
     <xsd:attribute name="settable" type="DoxBool" use="optional"/>
+    <xsd:attribute name="privatesettable" type="DoxBool" use="optional"/>
+    <xsd:attribute name="protectedsettable" type="DoxBool" use="optional"/>
     <xsd:attribute name="gettable" type="DoxBool" use="optional"/>
+    <xsd:attribute name="privategettable" type="DoxBool" use="optional"/>
+    <xsd:attribute name="protectedgettable" type="DoxBool" use="optional"/>
     <!-- C++/CLI function -->
     <xsd:attribute name="final" type="DoxBool" use="optional"/>
     <xsd:attribute name="sealed" type="DoxBool" use="optional"/>
@@ -61,6 +67,7 @@
     <xsd:attribute name="readonly" type="DoxBool" use="optional"/>
     <xsd:attribute name="bound" type="DoxBool" use="optional"/>
     <xsd:attribute name="removable" type="DoxBool" use="optional"/>
+    <xsd:attribute name="constrained" type="DoxBool" use="optional"/>
     <xsd:attribute name="contrained" type="DoxBool" use="optional"/>
     <xsd:attribute name="transient" type="DoxBool" use="optional"/>
     <xsd:attribute name="maybevoid" type="DoxBool" use="optional"/>

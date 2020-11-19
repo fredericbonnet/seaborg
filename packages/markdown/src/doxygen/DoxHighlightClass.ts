@@ -9,6 +9,10 @@
       <xsd:enumeration value="keywordflow" />
       <xsd:enumeration value="stringliteral" />
       <xsd:enumeration value="charliteral" />
+      <xsd:enumeration value="vhdlkeyword" />
+      <xsd:enumeration value="vhdllogic" />
+      <xsd:enumeration value="vhdlchar" />
+      <xsd:enumeration value="vhdldigit" />
     </xsd:restriction>
   </xsd:simpleType>
 */
@@ -21,4 +25,8 @@ export type DoxHighlightClass =
   | 'keywordtype'
   | 'keywordflow'
   | 'stringliteral'
-  | 'charliteral';
+  | 'charliteral'
+  | 'vhdlkeyword'
+  | 'vhdllogic'
+  | 'vhdlchar'
+  | 'vhdldigit';
