@@ -35,10 +35,15 @@ export interface DoxygenType {
   
   <xsd:complexType name="compounddefType">
     <xsd:sequence>
-    ...
+      ...
       <xsd:element name="title" type="xsd:string" minOccurs="0" />
-    ...
+      ...
       <xsd:element name="briefdescription" type="descriptionType" minOccurs="0" />
+      ...
+    </xsd:sequence>
+    ...
+    <xsd:attribute name="language" type="DoxLanguage" use="optional"/>
+    <xsd:attribute name="prot" type="DoxProtectionKind" />
     ...
   </xsd:complexType>
 */
@@ -50,6 +55,7 @@ export interface CompoundType {
   kind: CompoundKind;
 
   language?: string;
+  prot?: DoxProtectionKind;
 
   title?: string[];
   briefdescription?: string[];
@@ -72,12 +78,27 @@ export interface CompoundType {
     <xsd:attribute name="refid" type="xsd:string" use="required"/>
     <xsd:attribute name="kind" type="MemberKind" use="required"/>
   </xsd:complexType>
+
+  compound.xsd:
+ 
+  <xsd:complexType name="memberdefType">
+    ...
+    <xsd:attribute name="prot" type="DoxProtectionKind" />
+    ...
+  </xsd:complexType>
+
+  <xsd:complexType name="enumvalueType" mixed="true">
+    ...
+    <xsd:attribute name="prot" type="DoxProtectionKind" />
+  </xsd:complexType>
 */
 
 export interface MemberType {
   name?: string;
   refid: string;
   kind: MemberKind;
+
+  prot?: DoxProtectionKind;
 }
 
 /*
@@ -155,3 +176,18 @@ export type MemberKind =
   | 'friend'
   | 'dcop'
   | 'slot';
+
+/*
+  compound.xsd:
+
+  <xsd:simpleType name="DoxProtectionKind">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="public" />
+      <xsd:enumeration value="protected" />
+      <xsd:enumeration value="private" />
+      <xsd:enumeration value="package" />
+    </xsd:restriction>
+  </xsd:simpleType>
+*/
+
+export type DoxProtectionKind = 'public' | 'protected' | 'private' | 'package';

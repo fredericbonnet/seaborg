@@ -28,6 +28,7 @@ import {
   negate,
   groupValuesByNodeType,
   MapFunc,
+  elementsById,
 } from '../operators';
 
 /** Doxygen index file name */
@@ -93,7 +94,7 @@ export const withRefId = (refid: string) => (compound: CompoundType) =>
 
 /** Filter compound having given member */
 export const hasMember = (refid: string) => (compound: CompoundType) =>
-  compound.members.some(member => member.refid === refid);
+  compound.members.some((member) => member.refid === refid);
 
 /*
  * Types
@@ -181,11 +182,8 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
 
     // 2. Extract compound info from each compound file
     const compounds = await Promise.all(
-      selectCompounds(doxygenindex.children).map(
-        async (compound: CompoundType) => ({
-          ...compound,
-          ...(await this.readCompoundInfo(compound)),
-        })
+      selectCompounds(doxygenindex.children).map((compound) =>
+        this.readCompoundInfo(compound)
       )
     );
 
@@ -195,7 +193,9 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
   }
 
   /** Read compound info from compound file */
-  private async readCompoundInfo(compound: CompoundType) {
+  private async readCompoundInfo(
+    compound: CompoundType
+  ): Promise<CompoundType> {
     // 1. Read compound file
     const doxygen = await this.file.readXml(
       path.join(this.configuration.options.inputDir, `${compound.refid}.xml`)
@@ -206,7 +206,7 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
 
     // 3. Extract info
     const {
-      attributes: { language },
+      attributes: { language, prot },
     } = compounddef;
     const mappers: NodeMappers<any> = {
       title: this.state.fieldMappers.xsdString,
@@ -214,21 +214,26 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
         this.state.fieldMappers.descriptionType,
         voidIfEmpty
       ),
-      innerdir: element => element.attributes.refid,
-      innerfile: element => element.attributes.refid,
-      innerclass: element => element.attributes.refid,
-      innernamespace: element => element.attributes.refid,
-      innerpage: element => element.attributes.refid,
-      innergroup: element => element.attributes.refid,
+      innerdir: (element) => element.attributes.refid,
+      innerfile: (element) => element.attributes.refid,
+      innerclass: (element) => element.attributes.refid,
+      innernamespace: (element) => element.attributes.refid,
+      innerpage: (element) => element.attributes.refid,
+      innergroup: (element) => element.attributes.refid,
     };
     const info = pipe(
       toChildren,
       mapNodesWithValues(mappers),
       filterNodeValue(negate(isUndefined)),
       groupValuesByNodeType(mappers)
-    )(compounddef);
-
-    return { ...info, language };
+    )(compounddef) as CompoundType;
+    const elements = elementsById(compounddef);
+    const members = compound.members.map((member) => {
+      const element = elements[member.refid];
+      const prot = element ? element.attributes.prot : undefined;
+      return { ...member, prot } as MemberType;
+    });
+    return { ...compound, ...info, members, language, prot } as CompoundType;
   }
 }
 

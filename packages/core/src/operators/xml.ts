@@ -50,10 +50,10 @@ export const selectElements = pipe(
 
 /** Filter element nodes by name */
 export const filterElements = (name: string) =>
-  pipe(
-    selectElements,
-    filter(withName(name))
-  ) as MapFunc<NodeBase[], Element[]>;
+  pipe(selectElements, filter(withName(name))) as MapFunc<
+    NodeBase[],
+    Element[]
+  >;
 
 /** Select text nodes */
 export const selectTexts = pipe(
@@ -199,3 +199,20 @@ export const groupValuesByNodeType = <T>(mappers: NodeMappers<T>) => (
         };
     }
   }, {}) as GroupedValues<T>;
+
+/**
+ * Get all elements indexed by their IDs
+ */
+export const elementsById = (node: NodeBase): { [id: string]: Element } => {
+  if (node.type !== 'element') return {};
+  const element = node as Element;
+  const {
+    attributes: { id },
+    children,
+  } = element;
+  const childrenIds = children.reduce(
+    (acc, child) => ({ ...acc, ...elementsById(child) }),
+    {}
+  );
+  return id ? { [id]: element, ...childrenIds } : childrenIds;
+};
