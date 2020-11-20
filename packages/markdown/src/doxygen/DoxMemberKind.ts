@@ -43,6 +43,7 @@ export const labels: { [key: string]: string } = {
   variable: 'Variable',
   typedef: 'Typedef',
   enum: 'Enumeration type',
+  enumvalue: 'Enumerator',
   function: 'Function',
   signal: 'Signal',
   prototype: 'Prototype',
