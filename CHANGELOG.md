@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2020-11-21
+
+### Added
+
+- Add `excludeProtectionLevels` configuration option for filtering of compounds
+  and members based on their protection level (private, protected etc.).
+
+### Changed
+
+- Update to Doxygen XSD version 1.8.20
+- Update to Typescript version 3.9
+
 ## [0.4.1] - 2020-11-13
 
 ### Fixed
@@ -53,7 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First release.
 
-[unreleased]: https://github.com/fredericbonnet/seaborg/compare/v0.4.1...HEAD
+[unreleased]: https://github.com/fredericbonnet/seaborg/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/fredericbonnet/seaborg/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/fredericbonnet/seaborg/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/fredericbonnet/seaborg/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/fredericbonnet/seaborg/compare/v0.2.1...v0.3.0
