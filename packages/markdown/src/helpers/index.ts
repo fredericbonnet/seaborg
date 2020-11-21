@@ -123,3 +123,7 @@ export const joinParagraphs = (paragraphs: any[]) =>
 
 /** Pad single paragraph */
 export const padParagraph = (s: string) => '\n' + s.trim() + '\n';
+
+/** Filter out elements with excluded protection level */
+export const visibleProtectionLevels = ({ prot }: any) =>
+  !prot || !configuration.options.excludeProtectionLevels.includes(prot);

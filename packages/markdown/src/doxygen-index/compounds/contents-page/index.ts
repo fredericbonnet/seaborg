@@ -9,6 +9,7 @@ import {
 } from '@seaborg/core';
 import { CompoundKind, CompoundType } from '@seaborg/core/lib/models';
 import { isString, isUndefined } from 'util';
+import { visibleProtectionLevels } from '../../../helpers';
 import { IndentedItem } from '..';
 
 export const buildTree = (
@@ -41,7 +42,8 @@ export const buildTree = (
     const children = pipe(
       innerCompound,
       map((refid: string) => doxygenIndex.compounds.find(withRefId(refid))),
-      filter(negate(isUndefined))
+      filter(negate(isUndefined)),
+      filter(visibleProtectionLevels)
     )(compound) as CompoundType[];
     return [self, ...children.flatMap(flatten(level + 1))];
   };
@@ -55,7 +57,7 @@ export default (kind: CompoundKind, compounds: CompoundType[]) => {
   } catch {
     template = require('./default').default;
   }
-  const result = template(kind, compounds);
+  const result = template(kind, compounds.filter(visibleProtectionLevels));
 
   return result;
 };

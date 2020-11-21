@@ -1,5 +1,5 @@
 import { CompoundKind, CompoundType } from '@seaborg/core/lib/models';
-import { joinParagraphs } from '../../../helpers';
+import { joinParagraphs, visibleProtectionLevels } from '../../../helpers';
 import { compoundList } from '..';
 
 /** Index entry template */
@@ -24,7 +24,7 @@ export default (kind: CompoundKind, compounds: CompoundType[]) => {
   } catch {
     template = require('./default').default;
   }
-  const result = template(kind, compounds);
+  const result = template(kind, compounds.filter(visibleProtectionLevels));
 
   return result;
 };

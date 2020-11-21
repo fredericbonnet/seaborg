@@ -17,6 +17,9 @@ export type ConfigurationOptions = {
 
   /** Prefix string/regexp to ignore in index pages */
   ignorePrefix: string;
+
+  /** Protection levels to exclude from output (e.g. "private") */
+  excludeProtectionLevels: string[];
 };
 
 /**
@@ -50,7 +53,11 @@ import defaultOptions from './default-options.json';
 class ConfigurationServiceAdapter implements ConfigurationService {
   constructor() {}
 
-  options: ConfigurationOptions = defaultOptions as ConfigurationOptions;
+  options: ConfigurationOptions = {
+    ...defaultOptions,
+    // Fix strange issue with empty arrays being coalesced to never[]
+    excludeProtectionLevels: defaultOptions.excludeProtectionLevels as string[],
+  } as ConfigurationOptions;
 
   getIgnoredPrefixRE() {
     return new RegExp(`^(${this.options.ignorePrefix})`);

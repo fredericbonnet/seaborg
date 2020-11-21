@@ -1,4 +1,4 @@
-import { pipe, reduce, configuration } from '@seaborg/core';
+import { pipe, reduce, configuration, filter } from '@seaborg/core';
 import {
   DoxygenType,
   CompoundType,
@@ -9,7 +9,14 @@ import { DoxRefKind } from '../../doxygen';
 import { labels as compoundLabels } from '../../doxygen/DoxCompoundKind';
 import { labels as memberLabels } from '../../doxygen/DoxMemberKind';
 import { uniqueBy, sortBy, groupBy, initial } from '../../operators';
-import { bulletItem, joinLines, joinParagraphs, md, ref } from '../../helpers';
+import {
+  bulletItem,
+  joinLines,
+  joinParagraphs,
+  md,
+  ref,
+  visibleProtectionLevels,
+} from '../../helpers';
 
 /** Template for reference item */
 const referenceItem = ({ kind, refid, name, label }: Reference) =>
@@ -29,6 +36,7 @@ type Reference = {
   refid: string;
   name: string;
   label: string;
+  prot?: string;
 };
 
 /** Get reference from compound */
@@ -37,6 +45,7 @@ const compoundReference = (compound: CompoundType): Reference => ({
   refid: compound.refid,
   name: compoundName(compound),
   label: compoundLabels[compound.kind],
+  prot: compound.prot,
 });
 
 /** Get reference from member */
@@ -45,6 +54,7 @@ const memberReference = (member: MemberType): Reference => ({
   refid: member.refid,
   name: member.name as string,
   label: memberLabels[member.kind],
+  prot: member.prot,
 });
 
 /** Get compound name */
@@ -66,6 +76,7 @@ const referenceKey = pipe(referenceName, stripPrefix, initial);
 
 /** Build index from references */
 const buildIndex = pipe(
+  filter(visibleProtectionLevels),
   reduce(uniqueBy(referenceId), []),
   sortBy(referenceName),
   groupBy(referenceKey)

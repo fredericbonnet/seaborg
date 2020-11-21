@@ -11,6 +11,7 @@ import {
   joinParagraphs,
   joinLines,
   bulletItem,
+  visibleProtectionLevels,
 } from '../../helpers';
 
 /** Template for member title */
@@ -29,12 +30,15 @@ const compoundTitle = ({ name, refid, kind, title }: CompoundType) =>
 const compoundItem = (compound: CompoundType) =>
   joinLines([
     bulletItem(compoundTitle(compound)),
-    ...compound.members.map(memberItem),
+    ...compound.members.filter(visibleProtectionLevels).map(memberItem),
   ]);
 
 /** Main template */
 const template = (compounds: CompoundType[]) =>
-  joinParagraphs(['# Contents', joinLines(compounds.map(compoundItem))]);
+  joinParagraphs([
+    '# Contents',
+    joinLines(compounds.filter(visibleProtectionLevels).map(compoundItem)),
+  ]);
 
 export default (index: DoxygenType) => {
   const { compounds } = index;
