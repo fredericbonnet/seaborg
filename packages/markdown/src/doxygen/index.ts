@@ -152,7 +152,7 @@ export { default as docURLLink } from './docURLLink';
 export { default as docAnchorType } from './docAnchorType';
 export { default as docFormulaType } from './docFormulaType';
 // export {default as docIndexEntryType} from './docIndexEntryType'
-export { default as docListType } from './docListType';
+export { itemizedlist, orderedlist } from './docListType';
 export { default as docListItemType } from './docListItemType';
 export { default as docSimpleSectType } from './docSimpleSectType';
 export { default as docVarListEntryType } from './docVarListEntryType';
