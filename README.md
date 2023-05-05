@@ -5,7 +5,7 @@ Markdown.
 
 ## License
 
-PicoTest is released under the terms of the The 3-Clause BSD License:
+Seaborg is released under the terms of the The 3-Clause BSD License:
 
 https://opensource.org/licenses/BSD-3-Clause
 
