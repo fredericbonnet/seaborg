@@ -40,17 +40,23 @@ class FileServiceAdapter implements FileService {
   async read(file: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       fs.readFile(file, (err, data) => {
-        if (err) reject(err);
-        resolve(data.toString());
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data.toString());
+        }
       });
     });
   }
 
   async write(file: string, data: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      fs.writeFile(file, data, err => {
-        if (err) reject(err);
-        resolve();
+      fs.writeFile(file, data, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
       });
     });
   }
