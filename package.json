@@ -3,6 +3,7 @@
   "private": true,
   "description": "Seaborg is a Doxygen to Markdown converter",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "tsc": "lerna run tsc --",
     "dev:libs": "lerna run dev --parallel --ignore=@seaborg/cli",
     "dev:cli": "lerna run dev --stream --scope=@seaborg/cli --",
