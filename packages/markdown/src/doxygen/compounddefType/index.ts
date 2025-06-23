@@ -9,17 +9,23 @@
       <xsd:element name="includedby" type="incType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="incdepgraph" type="graphType" minOccurs="0" />
       <xsd:element name="invincdepgraph" type="graphType" minOccurs="0" />
+      <xsd:element name="innermodule" type="refType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="innerdir" type="refType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="innerfile" type="refType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="innerclass" type="refType" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="innerconcept" type="refType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="innernamespace" type="refType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="innerpage" type="refType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="innergroup" type="refType" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="qualifier" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="templateparamlist" type="templateparamlistType" minOccurs="0" />
       <xsd:element name="sectiondef" type="sectiondefType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="tableofcontents" type="tableofcontentsType" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="requiresclause" type="linkedTextType" minOccurs="0" />
+      <xsd:element name="initializer" type="linkedTextType" minOccurs="0" />
       <xsd:element name="briefdescription" type="descriptionType" minOccurs="0" />
       <xsd:element name="detaileddescription" type="descriptionType" minOccurs="0" />
+      <xsd:element name="exports" type="exportsType" minOccurs="0" maxOccurs="1"/>
       <xsd:element name="inheritancegraph" type="graphType" minOccurs="0" />
       <xsd:element name="collaborationgraph" type="graphType" minOccurs="0" />
       <xsd:element name="programlisting" type="listingType" minOccurs="0" />
@@ -68,17 +74,21 @@ export const compounddefList = ({
   list ? joinParagraphs([`## ${label}`, joinLines(list.map(bulletItem))]) : '';
 
 export const compounddefInnercompounds = ({
+  innermodule,
   innerdir,
   innerfile,
   innerclass,
+  innerconcept,
   innernamespace,
   innerpage,
   innergroup,
 }: any) =>
   joinParagraphs([
+    compounddefList({ list: innermodule, label: 'Modules' }),
     compounddefList({ list: innerdir, label: 'Directories' }),
     compounddefList({ list: innerfile, label: 'Files' }),
     compounddefList({ list: innerclass, label: 'Classes' }),
+    compounddefList({ list: innerconcept, label: 'Concepts' }),
     compounddefList({ list: innernamespace, label: 'Namespaces' }),
     compounddefList({ list: innerpage, label: 'Pages' }),
     compounddefList({ list: innergroup, label: 'Modules' }),
@@ -100,9 +110,11 @@ export const mappers = (): Mappers => ({
   briefdescription: descriptionType,
   detaileddescription: descriptionType,
   sectiondef: sectiondefType,
+  innermodule: refType,
   innerdir: refType,
   innerfile: refType,
   innerclass: refType,
+  innerconcept: refType,
   innernamespace: refType,
   innerpage: refType,
   innergroup: refType,

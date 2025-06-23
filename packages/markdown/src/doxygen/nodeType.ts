@@ -1,7 +1,7 @@
 /*
   <xsd:complexType name="nodeType">
     <xsd:sequence>
-      <xsd:element name="label" />
+      <xsd:element name="label" type="xsd:string" />
       <xsd:element name="link" type="linkType" minOccurs="0" />
       <xsd:element name="childnode" type="childnodeType" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>

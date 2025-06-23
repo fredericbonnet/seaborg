@@ -16,6 +16,7 @@
       <xsd:enumeration value="invariant" />
       <xsd:enumeration value="remark" />
       <xsd:enumeration value="attention" />
+      <xsd:enumeration value="important" />
       <xsd:enumeration value="par" />
       <xsd:enumeration value="rcs" />
     </xsd:restriction>
@@ -38,5 +39,6 @@ export type DoxSimpleSectKind =
   | 'invariant'
   | 'remark'
   | 'attention'
+  | 'important'
   | 'par'
   | 'rcs';

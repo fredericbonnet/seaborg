@@ -11,8 +11,11 @@ Definitions from compound.xsd:
   <xsd:complexType name="compoundRefType">
   <xsd:complexType name="reimplementType">
   <xsd:complexType name="incType">
+  <xsd:complexType name="exportsType">
+  <xsd:complexType name="exportType">
   <xsd:complexType name="refType">
   <xsd:complexType name="refTextType">
+  <xsd:complexType name="MemberType">
   <xsd:complexType name="sectiondefType">
   <xsd:complexType name="memberdefType">
   <xsd:complexType name="descriptionType" mixed="true">
@@ -34,13 +37,18 @@ Definitions from compound.xsd:
   <xsd:complexType name="docSect2Type" mixed="true">
   <xsd:complexType name="docSect3Type" mixed="true">
   <xsd:complexType name="docSect4Type" mixed="true">
+  <xsd:complexType name="docSect5Type" mixed="true">
+  <xsd:complexType name="docSect6Type" mixed="true">
   <xsd:complexType name="docInternalType" mixed="true">
   <xsd:complexType name="docInternalS1Type" mixed="true">
   <xsd:complexType name="docInternalS2Type" mixed="true">
   <xsd:complexType name="docInternalS3Type" mixed="true">
   <xsd:complexType name="docInternalS4Type" mixed="true">
+  <xsd:complexType name="docInternalS5Type" mixed="true">
+  <xsd:complexType name="docInternalS6Type" mixed="true">
   <xsd:group name="docTitleCmdGroup">
   <xsd:complexType name="docTitleType" mixed="true">
+  <xsd:complexType name="docSummaryType" mixed="true">
   <xsd:group name="docCmdGroup">
   <xsd:complexType name="docParaType" mixed="true">
   <xsd:complexType name="docMarkupType" mixed="true">
@@ -61,7 +69,9 @@ Definitions from compound.xsd:
   <xsd:complexType name="docCaptionType" mixed="true">
   <xsd:complexType name="docHeadingType" mixed="true">
   <xsd:complexType name="docImageType" mixed="true">
-  <xsd:complexType name="docFileType" mixed="true">
+  <xsd:complexType name="docDotMscType" mixed="true">
+  <xsd:complexType name="docImageFileType" mixed="true">
+  <xsd:complexType name="docPlantumlType" mixed="true">
   <xsd:complexType name="docTocItemType" mixed="true">
   <xsd:complexType name="docTocListType">
   <xsd:complexType name="docLanguageType">
@@ -72,15 +82,19 @@ Definitions from compound.xsd:
   <xsd:complexType name="docParamName" mixed="true">
   <xsd:complexType name="docXRefSectType">
   <xsd:complexType name="docCopyType">
+  <xsd:complexType name="docDetailsType">
   <xsd:complexType name="docBlockQuoteType">
   <xsd:complexType name="docParBlockType">
   <xsd:complexType name="docEmptyType"/>
   <xsd:complexType name="tableofcontentsType">
+  <xsd:complexType name="tableofcontentsNameType">
   <xsd:complexType name="tableofcontentsKindType">
   <xsd:complexType name="docEmojiType">
 
   <!-- Simple types -->
 
+  <xsd:simpleType name="MemberKind">
+  <xsd:simpleType name="range_1_6">
   <xsd:simpleType name="DoxBool">
   <xsd:simpleType name="DoxGraphRelation">
   <xsd:simpleType name="DoxRefKind">
@@ -93,13 +107,17 @@ Definitions from compound.xsd:
   <xsd:simpleType name="DoxSectionKind">
   <xsd:simpleType name="DoxHighlightClass">
   <xsd:simpleType name="DoxSimpleSectKind">
+  <xsd:simpleType name="DoxCheck">
   <xsd:simpleType name="DoxVersionNumber">
   <xsd:simpleType name="DoxImageKind">
+  <xsd:simpleType name="DoxPlantumlEngine">
   <xsd:simpleType name="DoxParamListKind">
   <xsd:simpleType name="DoxCharRange">
   <xsd:simpleType name="DoxParamDir">
   <xsd:simpleType name="DoxAccessor">
   <xsd:simpleType name="DoxAlign">
+  <xsd:simpleType name="DoxVerticalAlign">
+  <xsd:simpleType name="DoxOlType">
 */
 
 // Root element
@@ -115,8 +133,11 @@ export { default as memberRefType } from './memberRefType';
 export { default as compoundRefType } from './compoundRefType';
 export { default as reimplementType } from './reimplementType';
 export { default as incType } from './incType';
+// export { default as exportsType } from './exportsType';
+// export { default as exportType } from './exportType';
 export { default as refType } from './refType';
 export { default as refTextType } from './refTextType';
+export { default as MemberType } from './MemberType';
 export { default as sectiondefType } from './sectiondefType';
 export { default as memberdefType } from './memberdefType';
 export { default as descriptionType } from './descriptionType';
@@ -138,13 +159,18 @@ export { default as docSect1Type } from './docSect1Type';
 export { default as docSect2Type } from './docSect2Type';
 export { default as docSect3Type } from './docSect3Type';
 export { default as docSect4Type } from './docSect4Type';
+// export { default as docSect5Type } from './docSect5Type';
+// export { default as docSect6Type } from './docSect6Type';
 export { default as docInternalType } from './docInternalType';
 export { default as docInternalS1Type } from './docInternalS1Type';
 export { default as docInternalS2Type } from './docInternalS2Type';
 export { default as docInternalS3Type } from './docInternalS3Type';
 export { default as docInternalS4Type } from './docInternalS4Type';
+// export { default as docInternalS5Type } from './docInternalS5Type';
+// export { default as docInternalS6Type } from './docInternalS6Type';
 export { default as docTitleCmdGroup } from './docTitleCmdGroup';
 export { default as docTitleType } from './docTitleType';
+// export { default as docSummaryType } from './docSummaryType';
 export { default as docCmdGroup } from './docCmdGroup';
 export { default as docParaType } from './docParaType';
 export { default as docMarkupType } from './docMarkupType';
@@ -165,7 +191,9 @@ export { default as docRefTextType } from './docRefTextType';
 // export {default as docCaptionType} from './docCaptionType'
 export { default as docHeadingType } from './docHeadingType';
 // export {default as docImageType} from './docImageType'
-// export {default as docFileType} from './docFileType'
+// export {default as docDotMscType} from './docDotMscType'
+// export {default as docImageFileType} from './docImageFileType'
+// export {default as docPlantumlType} from './docPlantumlType'
 // export {default as docTocItemType} from './docTocItemType'
 // export {default as docTocListType} from './docTocListType'
 // export {default as docLanguageType} from './docLanguageType'
@@ -176,14 +204,18 @@ export { default as docParamType } from './docParamType';
 export { default as docParamName } from './docParamName';
 export { default as docXRefSectType } from './docXRefSectType';
 // export {default as docCopyType} from './docCopyType'
+// export {default as docDetailsType} from './docDetailsType'
 // export {default as docBlockQuoteType} from './docBlockQuoteType'
 export { default as docParBlockType } from './docParBlockType';
 // export {default as docEmptyType} from './docEmptyType'
 // export {default as tableofcontentsType} from './tableofcontentsType'
+// export {default as tableofcontentsNameType} from './tableofcontentsNameType'
 // export {default as tableofcontentsKindType} from './tableofcontentsKindType'
 export { default as docEmojiType } from './docEmojiType';
 
 // Simple types
+export { MemberKind } from './MemberKind';
+// export { range_1_6 } from './range_1_6';
 export { DoxBool } from './DoxBool';
 export { DoxGraphRelation } from './DoxGraphRelation';
 export { DoxRefKind } from './DoxRefKind';
@@ -196,10 +228,14 @@ export { DoxCompoundKind } from './DoxCompoundKind';
 export { DoxSectionKind } from './DoxSectionKind';
 export { DoxHighlightClass } from './DoxHighlightClass';
 export { DoxSimpleSectKind } from './DoxSimpleSectKind';
+// export { DoxCheck } from './DoxCheck';
 export { DoxVersionNumber } from './DoxVersionNumber';
 export { DoxImageKind } from './DoxImageKind';
+// export { DoxPlantumlEngine } from './DoxPlantumlEngine';
 export { DoxParamListKind } from './DoxParamListKind';
 export { DoxCharRange } from './DoxCharRange';
 export { DoxParamDir } from './DoxParamDir';
 export { DoxAccessor } from './DoxAccessor';
 export { DoxAlign } from './DoxAlign';
+// export { DoxVerticalAlign } from './DoxVerticalAlign';
+// export { DoxOlType } from './DoxOlType';

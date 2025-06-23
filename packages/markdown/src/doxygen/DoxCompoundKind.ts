@@ -19,6 +19,7 @@
       <xsd:enumeration value="page" />
       <xsd:enumeration value="example" />
       <xsd:enumeration value="dir" />
+      <xsd:enumeration value="concept" />
     </xsd:restriction>
   </xsd:simpleType>
 */
@@ -40,7 +41,8 @@ export type DoxCompoundKind =
   | 'group'
   | 'page'
   | 'example'
-  | 'dir';
+  | 'dir'
+  | 'concept';
 
 export const labels: { [key: string]: string } = {
   class: 'Class',
@@ -60,6 +62,7 @@ export const labels: { [key: string]: string } = {
   page: 'Page',
   example: 'Example',
   dir: 'Directory',
+  concept: 'Concept',
 };
 
 export const plurals: { [key: string]: string } = {
@@ -80,4 +83,5 @@ export const plurals: { [key: string]: string } = {
   page: 'Pages',
   example: 'Examples',
   dir: 'Directories',
+  concept: 'Concepts',
 };

@@ -1,11 +1,11 @@
 /*
   <xsd:complexType name="paramType">
     <xsd:sequence>
-      <xsd:element name="attributes" minOccurs="0" />
+      <xsd:element name="attributes" type="xsd:string" minOccurs="0" />
       <xsd:element name="type" type="linkedTextType" minOccurs="0" />
-      <xsd:element name="declname" minOccurs="0" />
-      <xsd:element name="defname" minOccurs="0" />
-      <xsd:element name="array" minOccurs="0" />
+      <xsd:element name="declname" type="xsd:string" minOccurs="0" />
+      <xsd:element name="defname" type="xsd:string" minOccurs="0" />
+      <xsd:element name="array" type="xsd:string" minOccurs="0" />
       <xsd:element name="defval" type="linkedTextType" minOccurs="0" />
       <xsd:element name="typeconstraint" type="linkedTextType" minOccurs="0" />
       <xsd:element name="briefdescription" type="descriptionType" minOccurs="0" />

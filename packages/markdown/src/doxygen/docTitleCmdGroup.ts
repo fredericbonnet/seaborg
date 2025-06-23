@@ -12,6 +12,7 @@
       <xsd:element name="superscript" type="docMarkupType" />
       <xsd:element name="center" type="docMarkupType" />
       <xsd:element name="small" type="docMarkupType" />
+      <xsd:element name="cite" type="docMarkupType" />
       <xsd:element name="del" type="docMarkupType" />
       <xsd:element name="ins" type="docMarkupType" />
       <xsd:element name="htmlonly" type="docHtmlOnlyType" />
@@ -21,9 +22,9 @@
       <xsd:element name="latexonly" type="xsd:string" />
       <xsd:element name="docbookonly" type="xsd:string" />
       <xsd:element name="image" type="docImageType" />
-      <xsd:element name="dot" type="docImageType" />
-      <xsd:element name="msc" type="docImageType" />
-      <xsd:element name="plantuml" type="docImageType" />
+      <xsd:element name="dot" type="docDotMscType" />
+      <xsd:element name="msc" type="docDotMscType" />
+      <xsd:element name="plantuml" type="docPlantumlType" />
       <xsd:element name="anchor" type="docAnchorType" />
       <xsd:element name="formula" type="docFormulaType" />
       <xsd:element name="ref" type="docRefTextType" />
@@ -305,6 +306,7 @@ export default (): Mappers => ({
   superscript: (s) => `<sup>${docMarkupType(s)}</sup>`,
   center: docMarkupType,
   small: (s) => `<small>${docMarkupType(s)}</small>`,
+  cite: (s) => `<cite>${docMarkupType(s)}</cite>`,
   del: (s) => `<del>${docMarkupType(s)}</del>`,
   ins: (s) => `<ins>${docMarkupType(s)}</ins>`,
   htmlonly: xsdString /* TODO docHtmlOnlyType */,
@@ -314,9 +316,9 @@ export default (): Mappers => ({
   latexonly: xsdString,
   docbookonly: xsdString,
   image: xsdString /* TODO docImageType */,
-  dot: xsdString /* TODO docImageType */,
-  msc: xsdString /* TODO docImageType */,
-  plantuml: xsdString /* TODO docImageType */,
+  dot: xsdString /* TODO docDotMscType */,
+  msc: xsdString /* TODO docDotMscType */,
+  plantuml: xsdString /* TODO docPlantumlType */,
   anchor: docAnchorType,
   formula: docFormulaType,
   ref: docRefTextType,

@@ -120,6 +120,8 @@ export interface MemberType {
       <xsd:enumeration value="example"/>
       <xsd:enumeration value="dir"/>
       <xsd:enumeration value="type"/>
+      <xsd:enumeration value="concept"/>
+      <xsd:enumeration value="module"/>
     </xsd:restriction>
   </xsd:simpleType>
 */
@@ -138,7 +140,9 @@ export type CompoundKind =
   | 'page'
   | 'example'
   | 'dir'
-  | 'type';
+  | 'type'
+  | 'concept'
+  | 'module';
 
 /*
   index.xsd:

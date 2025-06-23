@@ -17,6 +17,8 @@
       <xsd:enumeration value="SQL" />
       <xsd:enumeration value="Tcl" />
       <xsd:enumeration value="Markdown" />
+      <xsd:enumeration value="Slice" />
+      <xsd:enumeration value="Lex" />
     </xsd:restriction>
   </xsd:simpleType>
 */
@@ -38,7 +40,9 @@ export type DoxLanguage =
   | 'XML'
   | 'SQL'
   | 'Tcl'
-  | 'Markdown';
+  | 'Markdown'
+  | 'Slice'
+  | 'Lex';
 
 /** Map Doxygen to Markdown language codes */
 export const codes: { [key: string]: string } = {
@@ -59,4 +63,6 @@ export const codes: { [key: string]: string } = {
   SQL: 'sql',
   Tcl: 'tcl',
   Markdown: 'markdown',
+  Slice: 'slice',
+  Lex: 'lex',
 };

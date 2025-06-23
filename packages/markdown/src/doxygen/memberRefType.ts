@@ -1,8 +1,8 @@
 /*
   <xsd:complexType name="memberRefType">
     <xsd:sequence>
-      <xsd:element name="scope" />
-      <xsd:element name="name" />
+      <xsd:element name="scope" type="xsd:string" />
+      <xsd:element name="name" type="xsd:string" />
     </xsd:sequence>
     <xsd:attribute name="refid" type="xsd:string" />
     <xsd:attribute name="prot" type="DoxProtectionKind" />

@@ -6,6 +6,8 @@
       <xsd:element name="preformatted" type="docMarkupType" />
       <xsd:element name="programlisting" type="listingType" />
       <xsd:element name="verbatim" type="xsd:string" />
+      <xsd:element name="javadocliteral" type="xsd:string" />
+      <xsd:element name="javadoccode" type="xsd:string" />
       <xsd:element name="indexentry" type="docIndexEntryType" />
       <xsd:element name="orderedlist" type="docListType" />
       <xsd:element name="itemizedlist" type="docListType" />
@@ -14,6 +16,10 @@
       <xsd:element name="variablelist" type="docVariableListType" />
       <xsd:element name="table" type="docTableType" />
       <xsd:element name="heading" type="docHeadingType" />
+      <xsd:element name="dotfile" type="docImageFileType" />
+      <xsd:element name="mscfile" type="docImageFileType" />
+      <xsd:element name="diafile" type="docImageFileType" />
+      <xsd:element name="plantumlfile" type="docImageFileType" />
       <xsd:element name="dotfile" type="docImageType" />
       <xsd:element name="mscfile" type="docImageType" />
       <xsd:element name="diafile" type="docImageType" />
@@ -22,6 +28,7 @@
       <xsd:element name="parameterlist" type="docParamListType" />
       <xsd:element name="xrefsect" type="docXRefSectType" />
       <xsd:element name="copydoc" type="docCopyType" />
+      <xsd:element name="details" type="docDetailsType" />
       <xsd:element name="blockquote" type="docBlockQuoteType" />
       <xsd:element name="parblock" type="docParBlockType" />
     </xsd:choice>

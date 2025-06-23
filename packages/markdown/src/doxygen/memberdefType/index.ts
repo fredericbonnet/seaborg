@@ -3,16 +3,19 @@
     <xsd:sequence>
       <xsd:element name="templateparamlist" type="templateparamlistType" minOccurs="0" />
       <xsd:element name="type" type="linkedTextType" minOccurs="0" />
-      <xsd:element name="definition" minOccurs="0" />
-      <xsd:element name="argsstring" minOccurs="0" />
-      <xsd:element name="name" />
-      <xsd:element name="read" minOccurs="0" />
-      <xsd:element name="write" minOccurs="0" />
-      <xsd:element name="bitfield" minOccurs="0" />
+      <xsd:element name="definition" type="xsd:string" minOccurs="0" />
+      <xsd:element name="argsstring" type="xsd:string" minOccurs="0" />
+      <xsd:element name="name" type="xsd:string" />
+      <xsd:element name="qualifiedname" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="read" type="xsd:string" minOccurs="0" />
+      <xsd:element name="write" type="xsd:string" minOccurs="0" />
+      <xsd:element name="bitfield" type="xsd:string" minOccurs="0" />
       <xsd:element name="reimplements" type="reimplementType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="reimplementedby" type="reimplementType" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="qualifier" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="param" type="paramType" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="enumvalue" type="enumvalueType" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="requiresclause" type="linkedTextType" minOccurs="0" />
       <xsd:element name="initializer" type="linkedTextType" minOccurs="0" />
       <xsd:element name="exceptions" type="linkedTextType" minOccurs="0" />
       <xsd:element name="briefdescription" type="descriptionType" minOccurs="0" />
@@ -26,6 +29,7 @@
     <xsd:attribute name="id" type="xsd:string" />
     <xsd:attribute name="prot" type="DoxProtectionKind" />
     <xsd:attribute name="static" type="DoxBool" />
+    <xsd:attribute name="extern" type="DoxBool" use="optional" />
     <xsd:attribute name="strong" type="DoxBool" use="optional"/>
     <xsd:attribute name="const" type="DoxBool" use="optional"/>
     <xsd:attribute name="explicit" type="DoxBool" use="optional"/>
@@ -35,7 +39,11 @@
     <xsd:attribute name="volatile" type="DoxBool" use="optional"/>
     <xsd:attribute name="mutable" type="DoxBool" use="optional"/>
     <xsd:attribute name="noexcept" type="DoxBool" use="optional"/>
+    <xsd:attribute name="noexceptexpression" type="xsd:string" use="optional"/>
+    <xsd:attribute name="nodiscard" type="DoxBool" use="optional"/>
     <xsd:attribute name="constexpr" type="DoxBool" use="optional"/>
+    <xsd:attribute name="consteval" type="DoxBool" use="optional"/>
+    <xsd:attribute name="constinit" type="DoxBool" use="optional"/>
     <!-- Qt property -->
     <xsd:attribute name="readable" type="DoxBool" use="optional"/>
     <xsd:attribute name="writable" type="DoxBool" use="optional"/>
@@ -68,7 +76,6 @@
     <xsd:attribute name="bound" type="DoxBool" use="optional"/>
     <xsd:attribute name="removable" type="DoxBool" use="optional"/>
     <xsd:attribute name="constrained" type="DoxBool" use="optional"/>
-    <xsd:attribute name="contrained" type="DoxBool" use="optional"/>
     <xsd:attribute name="transient" type="DoxBool" use="optional"/>
     <xsd:attribute name="maybevoid" type="DoxBool" use="optional"/>
     <xsd:attribute name="maybedefault" type="DoxBool" use="optional"/>

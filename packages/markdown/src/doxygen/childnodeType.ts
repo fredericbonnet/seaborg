@@ -1,7 +1,7 @@
 /*
   <xsd:complexType name="childnodeType">
     <xsd:sequence>
-      <xsd:element name="edgelabel" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="edgelabel" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="refid" type="xsd:string" />
     <xsd:attribute name="relation" type="DoxGraphRelation" />

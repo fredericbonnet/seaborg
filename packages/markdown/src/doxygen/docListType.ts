@@ -3,6 +3,8 @@
     <xsd:sequence>
       <xsd:element name="listitem" type="docListItemType" maxOccurs="unbounded" />
     </xsd:sequence>
+    <xsd:attribute name="type" type="DoxOlType" />
+    <xsd:attribute name="start" type="xsd:integer" />
   </xsd:complexType>
 */
 

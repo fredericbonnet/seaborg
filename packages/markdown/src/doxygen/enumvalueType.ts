@@ -1,7 +1,7 @@
 /*
-  <xsd:complexType name="enumvalueType" mixed="true">
+  <xsd:complexType name="enumvalueType">
     <xsd:sequence>
-      <xsd:element name="name" />
+      <xsd:element name="name" type="xsd:string" />
       <xsd:element name="initializer" type="linkedTextType" minOccurs="0" />
       <xsd:element name="briefdescription" type="descriptionType" minOccurs="0" />
       <xsd:element name="detaileddescription" type="descriptionType" minOccurs="0" />
@@ -13,8 +13,8 @@
 
 import { Element } from '@rgrove/parse-xml';
 
-import { Mappers, applyToChildrenGrouped } from '../mappers';
-import { xsdString } from '../generic';
+import { Mappers, applyToChildrenGrouped, $text } from '../mappers';
+import { xsdString, textNode } from '../generic';
 import { joinParagraphs, joinStrings, md } from '../helpers';
 import { descriptionType, linkedTextType } from '.';
 import { initial } from '../operators';
@@ -49,6 +49,7 @@ const defTemplate = ({ name, initializer }: any) =>
 const defMappers = (): Mappers => ({
   name: xsdString,
   initializer: linkedTextType,
+  [$text]: textNode,
 });
 
 export function def(element: Element) {

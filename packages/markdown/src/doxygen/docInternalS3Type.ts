@@ -2,7 +2,7 @@
   <xsd:complexType name="docInternalS3Type" mixed="true">
     <xsd:sequence>
       <xsd:element name="para"  type="docParaType"  minOccurs="0" maxOccurs="unbounded" />
-      <xsd:element name="sect3" type="docSect4Type" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="sect4" type="docSect4Type" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
 */
@@ -16,7 +16,7 @@ import { docParaType, docSect4Type } from '.';
 
 const mappers = (): Mappers => ({
   para: docParaType,
-  sect3: docSect4Type,
+  sect4: docSect4Type,
   [$text]: textNode,
 });
 

@@ -5,8 +5,9 @@
       <xsd:enumeration value="latex" />
       <xsd:enumeration value="docbook" />
       <xsd:enumeration value="rtf" />
+      <xsd:enumeration value="xml" />
     </xsd:restriction>
   </xsd:simpleType>
 */
 
-export type DoxImageKind = 'html' | 'latex' | 'docbook' | 'rtf';
+export type DoxImageKind = 'html' | 'latex' | 'docbook' | 'rtf' | 'xml';
