@@ -8,7 +8,10 @@
     "dev:libs": "lerna run dev --parallel --ignore=@seaborg/cli",
     "dev:cli": "lerna run dev --stream --scope=@seaborg/cli --",
     "dev:test": "mocha -w --reporter min",
-    "test": "mocha"
+    "test": "mocha",
+    "version": "lerna version",
+    "publish": "lerna publish from-package",
+    "prepublish": "lerna run tsc --"
   },
   "devDependencies": {
     "@types/chai": "^4.2.4",
