@@ -180,15 +180,20 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
       attributes: { version },
     } = doxygenindex;
 
-    // 2. Extract compound info from each compound file
-    const compounds = await Promise.all(
-      selectCompounds(doxygenindex.children).map((compound) =>
-        this.readCompoundInfo(compound)
-      )
-    );
-
-    // 3. Store & return model
+    // 2. Initialize empty model; this fixes race conditions with very large
+    //    indexes where one of the promises attempts to access it while it's
+    //    still being computed.
+    const compounds: CompoundType[] = []
     this.state.doxygen = { compounds, version };
+
+    // 3. Extract compound info from each compound file
+    await Promise.all(selectCompounds(doxygenindex.children).map((compound) =>
+        this.readCompoundInfo(compound).then((compoundInfo) => {
+          compounds.push(compoundInfo);
+        })
+      ))
+
+    // 4. Return model
     return this.state.doxygen;
   }
 
