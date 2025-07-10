@@ -18,7 +18,7 @@ export const parseArgs = () => {
   program
     .name('seaborg')
     .description('Seaborg converts Doxygen XML output to Markdown')
-    .version('0.5.0')
+    .version('0.6.1')
     .option(
       '-c, --config-file <file>',
       'configuration file',

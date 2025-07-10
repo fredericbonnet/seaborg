@@ -1,6 +1,6 @@
 {
   "name": "@seaborg/cli",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Seaborg command line interface",
   "author": "Frédéric Bonnet <fredericbonnet@free.fr>",
   "homepage": "https://github.com/fredericbonnet/seaborg#readme",
@@ -25,8 +25,8 @@
     "url": "https://github.com/fredericbonnet/seaborg/issues"
   },
   "dependencies": {
-    "@seaborg/core": "^0.6.0",
-    "@seaborg/markdown": "^0.6.0",
+    "@seaborg/core": "^0.6.1",
+    "@seaborg/markdown": "^0.6.1",
     "comlink": "^4.2.0",
     "commander": "^4.0.1"
   }
