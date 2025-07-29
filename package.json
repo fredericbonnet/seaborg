@@ -9,7 +9,7 @@
     "dev:cli": "lerna run dev --stream --scope=@seaborg/cli --",
     "dev:test": "mocha -w --reporter min",
     "test": "mocha",
-    "version": "lerna version",
+    "version": "lerna version --amend --no-push",
     "publish": "lerna publish from-package",
     "prepublish": "lerna run tsc --"
   },

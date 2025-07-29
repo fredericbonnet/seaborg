@@ -1,6 +1,6 @@
 {
   "name": "@seaborg/markdown",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Seaborg Markdown templates",
   "author": "Frédéric Bonnet <fredericbonnet@free.fr>",
   "homepage": "https://github.com/fredericbonnet/seaborg#readme",
@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "@rgrove/parse-xml": "^2.0.1",
-    "@seaborg/core": "^0.6.1"
+    "@seaborg/core": "^0.6.2"
   }
 }
