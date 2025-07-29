@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Fixed
+
+- Fix Node 23+ compatibility issue (issue #23)
+
 ## [0.6.1] - 2025-07-10
 
 ## Fixed

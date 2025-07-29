@@ -1,6 +1,5 @@
 import path from 'path';
 import { Element, NodeBase } from '@rgrove/parse-xml';
-import { isUndefined } from 'util';
 
 import configuration, { ConfigurationService } from './configuration.service';
 import file, { FileService } from './file.service';
@@ -25,7 +24,6 @@ import {
   NodeMappers,
   mapNodesWithValues,
   filterNodeValue,
-  negate,
   groupValuesByNodeType,
   MapFunc,
   elementsById,
@@ -183,15 +181,17 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
     // 2. Initialize empty model; this fixes race conditions with very large
     //    indexes where one of the promises attempts to access it while it's
     //    still being computed.
-    const compounds: CompoundType[] = []
+    const compounds: CompoundType[] = [];
     this.state.doxygen = { compounds, version };
 
     // 3. Extract compound info from each compound file
-    await Promise.all(selectCompounds(doxygenindex.children).map((compound) =>
+    await Promise.all(
+      selectCompounds(doxygenindex.children).map((compound) =>
         this.readCompoundInfo(compound).then((compoundInfo) => {
           compounds.push(compoundInfo);
         })
-      ))
+      )
+    );
 
     // 4. Return model
     return this.state.doxygen;
@@ -229,7 +229,7 @@ class DoxygenIndexServiceAdapter implements DoxygenIndexService {
     const info = pipe(
       toChildren,
       mapNodesWithValues(mappers),
-      filterNodeValue(negate(isUndefined)),
+      filterNodeValue((o) => o !== undefined),
       groupValuesByNodeType(mappers)
     )(compounddef) as CompoundType;
     const elements = elementsById(compounddef);

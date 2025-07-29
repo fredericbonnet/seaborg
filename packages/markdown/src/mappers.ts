@@ -1,5 +1,4 @@
 import { Element, NodeBase, Text } from '@rgrove/parse-xml';
-import { isString } from 'util';
 import {
   NodeMappers,
   pipe,
@@ -33,7 +32,7 @@ export const applyToChildren = (mappers: Mappers) =>
   pipe(
     toChildren,
     mapNodes(mappers),
-    filter(isString)
+    filter((o) => typeof o === 'string')
   ) as MapFunc<Element, string[]>;
 
 /**
@@ -51,7 +50,7 @@ export const applyToChildrenGrouped = (mappers: Mappers) =>
   pipe(
     toChildren,
     mapNodesWithValues(mappers),
-    filterNodeValue(isString),
+    filterNodeValue((o) => typeof o === 'string'),
     groupValuesByNodeType(mappers)
   ) as MapFunc<Element, GroupedValues<string>>;
 
