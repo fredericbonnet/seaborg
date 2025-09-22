@@ -106,9 +106,11 @@ export const references = () =>
 
 /** Helper for code blocks */
 export const codeBlock = (language: string | undefined, code: string) =>
-  `\`\`\`${language || ''}
+  `
+\`\`\`${language || ''}
 ${code}
-\`\`\``;
+\`\`\`
+`;
 
 /** Join non-empty strings */
 export const joinStrings = (strings: any[], sep: string = '') =>

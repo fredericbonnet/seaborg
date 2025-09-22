@@ -38,7 +38,8 @@
 import { pipe } from '@seaborg/core/lib/operators';
 
 import { Mappers, $default } from '../mappers';
-import { padParagraph } from '../helpers';
+import { xsdString } from '../generic';
+import { padParagraph, codeBlock } from '../helpers';
 import {
   listingType,
   docTitleCmdGroup,
@@ -65,6 +66,7 @@ export default (): Mappers => ({
   parameterlist: pipe(docParamListType, padParagraph),
   xrefsect: pipe(docXRefSectType, padParagraph),
   parblock: docParBlockType,
+  verbatim: (element) => codeBlock(undefined, xsdString(element)),
   // TODO
   [$default]: (element) => element.name + ' ' + JSON.stringify(element),
 });

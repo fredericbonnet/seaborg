@@ -16,9 +16,11 @@ describe('listingType', () => {
 
   specify('empty', () => {
     const xml = `<programlisting></programlisting>`;
-    const md = `\`\`\`
+    const md = `
+\`\`\`
 
-\`\`\``;
+\`\`\`
+`;
     expect(render(xml)).to.equal(md);
   });
 
@@ -27,10 +29,12 @@ describe('listingType', () => {
           <codeline><highlight class="normal">Basic</highlight></codeline>
           <codeline><highlight class="normal">Normal<sp/></highlight><highlight class="comment">/*<sp/>Comment<sp/>*/</highlight></codeline>
       </programlisting>`;
-    const md = `\`\`\`
+    const md = `
+\`\`\`
 Basic
 Normal /* Comment */
-\`\`\``;
+\`\`\`
+`;
     expect(render(xml)).to.equal(md);
   });
 
@@ -46,10 +50,12 @@ Normal /* Comment */
             <codeline><highlight class="normal">Basic</highlight></codeline>
             <codeline><highlight class="normal">Normal<sp/></highlight><highlight class="comment">/*<sp/>Comment<sp/>*/</highlight></codeline>
         </programlisting>`;
-      const md = `\`\`\`cpp
+      const md = `
+\`\`\`cpp
 Basic
 Normal /* Comment */
-\`\`\``;
+\`\`\`
+`;
       expect(render(xml)).to.equal(md);
     });
   });
