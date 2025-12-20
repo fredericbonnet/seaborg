@@ -50,7 +50,7 @@ const mappers = (): Mappers => ({
   defval: linkedTextType,
   briefdescription: descriptionType,
   //TODO
-  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => `\`${element.name} ${JSON.stringify(element)}\``,
 });
 
 export default (element: Element) => {

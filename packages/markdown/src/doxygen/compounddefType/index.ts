@@ -125,7 +125,7 @@ export const mappers = (): Mappers => ({
   inheritancegraph: ignore, // TODO graphs
   collaborationgraph: ignore, // TODO graphs
   //TODO
-  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => `\`${element.name}  ${JSON.stringify(element)}\``,
 });
 
 export const templateContext = (element: Element) => {

@@ -27,7 +27,7 @@ const mappers = (): Mappers => ({
   internal: docInternalS4Type,
   [$text]: textNode,
   // TODO
-  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => `\`${element.name} ${JSON.stringify(element)}\``,
 });
 
 export default (element: Element) =>

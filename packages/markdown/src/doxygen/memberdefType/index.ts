@@ -144,7 +144,7 @@ export const mappers = (): Mappers => ({
   references: referenceType,
   referencedby: referenceType,
   //TODO
-  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => `\`${element.name} ${JSON.stringify(element)}\``,
 });
 
 export const templateContext = (element: Element) => {

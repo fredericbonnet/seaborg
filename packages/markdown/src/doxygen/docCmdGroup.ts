@@ -68,5 +68,5 @@ export default (): Mappers => ({
   parblock: docParBlockType,
   verbatim: (element) => codeBlock(undefined, xsdString(element)),
   // TODO
-  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => `\`${element.name} ${JSON.stringify(element)}\``,
 });

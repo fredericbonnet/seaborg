@@ -18,7 +18,7 @@ const mappers = (): Mappers => ({
   para: docParaType,
   [$text]: textNode,
   // TODO
-  [$default]: (element) => element.name + ' ' + JSON.stringify(element),
+  [$default]: (element) => `\`${element.name} ${JSON.stringify(element)}\``,
 });
 
 export default (element: Element) =>
