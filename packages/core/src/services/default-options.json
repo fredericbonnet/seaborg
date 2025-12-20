@@ -3,5 +3,6 @@
   "contentsSuffix": "_contents",
   "indexSuffix": "_index",
   "ignorePrefix": "",
-  "excludeProtectionLevels": []
+  "excludeProtectionLevels": [],
+  "showTodos": false
 }

@@ -20,6 +20,9 @@ export type ConfigurationOptions = {
 
   /** Protection levels to exclude from output (e.g. "private") */
   excludeProtectionLevels: string[];
+
+  /** Show/hide TODOs; if false, hide in comment blocks */
+  showTodos: boolean;
 };
 
 /**

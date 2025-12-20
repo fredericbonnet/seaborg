@@ -81,7 +81,12 @@ export const sectionList = (
     : '';
 
 /** Helper for TODO lists */
-export const todo = (items: string[]) => sectionList('TODO', items);
+export const todo = (items: string[]) =>
+  configuration.options.showTodos
+    ? sectionList('TODO', items)
+    : items && items.length
+    ? '<!--\n' + sectionList('TODO', items) + '\n-->'
+    : '';
 
 /** Helper for compound label */
 export const compoundLabel = (kind: DoxCompoundKind) => compoundLabels[kind];
