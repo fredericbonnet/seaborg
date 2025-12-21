@@ -52,9 +52,8 @@ export const refLink = (refid: string, kindref: string) => {
 };
 
 /** Helper for ref links */
-export const ref = (refid: string, kindref: string, text: string) => {
-  return `[${text}](${refLink(refid, kindref)})`;
-};
+export const ref = (refid: string, kindref: string, text: string) =>
+  refid ? `[${text}](${refLink(refid, kindref)})` : text;
 
 /** Helper for indentation */
 export const indent = (level: number) => '  '.repeat(level);

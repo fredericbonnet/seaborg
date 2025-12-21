@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hide TODO sections by default and add `showTodos` configuration option (issue
   #24)
 
+## Fixed
+
+- Fix bad links with undefined refids (issue #24)
+
 ## [0.6.3] - 2025-09-22
 
 ## Fixed
