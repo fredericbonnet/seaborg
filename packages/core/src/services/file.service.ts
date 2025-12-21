@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import parseXml, { Element } from '@rgrove/parse-xml';
 
 /**
@@ -51,11 +52,17 @@ class FileServiceAdapter implements FileService {
 
   async write(file: string, data: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      fs.writeFile(file, data, (err) => {
+      fs.mkdir(path.dirname(file), { recursive: true }, (err) => {
         if (err) {
           reject(err);
         } else {
-          resolve();
+          fs.writeFile(file, data, (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
         }
       });
     });
