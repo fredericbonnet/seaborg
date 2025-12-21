@@ -1,6 +1,6 @@
 {
   "name": "@seaborg/cli",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Seaborg command line interface",
   "author": "Frédéric Bonnet <fredericbonnet@free.fr>",
   "homepage": "https://github.com/fredericbonnet/seaborg#readme",

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.5] - 2025-12-21
+
+## Fixed
+
+- Fix version number
+
 ## [0.6.4] - 2025-12-21
 
 ## Added
@@ -102,7 +108,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First release.
 
-[unreleased]: https://github.com/fredericbonnet/seaborg/compare/v0.6.4...HEAD
+[unreleased]: https://github.com/fredericbonnet/seaborg/compare/v0.6.5...HEAD
+[0.6.5]: https://github.com/fredericbonnet/seaborg/compare/v0.6.3...v0.6.4
 [0.6.4]: https://github.com/fredericbonnet/seaborg/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/fredericbonnet/seaborg/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/fredericbonnet/seaborg/compare/v0.6.1...v0.6.2
